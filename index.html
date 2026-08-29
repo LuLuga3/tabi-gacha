@@ -580,4 +580,44 @@ function gacha() {
 </script>
 
 </body>
-</html>
+
+<script>
+const destinations = [
+  ["⛩️", "京都", "神社やお寺、古い街並みを楽しもう！"],
+  ["🐙", "大阪", "たこ焼きやお好み焼きを食べ歩こう！"],
+  ["🐻", "北海道", "大自然と美味しいグルメを楽しもう！"],
+  ["🌴", "沖縄", "きれいな海でのんびりしよう！"],
+  ["🏯", "金沢", "歴史ある街並みと海鮮を楽しもう！"],
+  ["♨️", "箱根", "温泉でゆっくりリフレッシュしよう！"],
+  ["🍜", "福岡", "ラーメンや屋台グルメを楽しもう！"],
+  ["🦪", "広島", "宮島と広島グルメを楽しもう！"],
+  ["🏔️", "長野", "自然の中でリフレッシュしよう！"],
+  ["🌊", "鎌倉", "海と歴史を気軽に楽しもう！"]
+];
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const button = document.querySelector("button");
+
+  button.addEventListener("click", function() {
+
+    const item =
+      destinations[Math.floor(Math.random() * destinations.length)];
+
+    document.getElementById("resultEmoji").textContent = item[0];
+    document.getElementById("destination").textContent = item[1];
+    document.getElementById("reason").textContent = item[2];
+
+    document.getElementById("resultPrice").textContent =
+      "おすすめの旅先です！";
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("result").scrollIntoView({
+      behavior: "smooth"
+    });
+
+  });
+
+});
+</script>
