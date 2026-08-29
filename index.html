@@ -12,25 +12,22 @@
 
 body{
   margin:0;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Noto Sans JP",
-    sans-serif;
-  background:linear-gradient(135deg,#eef7ff,#fff4e6);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;
+  background:radial-gradient(circle at top,#dbeafe,#fff7ed 60%,#fef3c7);
   color:#20242a;
+  min-height:100vh;
 }
 
 header{
   background:#111827;
   color:white;
   text-align:center;
-  padding:28px 16px;
+  padding:26px 15px;
 }
 
 header h1{
   margin:0;
-  font-size:30px;
+  font-size:31px;
 }
 
 header p{
@@ -39,17 +36,17 @@ header p{
 }
 
 main{
-  max-width:620px;
+  max-width:650px;
   margin:auto;
-  padding:18px 14px 50px;
+  padding:18px 14px 70px;
 }
 
 .card{
   background:white;
-  border-radius:22px;
-  padding:20px;
+  border-radius:24px;
+  padding:21px;
   margin-bottom:18px;
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  box-shadow:0 10px 35px rgba(0,0,0,.09);
 }
 
 h2{
@@ -60,7 +57,7 @@ h2{
 label{
   display:block;
   font-weight:bold;
-  margin:16px 0 7px;
+  margin:15px 0 7px;
 }
 
 input,
@@ -68,25 +65,26 @@ select{
   width:100%;
   padding:14px;
   border:1px solid #ddd;
-  border-radius:12px;
+  border-radius:13px;
   font-size:16px;
   background:white;
 }
 
 button{
   width:100%;
+  padding:16px;
   border:0;
   border-radius:15px;
-  padding:16px;
   margin-top:12px;
-  font-size:17px;
-  font-weight:bold;
   background:#2563eb;
   color:white;
+  font-size:18px;
+  font-weight:bold;
+  transition:.15s;
 }
 
 button:active{
-  transform:scale(.97);
+  transform:scale(.96);
 }
 
 button:disabled{
@@ -101,12 +99,12 @@ button:disabled{
   background:#111827;
 }
 
-.orange{
-  background:#f97316;
-}
-
 .green{
   background:#16a34a;
+}
+
+.orange{
+  background:#f97316;
 }
 
 .hidden{
@@ -114,56 +112,37 @@ button:disabled{
 }
 
 .hint{
-  font-size:13px;
   color:#777;
+  font-size:13px;
   line-height:1.6;
   margin-top:6px;
 }
 
-.mode{
-  border:2px solid #e5e7eb;
-  border-radius:16px;
-  padding:15px;
-  margin-top:12px;
-  cursor:pointer;
-}
 
-.mode strong{
-  display:block;
-  font-size:18px;
-}
-
-.mode span{
-  display:block;
-  margin-top:5px;
-  font-size:13px;
-  color:#777;
-}
-
-/* =========================
+/* ==============================
    ルーレット
-========================= */
+============================== */
 
 .roulette-area{
   position:relative;
   width:330px;
-  height:360px;
-  margin:10px auto 0;
+  height:390px;
+  margin:5px auto 0;
 }
 
 .pointer{
   position:absolute;
-  z-index:10;
+  z-index:20;
   top:0;
   left:50%;
   transform:translateX(-50%);
-  font-size:50px;
-  line-height:1;
+  font-size:52px;
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));
 }
 
 .wheel-wrap{
   position:absolute;
-  top:42px;
+  top:46px;
   left:15px;
   width:300px;
   height:300px;
@@ -173,8 +152,9 @@ button:disabled{
   width:300px;
   height:300px;
   border-radius:50%;
-  box-shadow:0 10px 30px rgba(0,0,0,.18);
-  transition:transform .08s linear;
+  border:8px solid white;
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
+  transform:rotate(0rad);
 }
 
 .wheel-center{
@@ -182,46 +162,120 @@ button:disabled{
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  width:62px;
-  height:62px;
+  width:68px;
+  height:68px;
   border-radius:50%;
-  background:white;
-  border:6px solid #111827;
-  z-index:5;
+  background:#111827;
+  border:6px solid white;
+  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:24px;
+  font-size:27px;
+  z-index:5;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
 
 .spin-status{
   text-align:center;
+  min-height:32px;
+  font-size:18px;
   font-weight:bold;
-  min-height:28px;
 }
 
-/* =========================
+
+/* ==============================
+   カウントダウン
+============================== */
+
+.countdown{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(17,24,39,.88);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.count-number{
+  font-size:110px;
+  font-weight:900;
+  animation:countPop .8s ease;
+}
+
+@keyframes countPop{
+  0%{
+    transform:scale(.3);
+    opacity:0;
+  }
+
+  50%{
+    transform:scale(1.3);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+
+/* ==============================
    結果
-========================= */
+============================== */
 
 .result{
   text-align:center;
 }
 
-.big-emoji{
-  font-size:65px;
+.result-emoji{
+  font-size:75px;
 }
 
-.destination{
-  font-size:38px;
-  font-weight:bold;
+.result-name{
+  font-size:42px;
+  font-weight:900;
   margin:5px 0;
 }
 
-.catch{
-  color:#666;
-  line-height:1.7;
+.luck{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:30px;
+  background:#fef3c7;
+  font-weight:bold;
+  margin:8px 0 15px;
 }
+
+
+/* ==============================
+   紙吹雪
+============================== */
+
+.confetti{
+  position:fixed;
+  top:-20px;
+  width:10px;
+  height:18px;
+  z-index:200;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:
+      translateY(110vh)
+      rotate(720deg);
+  }
+}
+
+
+/* ==============================
+   結果ボックス
+============================== */
 
 .result-box{
   background:#f8fafc;
@@ -234,8 +288,8 @@ button:disabled{
 
 .mission{
   background:#f3f4f6;
-  border-radius:13px;
-  padding:13px;
+  border-radius:14px;
+  padding:14px;
   margin:9px 0;
   text-align:left;
 }
@@ -257,12 +311,11 @@ button:disabled{
 
 .tag{
   display:inline-block;
-  background:#e0f2fe;
-  color:#0369a1;
   padding:4px 9px;
   border-radius:20px;
+  background:#e0f2fe;
+  color:#0369a1;
   font-size:12px;
-  margin:2px;
 }
 
 footer{
@@ -274,6 +327,7 @@ footer{
 </style>
 </head>
 
+
 <body>
 
 <header>
@@ -281,105 +335,125 @@ footer{
   <p>次の旅、運に任せてみない？</p>
 </header>
 
+
 <main>
 
-<!-- ======================
-     条件
-======================= -->
+
+<!-- ==============================
+     旅の条件
+============================== -->
 
 <div class="card">
 
-<h2>🎯 まずは旅の条件</h2>
+<h2>🎯 旅の条件</h2>
 
 <label>📍 出発地</label>
 
 <input
   id="startPlace"
-  placeholder="例：東京、大阪、名古屋">
+  placeholder="例：東京、大阪、名古屋"
+>
+
 
 <label>📅 旅行する日</label>
 
 <input
   type="date"
-  id="travelDate">
+  id="travelDate"
+>
+
 
 <label>💰 予算</label>
 
 <select id="budget">
-  <option value="10000">〜1万円</option>
-  <option value="30000">〜3万円</option>
-  <option value="50000" selected>〜5万円</option>
-  <option value="100000">〜10万円</option>
-  <option value="200000">〜20万円</option>
-  <option value="9999999">20万円以上</option>
+
+<option value="10000">
+〜1万円
+</option>
+
+<option value="30000">
+〜3万円
+</option>
+
+<option value="50000" selected>
+〜5万円
+</option>
+
+<option value="100000">
+〜10万円
+</option>
+
+<option value="200000">
+〜20万円
+</option>
+
+<option value="9999999">
+20万円以上
+</option>
+
 </select>
+
 
 <label>🎯 旅のキーワード</label>
 
 <input
   id="keyword"
-  placeholder="例：ちいかわ、温泉、ラーメン、推し活、絶景">
+  placeholder="例：ちいかわ、温泉、推し活、絶景"
+>
 
 <div class="hint">
-あなたの「好き」を入れてください。<br>
-ルーレット後のミッションに反映されます。
+入力したキーワードは、旅のミッションに反映されます。
 </div>
 
 </div>
 
 
-<!-- ======================
-     モード
-======================= -->
+<!-- ==============================
+     旅の決め方
+============================== -->
 
 <div class="card">
 
 <h2>🎰 旅の決め方</h2>
 
-<div
-  class="mode"
-  onclick="chooseMode('destination')"
+<button onclick="startDestinationMode()">
+🎡 行き先をルーレット
+</button>
+
+<button
+  class="orange"
+  onclick="startAllMode()"
 >
-<strong>🎡 行き先だけ決める</strong>
-<span>
-行き先をルーレットで決めて、その後は自分で旅を作る
-</span>
-</div>
-
-<div
-  class="mode"
-  onclick="chooseMode('all')"
->
-<strong>🎰 旅を全部ルーレット</strong>
-<span>
-行き先・ホテル・交通・グルメなどを順番に決める
-</span>
-</div>
+🎰 旅を全部ルーレット
+</button>
 
 </div>
 
 
-<!-- ======================
+<!-- ==============================
      ルーレット
-======================= -->
+============================== -->
 
 <div
   class="card hidden"
   id="rouletteCard"
 >
 
-<h2>🎡 行き先ルーレット</h2>
+<h2>🎡 運命の旅先</h2>
 
-<p
-  style="text-align:center"
-  id="rouletteDescription"
+<div
+  class="spin-status"
+  id="spinStatus"
 >
-運命の旅先を決めよう！
-</p>
+準備OK！
+</div>
+
 
 <div class="roulette-area">
 
-<div class="pointer">▼</div>
+<div class="pointer">
+▼
+</div>
 
 <div class="wheel-wrap">
 
@@ -397,12 +471,6 @@ footer{
 
 </div>
 
-<div
-  class="spin-status"
-  id="spinStatus"
->
-準備OK！
-</div>
 
 <button
   id="spinButton"
@@ -410,6 +478,7 @@ footer{
 >
 🎡 回す！
 </button>
+
 
 <button
   id="stopButton"
@@ -423,9 +492,9 @@ footer{
 </div>
 
 
-<!-- ======================
+<!-- ==============================
      結果
-======================= -->
+============================== -->
 
 <div
   class="card result hidden"
@@ -433,48 +502,62 @@ footer{
 >
 
 <div
-  class="big-emoji"
-  id="resultEmoji">
+  id="resultEmoji"
+  class="result-emoji"
+>
 🎉
 </div>
 
+
 <div
-  class="destination"
-  id="resultName">
+  id="resultName"
+  class="result-name"
+>
 </div>
 
-<p
-  class="catch"
-  id="resultCatch">
-</p>
-
 
 <div
-  class="result-box"
+  id="luck"
+  class="luck"
 >
+⭐ 旅運
+</div>
 
-<strong>💰 予算</strong><br>
-<span id="resultBudget"></span>
+
+<p id="resultCatch"></p>
+
+
+<div class="result-box">
+
+<strong>📅 旅行日</strong>
+
+<br>
+
+<span id="resultDate"></span>
 
 <br><br>
 
-<strong>📅 旅行日</strong><br>
-<span id="resultDate"></span>
+<strong>💰 予算</strong>
+
+<br>
+
+<span id="resultBudget"></span>
 
 </div>
 
 
 <div
   class="result-box"
-  id="weatherInfo">
-🌦️ 旅行日が近づいたら天気を確認して、
-ミッションを調整します。
+  id="weatherInfo"
+>
+
+🌦️ 旅行日が近づいたら、
+最新の天気を確認してミッションを調整します。
+
 </div>
 
 
-<div
-  class="special"
->
+<div class="special">
 
 <h3>🔥 今しかできない旅</h3>
 
@@ -483,9 +566,8 @@ footer{
 <span class="tag">予約情報</span>
 
 <p>
-旅行日が近づいたら、開催中のイベントや
-期間限定スポットなどを確認して、
-その日に合ったミッションを作ります。
+旅行日が近づいたら、その時点の天気・イベント・
+季節情報などを確認して、ミッションをアップデートします。
 </p>
 
 </div>
@@ -511,15 +593,17 @@ footer{
   class="dark"
   onclick="nextHotel()"
 >
-🏨 次はホテルを決める
+🏨 次はホテル
 </button>
+
 
 <button
   class="dark"
   onclick="nextTransport()"
 >
-🚆 次は交通を決める
+🚆 次は交通
 </button>
+
 
 <button
   class="green"
@@ -528,28 +612,52 @@ footer{
 📱 友達にシェア
 </button>
 
-<button
-  onclick="location.reload()"
->
-🔄 もう一度ルーレット
+
+<button onclick="location.reload()">
+🔄 もう一回！
 </button>
 
 </div>
 
 </main>
 
+
 <footer>
 旅ルーレット © 2026
 </footer>
 
 
+<!-- ==============================
+     カウントダウン
+============================== -->
+
+<div
+  id="countdown"
+  class="countdown hidden"
+>
+
+<div
+  id="countNumber"
+  class="count-number"
+>
+3
+</div>
+
+<div>
+運命の旅先を決めます
+</div>
+
+</div>
+
+
 <script>
 
-/* =====================================================
-   都道府県
-===================================================== */
 
-const japan = [
+/* =========================================
+   日本47都道府県
+========================================= */
+
+const japan=[
 
 ["北海道","🐻","北海道","海鮮・ラーメン・自然"],
 ["青森県","🍎","東北","りんご・ねぶた・海鮮"],
@@ -608,91 +716,87 @@ const japan = [
 ];
 
 
-/* =====================================================
+/* =========================================
    世界
-===================================================== */
+========================================= */
 
-const world = [
+const world=[
 
-["韓国","🇰🇷","アジア","韓国料理・カフェ・ショッピング"],
-["台湾","🇹🇼","アジア","夜市・小籠包・街歩き"],
-["タイ","🇹🇭","アジア","屋台・寺院・南国"],
-["ベトナム","🇻🇳","アジア","フォー・市場・街歩き"],
+["韓国","🇰🇷","アジア","韓国料理・カフェ"],
+["台湾","🇹🇼","アジア","夜市・小籠包"],
+["タイ","🇹🇭","アジア","屋台・寺院"],
+["ベトナム","🇻🇳","アジア","フォー・市場"],
 ["シンガポール","🇸🇬","アジア","グルメ・夜景"],
 ["マレーシア","🇲🇾","アジア","多文化・グルメ"],
 ["インドネシア","🇮🇩","アジア","ビーチ・寺院"],
 ["フィリピン","🇵🇭","アジア","海・リゾート"],
 
-["フランス","🇫🇷","ヨーロッパ","パン・美術館・街並み"],
-["イタリア","🇮🇹","ヨーロッパ","ピザ・歴史・美術"],
-["スペイン","🇪🇸","ヨーロッパ","料理・建築・街歩き"],
-["イギリス","🇬🇧","ヨーロッパ","紅茶・歴史・街並み"],
-["ドイツ","🇩🇪","ヨーロッパ","街並み・料理・城"],
-["スイス","🇨🇭","ヨーロッパ","山・鉄道・絶景"],
-["ポルトガル","🇵🇹","ヨーロッパ","街並み・海・料理"],
-["ギリシャ","🇬🇷","ヨーロッパ","島・遺跡・海"],
+["フランス","🇫🇷","ヨーロッパ","パン・美術館"],
+["イタリア","🇮🇹","ヨーロッパ","ピザ・歴史"],
+["スペイン","🇪🇸","ヨーロッパ","料理・建築"],
+["イギリス","🇬🇧","ヨーロッパ","紅茶・歴史"],
+["ドイツ","🇩🇪","ヨーロッパ","街並み・城"],
+["スイス","🇨🇭","ヨーロッパ","山・鉄道"],
+["ポルトガル","🇵🇹","ヨーロッパ","街並み・海"],
+["ギリシャ","🇬🇷","ヨーロッパ","島・遺跡"],
 
-["アメリカ","🇺🇸","北米","都市・自然・エンタメ"],
-["カナダ","🇨🇦","北米","自然・街・絶景"],
-["メキシコ","🇲🇽","中南米","料理・遺跡・街歩き"],
+["アメリカ","🇺🇸","北米","都市・自然"],
+["カナダ","🇨🇦","北米","自然・絶景"],
+["メキシコ","🇲🇽","中南米","料理・遺跡"],
 
-["オーストラリア","🇦🇺","オセアニア","海・自然・動物"],
+["オーストラリア","🇦🇺","オセアニア","海・自然"],
 ["ニュージーランド","🇳🇿","オセアニア","自然・絶景"],
 
-["モロッコ","🇲🇦","アフリカ","市場・料理・街並み"],
-["南アフリカ","🇿🇦","アフリカ","自然・動物・ワイン"]
+["モロッコ","🇲🇦","アフリカ","市場・料理"],
+["南アフリカ","🇿🇦","アフリカ","自然・動物"]
 
 ];
 
 
-/* =====================================================
-   データ作成
-===================================================== */
-
-const places = [
+const places=[
 
 ...japan.map(x=>({
- name:x[0],
- emoji:x[1],
- region:x[2],
- food:x[3],
- type:"日本"
+  name:x[0],
+  emoji:x[1],
+  region:x[2],
+  food:x[3]
 })),
 
 ...world.map(x=>({
- name:x[0],
- emoji:x[1],
- region:x[2],
- food:x[3],
- type:"世界"
+  name:x[0],
+  emoji:x[1],
+  region:x[2],
+  food:x[3]
 }))
 
 ];
 
 
-/* =====================================================
-   変数
-===================================================== */
+/* =========================================
+   状態
+========================================= */
 
-let candidates = places;
+let candidates=places;
 
-let current = null;
+let current=null;
 
-let spinning = false;
+let spinning=false;
 
-let wheelRotation = 0;
+let rotation=0;
 
-let animationId = null;
+let animation=null;
+
+let audioContext=null;
 
 
-/* =====================================================
+/* =========================================
    Canvas
-===================================================== */
+========================================= */
 
-const canvas =
+const canvas=
 document.getElementById("wheel");
 
-const ctx =
+const ctx=
 canvas.getContext("2d");
 
 
@@ -708,6 +812,7 @@ const slice=
 Math.PI*2/candidates.length;
 
 const colors=[
+
 "#60a5fa",
 "#fbbf24",
 "#f87171",
@@ -716,60 +821,60 @@ const colors=[
 "#fb923c",
 "#38bdf8",
 "#f472b6"
+
 ];
 
 
-candidates.forEach((place,index)=>{
+candidates.forEach((place,i)=>{
 
-const start=
-index*slice;
+const start=i*slice;
 
-const end=
-start+slice;
+const end=start+slice;
+
 
 ctx.beginPath();
 
 ctx.moveTo(center,center);
 
 ctx.arc(
-center,
-center,
-radius,
-start,
-end
+  center,
+  center,
+  radius,
+  start,
+  end
 );
 
 ctx.closePath();
 
 ctx.fillStyle=
-colors[index%colors.length];
+colors[i%colors.length];
 
 ctx.fill();
 
-
-/* 文字 */
 
 ctx.save();
 
 ctx.translate(center,center);
 
 ctx.rotate(
-start+slice/2
+  start+slice/2
 );
 
 ctx.fillStyle="white";
 
 ctx.font=
 candidates.length>35
-? "bold 8px sans-serif"
-: "bold 11px sans-serif";
+?
+"bold 8px sans-serif"
+:
+"bold 11px sans-serif";
 
 ctx.textAlign="right";
 
 ctx.fillText(
-place.name,
-radius-7,
-4
+  place.name,
+  radius-8,
+  4
 );
 
 ctx.restore();
@@ -782,53 +887,194 @@ ctx.restore();
 drawWheel();
 
 
-/* =====================================================
-   モード
-===================================================== */
+/* =========================================
+   効果音
+========================================= */
 
-let selectedMode="destination";
+function initAudio(){
+
+if(!audioContext){
+
+audioContext=
+new(
+window.AudioContext||
+window.webkitAudioContext
+)();
+
+}
+
+}
 
 
-function chooseMode(mode){
+function beep(
+frequency=440,
+duration=.08,
+type="sine"
+){
 
-selectedMode=mode;
+try{
+
+initAudio();
+
+const osc=
+audioContext.createOscillator();
+
+const gain=
+audioContext.createGain();
+
+osc.type=type;
+
+osc.frequency.value=
+frequency;
+
+gain.gain.setValueAtTime(
+  .08,
+  audioContext.currentTime
+);
+
+gain.gain.exponentialRampToValueAtTime(
+  .001,
+  audioContext.currentTime+duration
+);
+
+osc.connect(gain);
+
+gain.connect(
+  audioContext.destination
+);
+
+osc.start();
+
+osc.stop(
+  audioContext.currentTime+duration
+);
+
+}catch(e){}
+
+}
+
+
+/* =========================================
+   ルーレット表示
+========================================= */
+
+function startDestinationMode(){
 
 document
 .getElementById("rouletteCard")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 document
 .getElementById("rouletteCard")
 .scrollIntoView({
- behavior:"smooth"
+  behavior:"smooth"
 });
 
-if(mode==="all"){
+}
+
+
+function startAllMode(){
 
 document
-.getElementById("rouletteDescription")
-.textContent=
-"まずは行き先を運で決めよう！";
+.getElementById("rouletteCard")
+.classList
+.remove("hidden");
+
+document
+.getElementById("rouletteCard")
+.scrollIntoView({
+  behavior:"smooth"
+});
+
+}
+
+
+/* =========================================
+   カウントダウン
+========================================= */
+
+function countdown(){
+
+return new Promise(resolve=>{
+
+const overlay=
+document.getElementById("countdown");
+
+const number=
+document.getElementById("countNumber");
+
+overlay.classList.remove("hidden");
+
+let n=3;
+
+number.textContent=n;
+
+beep(440,.12);
+
+
+const timer=
+setInterval(()=>{
+
+n--;
+
+if(n>0){
+
+number.textContent=n;
+
+number.style.animation="none";
+
+void number.offsetWidth;
+
+number.style.animation=
+"countPop .8s ease";
+
+beep(
+  n===2?520:620,
+  .12
+);
 
 }else{
 
-document
-.getElementById("rouletteDescription")
-.textContent=
-"運命の旅先を決めよう！";
+clearInterval(timer);
+
+number.textContent="START!";
+
+number.style.animation=
+"countPop .8s ease";
+
+beep(
+  880,
+  .25,
+  "square"
+);
+
+setTimeout(()=>{
+
+overlay.classList.add("hidden");
+
+resolve();
+
+},600);
 
 }
 
+},850);
+
+});
+
 }
 
 
-/* =====================================================
-   回す
-===================================================== */
+/* =========================================
+   回転開始
+========================================= */
 
-function startSpin(){
+async function startSpin(){
 
 if(spinning)return;
+
+await countdown();
 
 spinning=true;
 
@@ -843,35 +1089,54 @@ document
 document
 .getElementById("spinStatus")
 .textContent=
-"🎡 回ってる……STOPしたいところで押して！";
+"🎡 回ってる！止めたいところでSTOP！";
 
 
-let speed=.10;
+let speed=.04;
+
 
 function animate(){
 
 if(!spinning)return;
 
-speed += .002;
+speed+=.001;
 
-wheelRotation += speed;
+if(speed>.30){
+speed=.30;
+}
+
+rotation+=speed;
 
 canvas.style.transform=
-"rotate("+wheelRotation+"rad)";
+"rotate("+rotation+"rad)";
 
-animationId=
+
+if(
+Math.floor(rotation*20)%3===0
+){
+
+beep(
+  180+speed*500,
+  .025
+);
+
+}
+
+
+animation=
 requestAnimationFrame(animate);
 
 }
+
 
 animate();
 
 }
 
 
-/* =====================================================
+/* =========================================
    STOP
-===================================================== */
+========================================= */
 
 function stopSpin(){
 
@@ -879,7 +1144,7 @@ if(!spinning)return;
 
 spinning=false;
 
-cancelAnimationFrame(animationId);
+cancelAnimationFrame(animation);
 
 document
 .getElementById("stopButton")
@@ -891,75 +1156,95 @@ document
 "🛑 STOP！";
 
 
-/* 減速 */
+let speed=.22;
 
-let speed=.12;
 
-function slowDown(){
+function slow(){
 
-wheelRotation += speed;
+rotation+=speed;
 
 canvas.style.transform=
-"rotate("+wheelRotation+"rad)";
+"rotate("+rotation+"rad)";
 
-speed *= .94;
+
+beep(
+  Math.max(100,speed*500),
+  .025
+);
+
+speed*=.93;
+
 
 if(speed>.002){
 
-requestAnimationFrame(slowDown);
+requestAnimationFrame(slow);
 
 }else{
 
-selectResult();
+finish();
 
 }
 
 }
 
-slowDown();
+
+slow();
 
 }
 
 
-/* =====================================================
+/* =========================================
    結果決定
-===================================================== */
+========================================= */
 
-function selectResult(){
-
-/*
-  上側のポインター位置から
-  どの区画が来たか計算
-*/
+function finish(){
 
 const slice=
 Math.PI*2/candidates.length;
 
+
 let normalized=
-(((-wheelRotation)%(Math.PI*2))
-+(Math.PI*2))
+(
+  (-rotation%(Math.PI*2))
+  +
+  Math.PI*2
+)
 %(Math.PI*2);
 
+
 let index=
-Math.floor(normalized/slice);
+Math.floor(
+  normalized/slice
+);
+
 
 current=
 candidates[index];
 
-showResult();
 
-document
-.getElementById("spinButton")
-.disabled=false;
+beep(660,.12);
+
+setTimeout(
+  ()=>beep(880,.18),
+  120
+);
+
+setTimeout(
+  ()=>beep(1100,.3),
+  280
+);
+
+
+showResult();
 
 }
 
 
-/* =====================================================
+/* =========================================
    ミッション
-===================================================== */
+========================================= */
 
-function createMissions(){
+function makeMissions(){
 
 const keyword=
 document
@@ -967,70 +1252,71 @@ document
 .value
 .trim();
 
-const count=
-3;
 
-let list=[];
+let missions=[];
 
 
 if(keyword){
 
-list.push(
+missions.push(
+"🎯 "+
 current.name+
 "で「"+
 keyword+
 "」に関係する場所を1つ探す"
 );
 
-list.push(
-"「"+
+missions.push(
+"📸 「"+
 keyword+
 "」をテーマに写真を1枚撮る"
 );
 
-list.push(
-current.name+
-"で「"+
+missions.push(
+"🔎 「"+
 keyword+
-"」に関係するものを1つ発見する"
+"」に関係するものを旅先で1つ発見する"
 );
 
 }
 
 
-list.push(
+missions.push(
+"🍴 "+
 current.name+
 "のご当地グルメを食べる"
 );
 
-list.push(
+missions.push(
+"🗺️ "+
 current.name+
 "で行ったことのない場所へ行く"
 );
 
-list.push(
-"旅先らしい写真を3枚撮る"
+missions.push(
+"📸 旅先らしい写真を3枚撮る"
 );
 
-list.push(
-"その土地ならではの体験を1つする"
+missions.push(
+"🎁 ご当地のお土産を1つ探す"
 );
 
-return list.slice(0,count);
+
+return missions.slice(0,3);
 
 }
 
 
-/* =====================================================
+/* =========================================
    結果表示
-===================================================== */
+========================================= */
 
 function showResult(){
 
-document
-.getElementById("resultCard")
-.classList
-.remove("hidden");
+const result=
+document.getElementById("resultCard");
+
+result.classList.remove("hidden");
 
 
 document
@@ -1045,12 +1331,43 @@ document
 current.name;
 
 
+/* 旅運 */
+
+const luck=
+Math.floor(
+  Math.random()*41
+)+60;
+
+
+document
+.getElementById("luck")
+.textContent=
+"⭐ 今日の旅運 "+
+luck+
+"点";
+
+
 document
 .getElementById("resultCatch")
 .textContent=
+"今日は"+
 current.name+
-"で、普段とは少し違う旅を楽しもう。";
+"があなたを呼んでいるかも。";
 
+
+/* 日付 */
+
+document
+.getElementById("resultDate")
+.textContent=
+document
+.getElementById("travelDate")
+.value
+||
+"未設定";
+
+
+/* 予算 */
 
 const budget=
 Number(
@@ -1068,17 +1385,7 @@ budget.toLocaleString()+
 "円";
 
 
-const date=
-document
-.getElementById("travelDate")
-.value;
-
-
-document
-.getElementById("resultDate")
-.textContent=
-date||"未設定";
-
+/* グルメ */
 
 document
 .getElementById("food")
@@ -1088,22 +1395,19 @@ current.food;
 
 /* ミッション */
 
-const missions=
-createMissions();
-
 const box=
-document
-.getElementById("missions");
+document.getElementById("missions");
 
 box.innerHTML="";
 
-missions.forEach(m=>{
+
+makeMissions().forEach(m=>{
 
 box.innerHTML+=`
 
 <div class="mission">
 
-<label style="display:block;margin:0">
+<label style="margin:0">
 
 <input type="checkbox">
 
@@ -1120,6 +1424,12 @@ ${m}
 
 /* 天気 */
 
+const date=
+document
+.getElementById("travelDate")
+.value;
+
+
 if(date){
 
 const today=
@@ -1130,17 +1440,20 @@ new Date(date);
 
 const days=
 Math.ceil(
-(target-today)/86400000
+  (target-today)/86400000
 );
+
 
 if(days>=0&&days<=7){
 
 document
 .getElementById("weatherInfo")
 .innerHTML=
+
 "🌦️ <strong>旅行が近い！</strong><br>"+
-"最新の天気を確認して、雨なら屋内ミッション、"+
-"晴れなら屋外ミッションを優先する仕組みにできます。";
+"最新の天気を確認して、"+
+"晴れなら屋外、雨なら屋内など、"+
+"ミッションを調整するのがおすすめ。";
 
 }
 
@@ -1155,60 +1468,119 @@ document
 .value
 .trim();
 
+
 if(keyword){
 
 document
 .getElementById("resultCatch")
-textContent;
-
-document
-.getElementById("resultCatch")
-innerHTML=
+.innerHTML=
 "🎯 キーワード「"+
 keyword+
-"」を旅に組み込んでみよう！";
+"」を今回の旅に組み込もう！";
 
 }
 
 
-document
-.getElementById("resultCard")
-.scrollIntoView({
- behavior:"smooth"
+/* 紙吹雪 */
+
+confetti();
+
+
+result.scrollIntoView({
+  behavior:"smooth"
 });
 
 }
 
 
-/* =====================================================
-   ホテル・交通
-===================================================== */
+/* =========================================
+   紙吹雪
+========================================= */
+
+function confetti(){
+
+for(let i=0;i<70;i++){
+
+const piece=
+document.createElement("div");
+
+piece.className=
+"confetti";
+
+piece.style.left=
+Math.random()*100+
+"vw";
+
+piece.style.animationDuration=
+(2+Math.random()*3)+
+"s";
+
+piece.style.transform=
+"rotate("+
+Math.random()*360+
+"deg)";
+
+piece.style.background=
+[
+"#ef4444",
+"#f59e0b",
+"#10b981",
+"#3b82f6",
+"#8b5cf6",
+"#ec4899"
+][
+Math.floor(
+  Math.random()*6
+)
+];
+
+
+document.body.appendChild(piece);
+
+
+setTimeout(
+  ()=>piece.remove(),
+  6000
+);
+
+}
+
+}
+
+
+/* =========================================
+   ホテル
+========================================= */
 
 function nextHotel(){
 
 alert(
-"🏨 次のバージョンでは、"+
+"🏨 次のステップでは、"+
 current.name+
-"＋予算＋旅行日を条件にホテル候補をルーレットで決められるようにします！"
+"＋旅行日＋予算を使ってホテルをルーレットで決めます。"
 );
 
 }
 
+
+/* =========================================
+   交通
+========================================= */
 
 function nextTransport(){
 
 alert(
-"🚆 次のバージョンでは、"+
+"🚆 次のステップでは、出発地＋"+
 current.name+
-"＋出発地＋予算＋旅行日を条件に交通手段をルーレットで決められるようにします！"
+"＋予算＋旅行日を使って交通手段をルーレットで決めます。"
 );
 
 }
 
 
-/* =====================================================
+/* =========================================
    シェア
-===================================================== */
+========================================= */
 
 function shareResult(){
 
@@ -1218,13 +1590,19 @@ document
 .value
 .trim();
 
+
 const text=
 "🎡 旅ルーレットで"+
 current.name+
 "に決まった！"+
-(keyword
-?" 🎯 キーワード："+keyword
-:"");
+(
+keyword
+?
+" 🎯 キーワード："+keyword
+:
+""
+);
+
 
 if(navigator.share){
 
@@ -1240,12 +1618,7 @@ url:location.href
 
 }else{
 
-navigator.clipboard
-?.writeText(text);
-
-alert(
-"結果をコピーしました！"
-);
+alert(text);
 
 }
 
@@ -1254,4 +1627,4 @@ alert(
 </script>
 
 </body>
-</html>
+  </html>
