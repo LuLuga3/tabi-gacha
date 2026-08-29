@@ -58,4 +58,1229 @@ h1{
 }
 
 label{
- 
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  background:white;
+}
+
+.mode{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.mode button{
+  border:0;
+  border-radius:18px;
+  padding:17px 8px;
+  font-size:18px;
+  font-weight:bold;
+  background:#eee;
+  cursor:pointer;
+}
+
+.mode button.active{
+  color:white;
+  background:
+    linear-gradient(135deg,#ff8a00,#ff4d4d);
+
+  box-shadow:
+    0 7px 18px rgba(255,80,50,.3);
+}
+
+.mode button.world.active{
+  background:
+    linear-gradient(135deg,#287cff,#754cff);
+
+  box-shadow:
+    0 7px 18px rgba(60,90,255,.3);
+}
+
+/* ルーレット */
+
+.roulette-area{
+  position:relative;
+  width:min(94vw,500px);
+  aspect-ratio:1;
+  margin:12px auto 18px;
+}
+
+.pointer{
+  position:absolute;
+  z-index:20;
+
+  left:50%;
+  top:-3px;
+
+  transform:translateX(-50%);
+
+  width:0;
+  height:0;
+
+  border-left:16px solid transparent;
+  border-right:16px solid transparent;
+  border-top:38px solid #222;
+
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.2));
+}
+
+canvas{
+  width:100%;
+  height:100%;
+
+  border-radius:50%;
+
+  background:white;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.2);
+
+  transition:
+    transform 5s cubic-bezier(.12,.75,.15,1);
+}
+
+.center{
+  position:absolute;
+
+  width:62px;
+  height:62px;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  border-radius:50%;
+
+  background:white;
+
+  border:5px solid #222;
+
+  z-index:10;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:25px;
+
+  box-shadow:
+    0 3px 12px rgba(0,0,0,.25);
+}
+
+.start,
+.stop{
+  width:100%;
+
+  border:0;
+  border-radius:18px;
+
+  padding:17px;
+
+  font-size:22px;
+  font-weight:900;
+
+  color:white;
+
+  cursor:pointer;
+}
+
+.start{
+  background:
+    linear-gradient(135deg,#ff512f,#dd2476);
+
+  box-shadow:
+    0 8px 20px rgba(220,40,90,.25);
+}
+
+.stop{
+  display:none;
+  background:#222;
+}
+
+.start:active,
+.stop:active{
+  transform:scale(.97);
+}
+
+.result{
+  text-align:center;
+  min-height:130px;
+  padding-top:18px;
+}
+
+.result-title{
+  color:#777;
+  font-size:14px;
+}
+
+.result-place{
+  font-size:32px;
+  font-weight:900;
+  margin:5px 0 8px;
+
+  word-break:keep-all;
+}
+
+.result-mission{
+  color:#555;
+  font-size:15px;
+  line-height:1.6;
+}
+
+.keyword-info{
+  margin-top:12px;
+  padding:12px;
+
+  border-radius:14px;
+
+  background:#fff7dc;
+
+  font-size:13px;
+  color:#6b5b25;
+}
+
+.share{
+  width:100%;
+  border:0;
+  border-radius:14px;
+
+  padding:13px;
+
+  background:#f0f0f0;
+
+  font-size:15px;
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.pop{
+  animation:pop .55s ease;
+}
+
+@keyframes pop{
+
+  0%{
+    transform:scale(.5);
+    opacity:0;
+  }
+
+  65%{
+    transform:scale(1.12);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(1);
+  }
+
+}
+
+.note{
+  text-align:center;
+  color:#888;
+  font-size:12px;
+  margin-top:10px;
+}
+
+@media(max-width:380px){
+
+  h1{
+    font-size:27px;
+  }
+
+  .result-place{
+    font-size:27px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎡 旅ガチャ</h1>
+
+<div class="subtitle">
+次の旅、運に任せてみない？
+</div>
+
+
+<!-- 設定 -->
+
+<div class="card">
+
+<label>📍 出発地</label>
+
+<input
+  id="from"
+  type="text"
+  placeholder="例：東京・大阪・名古屋"
+>
+
+
+<label>📅 旅行する日</label>
+
+<input
+  id="date"
+  type="date"
+>
+
+
+<label>💰 予算</label>
+
+<select id="budget">
+
+<option>特に決めてない</option>
+<option>1万円以内</option>
+<option>3万円以内</option>
+<option>5万円以内</option>
+<option>10万円以内</option>
+<option>10万円以上</option>
+
+</select>
+
+
+<label>🎯 旅のキーワード</label>
+
+<input
+  id="keyword"
+  type="text"
+  placeholder="温泉・グルメ・絶景・推し活など"
+>
+
+<div class="keyword-info">
+
+💡 キーワードを入れると、
+当選した旅先に合わせたミッションが出ます。
+
+</div>
+
+</div>
+
+
+<!-- 日本 / 世界 -->
+
+<div class="card">
+
+<h2 style="text-align:center;margin-top:0;">
+🌏 どこへ行く？
+</h2>
+
+<div class="mode">
+
+<button
+  id="japanBtn"
+  class="active"
+  onclick="selectMode('japan')"
+>
+🇯🇵<br>
+日本
+</button>
+
+<button
+  id="worldBtn"
+  class="world"
+  onclick="selectMode('world')"
+>
+🌎<br>
+世界
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ルーレット -->
+
+<div class="card">
+
+<div class="roulette-area">
+
+<div class="pointer"></div>
+
+<canvas id="roulette"></canvas>
+
+<div class="center">
+🎯
+</div>
+
+</div>
+
+
+<button
+  id="startBtn"
+  class="start"
+  onclick="startRoulette()"
+>
+🎰 START
+</button>
+
+
+<button
+  id="stopBtn"
+  class="stop"
+  onclick="stopRoulette()"
+>
+🛑 STOP
+</button>
+
+
+<div class="note">
+回転中にSTOPを押すと、その場所で決定！
+</div>
+
+
+<div class="result">
+
+<div
+  id="resultTitle"
+  class="result-title"
+>
+日本の47都道府県
+</div>
+
+<div
+  id="resultPlace"
+  class="result-place"
+>
+？？？
+</div>
+
+<div
+  id="resultMission"
+  class="result-mission"
+>
+STARTを押して旅先を決めよう！
+</div>
+
+</div>
+
+
+<button
+  id="shareBtn"
+  class="share hidden"
+  onclick="shareResult()"
+>
+📱 結果をシェア
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   日本 47都道府県
+========================================= */
+
+const japan = [
+
+"北海道",
+
+"青森県",
+"岩手県",
+"宮城県",
+"秋田県",
+"山形県",
+"福島県",
+
+"茨城県",
+"栃木県",
+"群馬県",
+"埼玉県",
+"千葉県",
+"東京都",
+"神奈川県",
+
+"新潟県",
+"富山県",
+"石川県",
+"福井県",
+"山梨県",
+"長野県",
+"岐阜県",
+"静岡県",
+"愛知県",
+
+"三重県",
+"滋賀県",
+"京都府",
+"大阪府",
+"兵庫県",
+"奈良県",
+"和歌山県",
+
+"鳥取県",
+"島根県",
+"岡山県",
+"広島県",
+"山口県",
+
+"徳島県",
+"香川県",
+"愛媛県",
+"高知県",
+
+"福岡県",
+"佐賀県",
+"長崎県",
+"熊本県",
+"大分県",
+"宮崎県",
+"鹿児島県",
+
+"沖縄県"
+
+];
+
+
+/* =========================================
+   世界
+========================================= */
+
+const world = [
+
+"🇰🇷 ソウル",
+"🇰🇷 釜山",
+
+"🇹🇼 台北",
+"🇹🇼 台中",
+
+"🇭🇰 香港",
+
+"🇹🇭 バンコク",
+"🇹🇭 プーケット",
+
+"🇻🇳 ホーチミン",
+"🇻🇳 ダナン",
+
+"🇸🇬 シンガポール",
+
+"🇲🇾 クアラルンプール",
+
+"🇮🇩 バリ",
+
+"🇵🇭 セブ",
+
+"🇦🇺 シドニー",
+"🇦🇺 ゴールドコースト",
+
+"🇺🇸 ハワイ",
+"🇺🇸 ニューヨーク",
+"🇺🇸 ロサンゼルス",
+
+"🇨🇦 バンクーバー",
+
+"🇫🇷 パリ",
+
+"🇬🇧 ロンドン",
+
+"🇮🇹 ローマ",
+
+"🇪🇸 バルセロナ",
+
+"🇵🇹 リスボン",
+
+"🇨🇭 スイス",
+
+"🇩🇪 ベルリン",
+
+"🇳🇱 アムステルダム",
+
+"🇦🇹 ウィーン",
+
+"🇬🇷 サントリーニ",
+
+"🇹🇷 イスタンブール",
+
+"🇪🇬 カイロ",
+
+"🇦🇪 ドバイ",
+
+"🇳🇿 オークランド",
+
+"🇫🇮 ヘルシンキ",
+
+"🇸🇪 ストックホルム",
+
+"🇩🇰 コペンハーゲン",
+
+"🇨🇿 プラハ",
+
+"🇲🇽 カンクン",
+
+"🇵🇪 マチュピチュ"
+
+];
+
+
+/* =========================================
+   変数
+========================================= */
+
+const canvas =
+  document.getElementById("roulette");
+
+const ctx =
+  canvas.getContext("2d");
+
+let mode = "japan";
+
+let spinning = false;
+
+let rotation = 0;
+
+let selectedIndex = 0;
+
+let selectedPlace = "";
+
+
+/* =========================================
+   Canvasサイズ
+========================================= */
+
+function resizeCanvas(){
+
+  const size = 900;
+
+  canvas.width = size;
+  canvas.height = size;
+
+  drawRoulette();
+
+}
+
+resizeCanvas();
+
+window.addEventListener(
+  "resize",
+  resizeCanvas
+);
+
+
+/* =========================================
+   ルーレット描画
+========================================= */
+
+function drawRoulette(){
+
+  const list =
+    mode === "japan"
+    ? japan
+    : world;
+
+  const size = canvas.width;
+
+  const center =
+    size / 2;
+
+  const radius =
+    size / 2 - 10;
+
+  const count =
+    list.length;
+
+  const slice =
+    Math.PI * 2 / count;
+
+
+  ctx.clearRect(
+    0,
+    0,
+    size,
+    size
+  );
+
+
+  for(let i=0;i<count;i++){
+
+    const start =
+      -Math.PI/2 +
+      i * slice;
+
+    const end =
+      start + slice;
+
+
+    /* 色 */
+
+    const colors = [
+
+      "#ff6b6b",
+      "#ffd93d",
+      "#6bcB77",
+      "#4d96ff",
+      "#c77dff",
+      "#ff9f1c",
+      "#00b4d8",
+      "#ff70a6"
+
+    ];
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      center,
+      center
+    );
+
+    ctx.arc(
+      center,
+      center,
+      radius,
+      start,
+      end
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle =
+      colors[i % colors.length];
+
+    ctx.fill();
+
+    ctx.strokeStyle =
+      "rgba(255,255,255,.9)";
+
+    ctx.lineWidth =
+      3;
+
+    ctx.stroke();
+
+
+    /* 文字 */
+
+    const middle =
+      start + slice/2;
+
+
+    ctx.save();
+
+    ctx.translate(
+      center,
+      center
+    );
+
+    ctx.rotate(middle);
+
+
+    ctx.textAlign =
+      "right";
+
+    ctx.textBaseline =
+      "middle";
+
+
+    if(mode === "japan"){
+
+      /*
+        47個なので文字を小さくして
+        円盤に全部表示
+      */
+
+      ctx.font =
+        "bold 22px sans-serif";
+
+    }else{
+
+      ctx.font =
+        "bold 20px sans-serif";
+
+    }
+
+    ctx.fillStyle =
+      "#222";
+
+
+    let text =
+      list[i];
+
+
+    /*
+      長すぎる文字を調整
+    */
+
+    if(text.length > 9){
+
+      ctx.font =
+        "bold 17px sans-serif";
+
+    }
+
+
+    ctx.fillText(
+      text,
+      radius - 18,
+      0
+    );
+
+    ctx.restore();
+
+  }
+
+
+  /* 外周 */
+
+  ctx.beginPath();
+
+  ctx.arc(
+    center,
+    center,
+    radius,
+    0,
+    Math.PI*2
+  );
+
+  ctx.strokeStyle =
+    "#fff";
+
+  ctx.lineWidth =
+    12;
+
+  ctx.stroke();
+
+
+  /* 中央円 */
+
+  ctx.beginPath();
+
+  ctx.arc(
+    center,
+    center,
+    48,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fillStyle =
+    "#fff";
+
+  ctx.fill();
+
+}
+
+
+/* =========================================
+   モード変更
+========================================= */
+
+function selectMode(type){
+
+  if(spinning){
+    return;
+  }
+
+  mode = type;
+
+
+  document
+    .getElementById("japanBtn")
+    .classList.toggle(
+      "active",
+      type === "japan"
+    );
+
+
+  document
+    .getElementById("worldBtn")
+    .classList.toggle(
+      "active",
+      type === "world"
+    );
+
+
+  drawRoulette();
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      type === "japan"
+      ? "🇯🇵 日本の47都道府県"
+      : "🌎 世界の旅先";
+
+
+  document
+    .getElementById("resultPlace")
+    .textContent =
+      type === "japan"
+      ? "？？？"
+      : "？？？";
+
+
+  document
+    .getElementById("resultMission")
+    .textContent =
+      "STARTを押して旅先を決めよう！";
+
+
+  document
+    .getElementById("shareBtn")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+function startRoulette(){
+
+  if(spinning){
+    return;
+  }
+
+  spinning = true;
+
+
+  document
+    .getElementById("startBtn")
+    .style.display = "none";
+
+
+  document
+    .getElementById("stopBtn")
+    .style.display = "block";
+
+
+  document
+    .getElementById("shareBtn")
+    .classList.add("hidden");
+
+
+  const list =
+    mode === "japan"
+    ? japan
+    : world;
+
+
+  selectedIndex =
+    Math.floor(
+      Math.random() * list.length
+    );
+
+
+  selectedPlace =
+    list[selectedIndex];
+
+
+  /*
+    選ばれた場所が上の矢印に
+    来るように計算
+  */
+
+  const slice =
+    360 / list.length;
+
+
+  const targetAngle =
+    selectedIndex * slice +
+    slice / 2;
+
+
+  const extraSpins =
+    6 + Math.floor(
+      Math.random() * 4
+    );
+
+
+  const current =
+    rotation % 360;
+
+
+  let target =
+    rotation +
+    extraSpins * 360;
+
+
+  target +=
+    (360 - targetAngle - current + 360)
+    % 360;
+
+
+  rotation =
+    target;
+
+
+  canvas.style.transition =
+    "transform 5s cubic-bezier(.12,.75,.15,1)";
+
+
+  canvas.style.transform =
+    `rotate(${rotation}deg)`;
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      "🎰 回転中……";
+
+
+  document
+    .getElementById("resultPlace")
+    .textContent =
+      "？？？";
+
+
+  document
+    .getElementById("resultMission")
+    .textContent =
+      "STOPで旅先決定！";
+
+
+  /*
+    5秒後に自動停止
+  */
+
+  setTimeout(()=>{
+
+    if(spinning){
+
+      stopRoulette();
+
+    }
+
+  },5100);
+
+}
+
+
+/* =========================================
+   STOP
+========================================= */
+
+function stopRoulette(){
+
+  if(!spinning){
+    return;
+  }
+
+  spinning = false;
+
+
+  document
+    .getElementById("startBtn")
+    .style.display = "block";
+
+
+  document
+    .getElementById("stopBtn")
+    .style.display = "none";
+
+
+  showResult();
+
+}
+
+
+/* =========================================
+   結果表示
+========================================= */
+
+function showResult(){
+
+  const keyword =
+    document
+      .getElementById("keyword")
+      .value
+      .trim();
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      mode === "japan"
+      ? "🇯🇵 今回の旅先"
+      : "🌎 今回の旅先";
+
+
+  const place =
+    document.getElementById(
+      "resultPlace"
+    );
+
+
+  place.textContent =
+    selectedPlace;
+
+
+  place.classList.remove(
+    "pop"
+  );
+
+
+  void place.offsetWidth;
+
+
+  place.classList.add(
+    "pop"
+  );
+
+
+  document
+    .getElementById("resultMission")
+    .textContent =
+      "🎯 " +
+      createMission(
+        selectedPlace,
+        keyword
+      );
+
+
+  document
+    .getElementById("shareBtn")
+    .classList.remove("hidden");
+
+}
+
+
+/* =========================================
+   ミッション
+========================================= */
+
+function createMission(
+  place,
+  keyword
+){
+
+  if(keyword){
+
+    return (
+      `「${keyword}」をテーマに` +
+      `${place}で写真を1枚撮る！`
+    );
+
+  }
+
+
+  const missions = [
+
+    "ご当地グルメを1つ食べる！",
+
+    "その土地の名物を探す！",
+
+    "絶景スポットで写真を撮る！",
+
+    "ご当地のお土産を1つ買う！",
+
+    "その土地ならではの体験をする！",
+
+    "朝から観光してみる！",
+
+    "有名スポット以外を1ヶ所探す！",
+
+    "旅先で気になった店に入ってみる！",
+
+    "地元の人におすすめを聞いてみる！",
+
+    "旅の思い出を動画に残す！"
+
+  ];
+
+
+  return missions[
+    Math.floor(
+      Math.random() *
+      missions.length
+    )
+  ];
+
+}
+
+
+/* =========================================
+   シェア
+========================================= */
+
+async function shareResult(){
+
+  const keyword =
+    document
+      .getElementById("keyword")
+      .value
+      .trim();
+
+
+  const text =
+
+`🎡 旅ガチャ
+
+${mode === "japan"
+  ? "🇯🇵 日本"
+  : "🌎 世界"}
+
+📍 ${selectedPlace}
+
+🎯 ${
+  createMission(
+    selectedPlace,
+    keyword
+  )
+}
+
+次の旅、運に任せてみない？`;
+
+
+  if(navigator.share){
+
+    try{
+
+      await navigator.share({
+
+        title:"🎡 旅ガチャ",
+
+        text:text
+
+      });
+
+    }catch(e){
+
+    }
+
+  }else{
+
+    try{
+
+      await navigator.clipboard
+        .writeText(text);
+
+      alert(
+        "結果をコピーしました！"
+      );
+
+    }catch(e){
+
+      alert(text);
+
+    }
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
