@@ -295,4 +295,296 @@ font-size:16px;">
 
 <button class="stop" id="stopBtn" onclick="stopRoulette()">
 🛑 STOP
-</
+</button>
+
+<div class="info">
+ルーレットが止まった場所が、あなたの次の旅先！
+</div>
+
+<div class="result" id="result">
+<div class="country">まだ結果がありません</div>
+<div class="place">？？？</div>
+<div class="mission">日本か世界を選んでSTART！</div>
+</div>
+
+<button class="share hidden" id="shareBtn" onclick="shareResult()">
+📱 結果をシェア
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const japan = [
+"北海道・札幌",
+"北海道・函館",
+"青森",
+"秋田",
+"岩手",
+"宮城・仙台",
+"山形",
+"福島",
+"新潟",
+"長野",
+"金沢",
+"富山",
+"東京",
+"横浜",
+"鎌倉",
+"箱根",
+"伊豆",
+"名古屋",
+"京都",
+"大阪",
+"神戸",
+"奈良",
+"和歌山",
+"岡山",
+"広島",
+"香川・高松",
+"愛媛・松山",
+"福岡",
+"長崎",
+"熊本",
+"鹿児島",
+"沖縄"
+];
+
+const world = [
+"🇰🇷 韓国・ソウル",
+"🇰🇷 韓国・釜山",
+"🇹🇼 台湾・台北",
+"🇹🇼 台湾・台中",
+"🇭🇰 香港",
+"🇹🇭 タイ・バンコク",
+"🇹🇭 タイ・プーケット",
+"🇸🇬 シンガポール",
+"🇻🇳 ベトナム・ホーチミン",
+"🇻🇳 ベトナム・ダナン",
+"🇲🇾 マレーシア・クアラルンプール",
+"🇮🇩 インドネシア・バリ",
+"🇵🇭 フィリピン・セブ",
+"🇦🇺 オーストラリア・シドニー",
+"🇬🇺 グアム",
+"🇺🇸 ハワイ",
+"🇺🇸 ニューヨーク",
+"🇺🇸 ロサンゼルス",
+"🇨🇦 カナダ・バンクーバー",
+"🇫🇷 フランス・パリ",
+"🇬🇧 イギリス・ロンドン",
+"🇮🇹 イタリア・ローマ",
+"🇪🇸 スペイン・バルセロナ",
+"🇨🇭 スイス・チューリッヒ",
+"🇩🇪 ドイツ・ベルリン",
+"🇳🇱 オランダ・アムステルダム",
+"🇦🇹 オーストリア・ウィーン",
+"🇬🇷 ギリシャ・サントリーニ",
+"🇹🇷 トルコ・イスタンブール",
+"🇪🇬 エジプト・カイロ"
+];
+
+let mode = "japan";
+let spinning = false;
+let stopped = false;
+let currentRotation = 0;
+let selectedPlace = "";
+
+const roulette = document.getElementById("roulette");
+
+selectMode("japan");
+
+function selectMode(type){
+
+  if(spinning) return;
+
+  mode = type;
+
+  document.getElementById("japanBtn")
+    .classList.toggle("active",type==="japan");
+
+  document.getElementById("worldBtn")
+    .classList.toggle("active",type==="world");
+
+  const list = type==="japan" ? japan : world;
+
+  document.querySelector(".place").textContent =
+    type==="japan" ? "🇯🇵 日本ルーレット" : "🌎 世界ルーレット";
+
+  document.querySelector(".country").textContent =
+    list.length + "ヶ所からランダム";
+
+  document.querySelector(".mission").textContent =
+    "STARTを押して運命を決めよう！";
+}
+
+function startRoulette(){
+
+  if(spinning) return;
+
+  spinning = true;
+  stopped = false;
+
+  document.getElementById("startBtn").style.display="none";
+  document.getElementById("stopBtn").style.display="block";
+  document.getElementById("shareBtn").classList.add("hidden");
+
+  selectedPlace = "";
+
+  const list = mode==="japan" ? japan : world;
+
+  const randomIndex =
+    Math.floor(Math.random()*list.length);
+
+  selectedPlace = list[randomIndex];
+
+  /*
+    最初は結果を隠して、
+    STOPしたタイミングで決定。
+  */
+
+  const extraSpins = 8 + Math.floor(Math.random()*5);
+
+  currentRotation +=
+    extraSpins * 360 +
+    Math.floor(Math.random()*360);
+
+  roulette.style.transform =
+    `rotate(${currentRotation}deg)`;
+
+  document.querySelector(".place").textContent="？？？";
+  document.querySelector(".country").textContent="回転中……";
+  document.querySelector(".mission").textContent="STOPで旅先決定！";
+
+  // 自動停止
+  setTimeout(()=>{
+
+    if(spinning){
+      stopRoulette();
+
+    }
+
+  },5200);
+
+}
+
+function stopRoulette(){
+
+  if(!spinning) return;
+
+  spinning=false;
+  stopped=true;
+
+  document.getElementById("startBtn").style.display="block";
+  document.getElementById("stopBtn").style.display="none";
+
+  showResult();
+
+}
+
+function showResult(){
+
+  const keyword =
+    document.getElementById("keyword").value.trim();
+
+  document.querySelector(".country").textContent =
+    mode==="japan"
+    ? "🇯🇵 日本の旅先"
+    : "🌎 世界の旅先";
+
+  const placeElement =
+    document.querySelector(".place");
+
+  placeElement.textContent = selectedPlace;
+
+  placeElement.classList.remove("flash");
+
+  void placeElement.offsetWidth;
+
+  placeElement.classList.add("flash");
+
+  let mission = createMission(selectedPlace,keyword);
+
+  document.querySelector(".mission").textContent =
+    "🎯 " + mission;
+
+  document.getElementById("shareBtn")
+    .classList.remove("hidden");
+
+}
+
+function createMission(place,keyword){
+
+  if(keyword){
+
+    return `「${keyword}」をテーマに${place}で写真を1枚撮る！`;
+
+  }
+
+  const missions = [
+
+    "ご当地グルメを1つ食べる！",
+
+    "地元の人しか知らなそうな場所を探す！",
+
+    "その場所の絶景を1枚撮る！",
+
+    "ご当地のお土産を1つ買う！",
+
+    "その土地でしかできない体験をする！",
+
+    "朝から観光してみる！",
+
+    "有名スポット以外の場所へ行ってみる！",
+
+    "旅先で新しい店に入ってみる！"
+
+  ];
+
+  return missions[
+    Math.floor(Math.random()*missions.length)
+  ];
+
+}
+
+async function shareResult(){
+
+  const keyword =
+    document.getElementById("keyword").value.trim();
+
+  const text =
+`🎡 旅ルーレット
+
+${mode==="japan" ? "🇯🇵 日本" : "🌎 世界"}
+📍 ${selectedPlace}
+
+🎯 ${createMission(selectedPlace,keyword)}
+
+次の旅、運に任せてみない？`;
+
+  if(navigator.share){
+
+    try{
+
+      await navigator.share({
+        title:"🎡 旅ルーレット",
+        text:text
+      });
+
+    }catch(e){}
+
+  }else{
+
+    await navigator.clipboard.writeText(text);
+
+    alert("結果をコピーしました！");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
