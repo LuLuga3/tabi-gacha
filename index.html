@@ -77,5 +77,507 @@
       width: 100%;
       border: none;
       border-radius: 14px;
-      padding: 16px;
-      margin
+      padding: 17px;
+      margin-top: 24px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background: #2563eb;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    #result {
+      display: none;
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 64px;
+      margin: 10px 0;
+    }
+
+    .destination {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .reason {
+      color: #555;
+      line-height: 1.7;
+      margin: 16px 0;
+    }
+
+    .price {
+      display: inline-block;
+      background: #f3f4f6;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .again {
+      background: #111827;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>✈️ 旅ガチャ</h1>
+  <p>次の旅行先、ガチャで決めよう。</p>
+</header>
+
+<main>
+
+  <div class="card">
+    <h2>旅行条件を選択</h2>
+
+    <label for="area">出発エリア</label>
+    <select id="area">
+      <option value="全国">全国</option>
+      <option value="関東">関東</option>
+      <option value="関西">関西</option>
+      <option value="東海">東海</option>
+      <option value="九州">九州</option>
+      <option value="北海道">北海道</option>
+    </select>
+
+    <label for="budget">予算</label>
+    <select id="budget">
+      <option value="low">〜1万円</option>
+      <option value="middle">1〜3万円</option>
+      <option value="high">3万円以上</option>
+    </select>
+
+    <label for="days">日数</label>
+    <select id="days">
+      <option value="1">日帰り</option>
+      <option value="2">1泊2日</option>
+      <option value="3">2泊3日以上</option>
+    </select>
+
+    <button onclick="gacha()">🎰 旅先をガチャる！</button>
+  </div>
+
+  <div class="card" id="result">
+
+    <div class="emoji" id="resultEmoji">🎉</div>
+
+    <div class="destination" id="destination">
+      京都
+    </div>
+
+    <div class="reason" id="reason">
+      あなたにおすすめの旅先です！
+    </div>
+
+    <div class="price" id="resultPrice">
+      予算：1〜3万円
+    </div>
+
+    <button class="again" onclick="gacha()">
+      🔄 もう一回ガチャる
+    </button>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 旅ガチャ
+</footer>
+
+<script>
+
+const destinations = [
+
+  {
+    name: "京都",
+    emoji: "⛩️",
+    price: "1〜3万円",
+    reason: "古い街並みや神社、お寺をゆっくり楽しみたい人におすすめ。"
+  },
+
+  {
+    name: "大阪",
+    emoji: "🐙",
+    price: "1〜3万円",
+    reason: "食い倒れしたいならここ。たこ焼き、お好み焼き、串カツを楽しもう！"
+  },
+
+  {
+    name: "北海道",
+    emoji: "🐻",
+    price: "3万円以上",
+    reason: "大自然と美味しい食べ物を楽しむ王道旅行。"
+  },
+
+  {
+    name: "沖縄",
+    emoji: "🌴",
+    price: "3万円以上",
+    reason: "海を見ながら何も考えずに過ごしたい人におすすめ。"
+  },
+
+  {
+    name: "金沢",
+    emoji: "🏯",
+    price: "1〜3万円",
+    reason: "歴史ある街並みと美味しい海鮮を楽しめる旅先。"
+  },
+
+  {
+    name: "箱根",
+    emoji: "♨️",
+    price: "1〜3万円",
+    reason: "温泉でゆっくりしたいときにぴったり。"
+  },
+
+  {
+    name: "福岡",
+    emoji: "🍜",
+    price: "1〜3万円",
+    reason: "ラーメン、もつ鍋、屋台などグルメ旅行におすすめ。"
+  },
+
+  {
+    name: "広島",
+    emoji: "🦪",
+    price: "1〜3万円",
+    reason: "宮島や広島グルメを楽しむ歴史と食の旅。"
+  },
+
+  {
+    name: "長野",
+    emoji: "🏔️",
+    price: "〜1万円",
+    reason: "自然の中でリフレッシュしたい人におすすめ。"
+  },
+
+  {
+    name: "鎌倉",
+    emoji: "🌊",
+    price: "〜1万円",
+    reason: "気軽に行ける海と<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旅ガチャ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans JP",
+        sans-serif;
+      background: linear-gradient(135deg, #eef7ff, #fff7ed);
+      color: #20242a;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      opacity: 0.8;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 16px 50px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 18px 0 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      background: white;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 17px;
+      margin-top: 24px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background: #2563eb;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    #result {
+      display: none;
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 64px;
+      margin: 10px 0;
+    }
+
+    .destination {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .reason {
+      color: #555;
+      line-height: 1.7;
+      margin: 16px 0;
+    }
+
+    .price {
+      display: inline-block;
+      background: #f3f4f6;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .again {
+      background: #111827;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>✈️ 旅ガチャ</h1>
+  <p>次の旅行先、ガチャで決めよう。</p>
+</header>
+
+<main>
+
+  <div class="card">
+    <h2>旅行条件を選択</h2>
+
+    <label for="area">出発エリア</label>
+    <select id="area">
+      <option value="全国">全国</option>
+      <option value="関東">関東</option>
+      <option value="関西">関西</option>
+      <option value="東海">東海</option>
+      <option value="九州">九州</option>
+      <option value="北海道">北海道</option>
+    </select>
+
+    <label for="budget">予算</label>
+    <select id="budget">
+      <option value="low">〜1万円</option>
+      <option value="middle">1〜3万円</option>
+      <option value="high">3万円以上</option>
+    </select>
+
+    <label for="days">日数</label>
+    <select id="days">
+      <option value="1">日帰り</option>
+      <option value="2">1泊2日</option>
+      <option value="3">2泊3日以上</option>
+    </select>
+
+    <button onclick="gacha()">🎰 旅先をガチャる！</button>
+  </div>
+
+  <div class="card" id="result">
+
+    <div class="emoji" id="resultEmoji">🎉</div>
+
+    <div class="destination" id="destination">
+      京都
+    </div>
+
+    <div class="reason" id="reason">
+      あなたにおすすめの旅先です！
+    </div>
+
+    <div class="price" id="resultPrice">
+      予算：1〜3万円
+    </div>
+
+    <button class="again" onclick="gacha()">
+      🔄 もう一回ガチャる
+    </button>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 旅ガチャ
+</footer>
+
+<script>
+
+const destinations = [
+
+  {
+    name: "京都",
+    emoji: "⛩️",
+    price: "1〜3万円",
+    reason: "古い街並みや神社、お寺をゆっくり楽しみたい人におすすめ。"
+  },
+
+  {
+    name: "大阪",
+    emoji: "🐙",
+    price: "1〜3万円",
+    reason: "食い倒れしたいならここ。たこ焼き、お好み焼き、串カツを楽しもう！"
+  },
+
+  {
+    name: "北海道",
+    emoji: "🐻",
+    price: "3万円以上",
+    reason: "大自然と美味しい食べ物を楽しむ王道旅行。"
+  },
+
+  {
+    name: "沖縄",
+    emoji: "🌴",
+    price: "3万円以上",
+    reason: "海を見ながら何も考えずに過ごしたい人におすすめ。"
+  },
+
+  {
+    name: "金沢",
+    emoji: "🏯",
+    price: "1〜3万円",
+    reason: "歴史ある街並みと美味しい海鮮を楽しめる旅先。"
+  },
+
+  {
+    name: "箱根",
+    emoji: "♨️",
+    price: "1〜3万円",
+    reason: "温泉でゆっくりしたいときにぴったり。"
+  },
+
+  {
+    name: "福岡",
+    emoji: "🍜",
+    price: "1〜3万円",
+    reason: "ラーメン、もつ鍋、屋台などグルメ旅行におすすめ。"
+  },
+
+  {
+    name: "広島",
+    emoji: "🦪",
+    price: "1〜3万円",
+    reason: "宮島や広島グルメを楽しむ歴史と食の旅。"
+  },
+
+  {
+    name: "長野",
+    emoji: "🏔️",
+    price: "〜1万円",
+    reason: "自然の中でリフレッシュしたい人におすすめ。"
+  },
+
+  {
+    name: "鎌倉",
+    emoji: "🌊",
+    price: "〜1万円",
+    reason: "気軽に行ける海と歴史の街。日帰り旅行にもおすすめ。"
+  }
+
+];
+
+function gacha() {
+
+  const result = document.getElementById("result");
+
+  const random =
+    destinations[
+      Math.floor(Math.random() * destinations.length)
+    ];
+
+  document.getElementById("resultEmoji").textContent =
+    random.emoji;
+
+  document.getElementById("destination").textContent =
+    random.name;
+
+  document.getElementById("reason").textContent =
+    random.reason;
+
+  document.getElementById("resultPrice").textContent =
+    "おすすめ予算：" + random.price;
+
+  result.style.display = "block";
+
+  result.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+</script>
+
+</body>
+</html>
