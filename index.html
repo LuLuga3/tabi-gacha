@@ -2,1629 +2,297 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>🎡 旅ルーレット</title>
 
 <style>
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;
-  background:radial-gradient(circle at top,#dbeafe,#fff7ed 60%,#fef3c7);
-  color:#20242a;
-  min-height:100vh;
+  font-family:
+    -apple-system,BlinkMacSystemFont,"Noto Sans JP",
+    "Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  background:linear-gradient(180deg,#fff7ed,#eef8ff);
+  color:#222;
 }
 
-header{
-  background:#111827;
-  color:white;
-  text-align:center;
-  padding:26px 15px;
-}
-
-header h1{
-  margin:0;
-  font-size:31px;
-}
-
-header p{
-  margin:8px 0 0;
-  opacity:.8;
-}
-
-main{
-  max-width:650px;
+.container{
+  max-width:520px;
   margin:auto;
-  padding:18px 14px 70px;
+  padding:20px 15px 40px;
+}
+
+h1{
+  text-align:center;
+  margin:5px 0 5px;
+  font-size:30px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#666;
+  margin-bottom:22px;
 }
 
 .card{
-  background:white;
-  border-radius:24px;
-  padding:21px;
-  margin-bottom:18px;
-  box-shadow:0 10px 35px rgba(0,0,0,.09);
-}
-
-h2{
-  text-align:center;
-  margin-top:0;
+  background:#fff;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
 label{
   display:block;
   font-weight:bold;
-  margin:15px 0 7px;
+  margin:13px 0 6px;
 }
 
-input,
-select{
+input{
   width:100%;
-  padding:14px;
+  padding:13px;
   border:1px solid #ddd;
-  border-radius:13px;
+  border-radius:12px;
   font-size:16px;
-  background:white;
 }
 
-button{
-  width:100%;
-  padding:16px;
+.mode{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.mode button{
   border:0;
-  border-radius:15px;
-  margin-top:12px;
-  background:#2563eb;
-  color:white;
-  font-size:18px;
+  border-radius:18px;
+  padding:18px 8px;
+  font-size:17px;
   font-weight:bold;
-  transition:.15s;
+  cursor:pointer;
+  background:#f2f2f2;
 }
 
-button:active{
-  transform:scale(.96);
+.mode button.active{
+  background:linear-gradient(135deg,#ff8a00,#ff4d4d);
+  color:white;
+  box-shadow:0 6px 15px rgba(255,90,40,.3);
 }
 
-button:disabled{
-  opacity:.45;
+.mode .world.active{
+  background:linear-gradient(135deg,#267cff,#7b4dff);
 }
 
-.stop{
-  background:#ef4444;
-}
-
-.dark{
-  background:#111827;
-}
-
-.green{
-  background:#16a34a;
-}
-
-.orange{
-  background:#f97316;
-}
-
-.hidden{
-  display:none!important;
-}
-
-.hint{
-  color:#777;
-  font-size:13px;
-  line-height:1.6;
-  margin-top:6px;
-}
-
-
-/* ==============================
-   ルーレット
-============================== */
-
-.roulette-area{
-  position:relative;
-  width:330px;
-  height:390px;
-  margin:5px auto 0;
-}
-
-.pointer{
-  position:absolute;
-  z-index:20;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:52px;
-  filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));
-}
-
-.wheel-wrap{
-  position:absolute;
-  top:46px;
-  left:15px;
-  width:300px;
-  height:300px;
-}
-
-#wheel{
-  width:300px;
-  height:300px;
+#roulette{
+  width:280px;
+  height:280px;
+  margin:20px auto;
   border-radius:50%;
-  border:8px solid white;
-  box-shadow:0 12px 35px rgba(0,0,0,.22);
-  transform:rotate(0rad);
+  background:
+    conic-gradient(
+      #ff6b6b 0deg 45deg,
+      #ffd93d 45deg 90deg,
+      #6bcB77 90deg 135deg,
+      #4d96ff 135deg 180deg,
+      #c77dff 180deg 225deg,
+      #ff9f1c 225deg 270deg,
+      #00b4d8 270deg 315deg,
+      #ff70a6 315deg 360deg
+    );
+  border:10px solid white;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+  position:relative;
+  transition:transform 5s cubic-bezier(.12,.75,.18,1);
 }
 
-.wheel-center{
+#roulette::after{
+  content:"";
   position:absolute;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:white;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  width:68px;
-  height:68px;
-  border-radius:50%;
-  background:#111827;
-  border:6px solid white;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:27px;
+  box-shadow:0 3px 8px rgba(0,0,0,.2);
+}
+
+.pointer{
+  width:0;
+  height:0;
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:35px solid #222;
+  margin:0 auto -10px;
+  position:relative;
   z-index:5;
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
-
-.spin-status{
-  text-align:center;
-  min-height:32px;
-  font-size:18px;
-  font-weight:bold;
-}
-
-
-/* ==============================
-   カウントダウン
-============================== */
-
-.countdown{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(17,24,39,.88);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
-
-.count-number{
-  font-size:110px;
-  font-weight:900;
-  animation:countPop .8s ease;
-}
-
-@keyframes countPop{
-  0%{
-    transform:scale(.3);
-    opacity:0;
-  }
-
-  50%{
-    transform:scale(1.3);
-    opacity:1;
-  }
-
-  100%{
-    transform:scale(1);
-  }
-}
-
-
-/* ==============================
-   結果
-============================== */
 
 .result{
   text-align:center;
+  min-height:100px;
+  padding:10px;
 }
 
-.result-emoji{
-  font-size:75px;
+.result .country{
+  font-size:15px;
+  color:#777;
 }
 
-.result-name{
-  font-size:42px;
+.result .place{
+  font-size:32px;
   font-weight:900;
   margin:5px 0;
 }
 
-.luck{
-  display:inline-block;
-  padding:8px 16px;
-  border-radius:30px;
-  background:#fef3c7;
-  font-weight:bold;
-  margin:8px 0 15px;
+.result .mission{
+  font-size:16px;
+  color:#555;
 }
 
-
-/* ==============================
-   紙吹雪
-============================== */
-
-.confetti{
-  position:fixed;
-  top:-20px;
-  width:10px;
-  height:18px;
-  z-index:200;
-  animation:fall linear forwards;
+.start{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:18px;
+  font-size:22px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+  box-shadow:0 8px 20px rgba(220,40,90,.3);
+  cursor:pointer;
 }
 
-@keyframes fall{
-  to{
-    transform:
-      translateY(110vh)
-      rotate(720deg);
-  }
+.start:active{
+  transform:scale(.97);
 }
 
-
-/* ==============================
-   結果ボックス
-============================== */
-
-.result-box{
-  background:#f8fafc;
-  border-radius:15px;
-  padding:15px;
-  text-align:left;
-  margin-top:12px;
-  line-height:1.7;
+.stop{
+  display:none;
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:18px;
+  font-size:22px;
+  font-weight:900;
+  color:white;
+  background:#222;
+  cursor:pointer;
 }
 
-.mission{
-  background:#f3f4f6;
-  border-radius:14px;
-  padding:14px;
-  margin:9px 0;
-  text-align:left;
-}
-
-.mission input{
-  width:auto;
-  margin-right:7px;
-}
-
-.special{
-  background:#fff8dc;
-  border:2px solid #f5c542;
-  border-radius:15px;
-  padding:15px;
-  margin-top:15px;
-  text-align:left;
-  line-height:1.7;
-}
-
-.tag{
-  display:inline-block;
-  padding:4px 9px;
-  border-radius:20px;
-  background:#e0f2fe;
-  color:#0369a1;
-  font-size:12px;
-}
-
-footer{
+.info{
   text-align:center;
   color:#777;
-  font-size:12px;
-  padding:20px;
+  font-size:13px;
+  margin-top:12px;
+}
+
+.hidden{
+  display:none;
+}
+
+.share{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:13px;
+  background:#f1f1f1;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.keyword-box{
+  background:#fff8df;
+  border-radius:14px;
+  padding:12px;
+  margin-top:12px;
+  font-size:14px;
+}
+
+.flash{
+  animation:pop .5s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(.7);opacity:.2}
+  70%{transform:scale(1.08)}
+  100%{transform:scale(1);opacity:1}
 }
 </style>
 </head>
 
-
 <body>
 
-<header>
-  <h1>🎡 旅ルーレット</h1>
-  <p>次の旅、運に任せてみない？</p>
-</header>
+<div class="container">
 
-
-<main>
-
-
-<!-- ==============================
-     旅の条件
-============================== -->
+<h1>🎡 旅ルーレット</h1>
+<div class="subtitle">次の旅、運に任せてみない？</div>
 
 <div class="card">
-
-<h2>🎯 旅の条件</h2>
 
 <label>📍 出発地</label>
-
-<input
-  id="startPlace"
-  placeholder="例：東京、大阪、名古屋"
->
-
+<input id="from" placeholder="例：東京、大阪、札幌">
 
 <label>📅 旅行する日</label>
-
-<input
-  type="date"
-  id="travelDate"
->
-
+<input id="date" type="date">
 
 <label>💰 予算</label>
-
-<select id="budget">
-
-<option value="10000">
-〜1万円
-</option>
-
-<option value="30000">
-〜3万円
-</option>
-
-<option value="50000" selected>
-〜5万円
-</option>
-
-<option value="100000">
-〜10万円
-</option>
-
-<option value="200000">
-〜20万円
-</option>
-
-<option value="9999999">
-20万円以上
-</option>
-
+<select id="budget" style="
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:16px;">
+<option>特に決めてない</option>
+<option>1万円以内</option>
+<option>3万円以内</option>
+<option>5万円以内</option>
+<option>10万円以内</option>
+<option>10万円以上</option>
 </select>
 
-
 <label>🎯 旅のキーワード</label>
+<input id="keyword" placeholder="例：温泉、絶景、グルメ、推し活">
 
-<input
-  id="keyword"
-  placeholder="例：ちいかわ、温泉、推し活、絶景"
->
-
-<div class="hint">
-入力したキーワードは、旅のミッションに反映されます。
+<div class="keyword-box">
+💡 キーワードを入れると、当選した場所に合わせて
+「旅のミッション」が表示されます。
 </div>
 
 </div>
-
-
-<!-- ==============================
-     旅の決め方
-============================== -->
 
 <div class="card">
 
-<h2>🎰 旅の決め方</h2>
+<h2 style="text-align:center">🌏 どこへ行く？</h2>
 
-<button onclick="startDestinationMode()">
-🎡 行き先をルーレット
+<div class="mode">
+
+<button id="japanBtn" onclick="selectMode('japan')">
+🇯🇵<br>日本
 </button>
 
-<button
-  class="orange"
-  onclick="startAllMode()"
->
-🎰 旅を全部ルーレット
-</button>
-
-</div>
-
-
-<!-- ==============================
-     ルーレット
-============================== -->
-
-<div
-  class="card hidden"
-  id="rouletteCard"
->
-
-<h2>🎡 運命の旅先</h2>
-
-<div
-  class="spin-status"
-  id="spinStatus"
->
-準備OK！
-</div>
-
-
-<div class="roulette-area">
-
-<div class="pointer">
-▼
-</div>
-
-<div class="wheel-wrap">
-
-<canvas
-  id="wheel"
-  width="300"
-  height="300">
-</canvas>
-
-<div class="wheel-center">
-🎡
-</div>
-
-</div>
-
-</div>
-
-
-<button
-  id="spinButton"
-  onclick="startSpin()"
->
-🎡 回す！
-</button>
-
-
-<button
-  id="stopButton"
-  class="stop"
-  onclick="stopSpin()"
-  disabled
->
-🛑 STOP！
+<button id="worldBtn" class="world" onclick="selectMode('world')">
+🌎<br>世界
 </button>
 
 </div>
 
-
-<!-- ==============================
-     結果
-============================== -->
-
-<div
-  class="card result hidden"
-  id="resultCard"
->
-
-<div
-  id="resultEmoji"
-  class="result-emoji"
->
-🎉
 </div>
 
+<div class="card">
 
-<div
-  id="resultName"
-  class="result-name"
->
-</div>
+<div class="pointer"></div>
 
+<div id="roulette"></div>
 
-<div
-  id="luck"
-  class="luck"
->
-⭐ 旅運
-</div>
-
-
-<p id="resultCatch"></p>
-
-
-<div class="result-box">
-
-<strong>📅 旅行日</strong>
-
-<br>
-
-<span id="resultDate"></span>
-
-<br><br>
-
-<strong>💰 予算</strong>
-
-<br>
-
-<span id="resultBudget"></span>
-
-</div>
-
-
-<div
-  class="result-box"
-  id="weatherInfo"
->
-
-🌦️ 旅行日が近づいたら、
-最新の天気を確認してミッションを調整します。
-
-</div>
-
-
-<div class="special">
-
-<h3>🔥 今しかできない旅</h3>
-
-<span class="tag">期間限定</span>
-<span class="tag">最新情報</span>
-<span class="tag">予約情報</span>
-
-<p>
-旅行日が近づいたら、その時点の天気・イベント・
-季節情報などを確認して、ミッションをアップデートします。
-</p>
-
-</div>
-
-
-<h2>🎯 あなたのミッション</h2>
-
-<div id="missions"></div>
-
-
-<div class="result-box">
-
-<strong>🍴 ご当地グルメ</strong>
-
-<br>
-
-<span id="food"></span>
-
-</div>
-
-
-<button
-  class="dark"
-  onclick="nextHotel()"
->
-🏨 次はホテル
+<button class="start" id="startBtn" onclick="startRoulette()">
+🎰 START
 </button>
 
-
-<button
-  class="dark"
-  onclick="nextTransport()"
->
-🚆 次は交通
-</button>
-
-
-<button
-  class="green"
-  onclick="shareResult()"
->
-📱 友達にシェア
-</button>
-
-
-<button onclick="location.reload()">
-🔄 もう一回！
-</button>
-
-</div>
-
-</main>
-
-
-<footer>
-旅ルーレット © 2026
-</footer>
-
-
-<!-- ==============================
-     カウントダウン
-============================== -->
-
-<div
-  id="countdown"
-  class="countdown hidden"
->
-
-<div
-  id="countNumber"
-  class="count-number"
->
-3
-</div>
-
-<div>
-運命の旅先を決めます
-</div>
-
-</div>
-
-
-<script>
-
-
-/* =========================================
-   日本47都道府県
-========================================= */
-
-const japan=[
-
-["北海道","🐻","北海道","海鮮・ラーメン・自然"],
-["青森県","🍎","東北","りんご・ねぶた・海鮮"],
-["岩手県","🗿","東北","わんこそば・自然"],
-["宮城県","🐮","東北","牛タン・松島"],
-["秋田県","🐕","東北","きりたんぽ・温泉"],
-["山形県","🍒","東北","さくらんぼ・温泉"],
-["福島県","🍑","東北","桃・会津・温泉"],
-
-["茨城県","🌷","関東","海鮮・花・自然"],
-["栃木県","♨️","関東","日光・餃子・温泉"],
-["群馬県","♨️","関東","草津温泉"],
-["埼玉県","🏙️","関東","川越・秩父"],
-["千葉県","🌊","関東","海・テーマパーク"],
-["東京都","🗼","関東","グルメ・ショッピング"],
-["神奈川県","🌊","関東","横浜・鎌倉・箱根"],
-
-["新潟県","🍚","中部","米・日本酒・温泉"],
-["富山県","🐟","中部","海鮮・立山"],
-["石川県","🍣","中部","金沢・海鮮"],
-["福井県","🦖","中部","恐竜・海鮮"],
-["山梨県","🗻","中部","富士山・ワイン"],
-["長野県","🏔️","中部","山・温泉・そば"],
-["岐阜県","🏘️","中部","白川郷・飛騨牛"],
-["静岡県","🍵","中部","富士山・お茶・温泉"],
-["愛知県","🍤","中部","名古屋めし・城"],
-
-["三重県","⛩️","近畿","伊勢神宮・海鮮"],
-["滋賀県","🌊","近畿","琵琶湖・近江牛"],
-["京都府","⛩️","近畿","寺社・抹茶・和菓子"],
-["大阪府","🐙","近畿","たこ焼き・街歩き"],
-["兵庫県","🥩","近畿","神戸・温泉"],
-["奈良県","🦌","近畿","鹿・寺社"],
-["和歌山県","🐼","近畿","温泉・海"],
-
-["鳥取県","🏜️","中国","砂丘・海鮮"],
-["島根県","⛩️","中国","出雲・温泉"],
-["岡山県","🍑","中国","倉敷・桃"],
-["広島県","🦪","中国","宮島・お好み焼き"],
-["山口県","🐡","中国","ふぐ・温泉"],
-
-["徳島県","💃","四国","阿波踊り・海"],
-["香川県","🍜","四国","讃岐うどん"],
-["愛媛県","🍊","四国","道後温泉・みかん"],
-["高知県","🐟","四国","カツオ・自然"],
-
-["福岡県","🍜","九州","豚骨ラーメン・屋台"],
-["佐賀県","🏺","九州","陶器・温泉"],
-["長崎県","⛪","九州","夜景・ちゃんぽん"],
-["熊本県","🐻","九州","熊本城・阿蘇"],
-["大分県","♨️","九州","別府・湯布院"],
-["宮崎県","🥭","九州","南国・チキン南蛮"],
-["鹿児島県","🌋","九州","桜島・黒豚"],
-["沖縄県","🌴","九州","海・沖縄料理"]
-
-];
-
-
-/* =========================================
-   世界
-========================================= */
-
-const world=[
-
-["韓国","🇰🇷","アジア","韓国料理・カフェ"],
-["台湾","🇹🇼","アジア","夜市・小籠包"],
-["タイ","🇹🇭","アジア","屋台・寺院"],
-["ベトナム","🇻🇳","アジア","フォー・市場"],
-["シンガポール","🇸🇬","アジア","グルメ・夜景"],
-["マレーシア","🇲🇾","アジア","多文化・グルメ"],
-["インドネシア","🇮🇩","アジア","ビーチ・寺院"],
-["フィリピン","🇵🇭","アジア","海・リゾート"],
-
-["フランス","🇫🇷","ヨーロッパ","パン・美術館"],
-["イタリア","🇮🇹","ヨーロッパ","ピザ・歴史"],
-["スペイン","🇪🇸","ヨーロッパ","料理・建築"],
-["イギリス","🇬🇧","ヨーロッパ","紅茶・歴史"],
-["ドイツ","🇩🇪","ヨーロッパ","街並み・城"],
-["スイス","🇨🇭","ヨーロッパ","山・鉄道"],
-["ポルトガル","🇵🇹","ヨーロッパ","街並み・海"],
-["ギリシャ","🇬🇷","ヨーロッパ","島・遺跡"],
-
-["アメリカ","🇺🇸","北米","都市・自然"],
-["カナダ","🇨🇦","北米","自然・絶景"],
-["メキシコ","🇲🇽","中南米","料理・遺跡"],
-
-["オーストラリア","🇦🇺","オセアニア","海・自然"],
-["ニュージーランド","🇳🇿","オセアニア","自然・絶景"],
-
-["モロッコ","🇲🇦","アフリカ","市場・料理"],
-["南アフリカ","🇿🇦","アフリカ","自然・動物"]
-
-];
-
-
-const places=[
-
-...japan.map(x=>({
-  name:x[0],
-  emoji:x[1],
-  region:x[2],
-  food:x[3]
-})),
-
-...world.map(x=>({
-  name:x[0],
-  emoji:x[1],
-  region:x[2],
-  food:x[3]
-}))
-
-];
-
-
-/* =========================================
-   状態
-========================================= */
-
-let candidates=places;
-
-let current=null;
-
-let spinning=false;
-
-let rotation=0;
-
-let animation=null;
-
-let audioContext=null;
-
-
-/* =========================================
-   Canvas
-========================================= */
-
-const canvas=
-document.getElementById("wheel");
-
-const ctx=
-canvas.getContext("2d");
-
-
-function drawWheel(){
-
-ctx.clearRect(0,0,300,300);
-
-const center=150;
-
-const radius=145;
-
-const slice=
-Math.PI*2/candidates.length;
-
-const colors=[
-
-"#60a5fa",
-"#fbbf24",
-"#f87171",
-"#34d399",
-"#a78bfa",
-"#fb923c",
-"#38bdf8",
-"#f472b6"
-
-];
-
-
-candidates.forEach((place,i)=>{
-
-const start=i*slice;
-
-const end=start+slice;
-
-
-ctx.beginPath();
-
-ctx.moveTo(center,center);
-
-ctx.arc(
-  center,
-  center,
-  radius,
-  start,
-  end
-);
-
-ctx.closePath();
-
-ctx.fillStyle=
-colors[i%colors.length];
-
-ctx.fill();
-
-
-ctx.save();
-
-ctx.translate(center,center);
-
-ctx.rotate(
-  start+slice/2
-);
-
-ctx.fillStyle="white";
-
-ctx.font=
-candidates.length>35
-?
-"bold 8px sans-serif"
-:
-"bold 11px sans-serif";
-
-ctx.textAlign="right";
-
-ctx.fillText(
-  place.name,
-  radius-8,
-  4
-);
-
-ctx.restore();
-
-});
-
-}
-
-
-drawWheel();
-
-
-/* =========================================
-   効果音
-========================================= */
-
-function initAudio(){
-
-if(!audioContext){
-
-audioContext=
-new(
-window.AudioContext||
-window.webkitAudioContext
-)();
-
-}
-
-}
-
-
-function beep(
-frequency=440,
-duration=.08,
-type="sine"
-){
-
-try{
-
-initAudio();
-
-const osc=
-audioContext.createOscillator();
-
-const gain=
-audioContext.createGain();
-
-osc.type=type;
-
-osc.frequency.value=
-frequency;
-
-gain.gain.setValueAtTime(
-  .08,
-  audioContext.currentTime
-);
-
-gain.gain.exponentialRampToValueAtTime(
-  .001,
-  audioContext.currentTime+duration
-);
-
-osc.connect(gain);
-
-gain.connect(
-  audioContext.destination
-);
-
-osc.start();
-
-osc.stop(
-  audioContext.currentTime+duration
-);
-
-}catch(e){}
-
-}
-
-
-/* =========================================
-   ルーレット表示
-========================================= */
-
-function startDestinationMode(){
-
-document
-.getElementById("rouletteCard")
-.classList
-.remove("hidden");
-
-document
-.getElementById("rouletteCard")
-.scrollIntoView({
-  behavior:"smooth"
-});
-
-}
-
-
-function startAllMode(){
-
-document
-.getElementById("rouletteCard")
-.classList
-.remove("hidden");
-
-document
-.getElementById("rouletteCard")
-.scrollIntoView({
-  behavior:"smooth"
-});
-
-}
-
-
-/* =========================================
-   カウントダウン
-========================================= */
-
-function countdown(){
-
-return new Promise(resolve=>{
-
-const overlay=
-document.getElementById("countdown");
-
-const number=
-document.getElementById("countNumber");
-
-overlay.classList.remove("hidden");
-
-let n=3;
-
-number.textContent=n;
-
-beep(440,.12);
-
-
-const timer=
-setInterval(()=>{
-
-n--;
-
-if(n>0){
-
-number.textContent=n;
-
-number.style.animation="none";
-
-void number.offsetWidth;
-
-number.style.animation=
-"countPop .8s ease";
-
-beep(
-  n===2?520:620,
-  .12
-);
-
-}else{
-
-clearInterval(timer);
-
-number.textContent="START!";
-
-number.style.animation=
-"countPop .8s ease";
-
-beep(
-  880,
-  .25,
-  "square"
-);
-
-setTimeout(()=>{
-
-overlay.classList.add("hidden");
-
-resolve();
-
-},600);
-
-}
-
-},850);
-
-});
-
-}
-
-
-/* =========================================
-   回転開始
-========================================= */
-
-async function startSpin(){
-
-if(spinning)return;
-
-await countdown();
-
-spinning=true;
-
-document
-.getElementById("spinButton")
-.disabled=true;
-
-document
-.getElementById("stopButton")
-.disabled=false;
-
-document
-.getElementById("spinStatus")
-.textContent=
-"🎡 回ってる！止めたいところでSTOP！";
-
-
-let speed=.04;
-
-
-function animate(){
-
-if(!spinning)return;
-
-speed+=.001;
-
-if(speed>.30){
-speed=.30;
-}
-
-rotation+=speed;
-
-canvas.style.transform=
-"rotate("+rotation+"rad)";
-
-
-if(
-Math.floor(rotation*20)%3===0
-){
-
-beep(
-  180+speed*500,
-  .025
-);
-
-}
-
-
-animation=
-requestAnimationFrame(animate);
-
-}
-
-
-animate();
-
-}
-
-
-/* =========================================
-   STOP
-========================================= */
-
-function stopSpin(){
-
-if(!spinning)return;
-
-spinning=false;
-
-cancelAnimationFrame(animation);
-
-document
-.getElementById("stopButton")
-.disabled=true;
-
-document
-.getElementById("spinStatus")
-.textContent=
-"🛑 STOP！";
-
-
-let speed=.22;
-
-
-function slow(){
-
-rotation+=speed;
-
-canvas.style.transform=
-"rotate("+rotation+"rad)";
-
-
-beep(
-  Math.max(100,speed*500),
-  .025
-);
-
-speed*=.93;
-
-
-if(speed>.002){
-
-requestAnimationFrame(slow);
-
-}else{
-
-finish();
-
-}
-
-}
-
-
-slow();
-
-}
-
-
-/* =========================================
-   結果決定
-========================================= */
-
-function finish(){
-
-const slice=
-Math.PI*2/candidates.length;
-
-
-let normalized=
-(
-  (-rotation%(Math.PI*2))
-  +
-  Math.PI*2
-)
-%(Math.PI*2);
-
-
-let index=
-Math.floor(
-  normalized/slice
-);
-
-
-current=
-candidates[index];
-
-
-beep(660,.12);
-
-setTimeout(
-  ()=>beep(880,.18),
-  120
-);
-
-setTimeout(
-  ()=>beep(1100,.3),
-  280
-);
-
-
-showResult();
-
-}
-
-
-/* =========================================
-   ミッション
-========================================= */
-
-function makeMissions(){
-
-const keyword=
-document
-.getElementById("keyword")
-.value
-.trim();
-
-
-let missions=[];
-
-
-if(keyword){
-
-missions.push(
-"🎯 "+
-current.name+
-"で「"+
-keyword+
-"」に関係する場所を1つ探す"
-);
-
-missions.push(
-"📸 「"+
-keyword+
-"」をテーマに写真を1枚撮る"
-);
-
-missions.push(
-"🔎 「"+
-keyword+
-"」に関係するものを旅先で1つ発見する"
-);
-
-}
-
-
-missions.push(
-"🍴 "+
-current.name+
-"のご当地グルメを食べる"
-);
-
-missions.push(
-"🗺️ "+
-current.name+
-"で行ったことのない場所へ行く"
-);
-
-missions.push(
-"📸 旅先らしい写真を3枚撮る"
-);
-
-missions.push(
-"🎁 ご当地のお土産を1つ探す"
-);
-
-
-return missions.slice(0,3);
-
-}
-
-
-/* =========================================
-   結果表示
-========================================= */
-
-function showResult(){
-
-const result=
-document.getElementById("resultCard");
-
-result.classList.remove("hidden");
-
-
-document
-.getElementById("resultEmoji")
-.textContent=
-current.emoji;
-
-
-document
-.getElementById("resultName")
-.textContent=
-current.name;
-
-
-/* 旅運 */
-
-const luck=
-Math.floor(
-  Math.random()*41
-)+60;
-
-
-document
-.getElementById("luck")
-.textContent=
-"⭐ 今日の旅運 "+
-luck+
-"点";
-
-
-document
-.getElementById("resultCatch")
-.textContent=
-"今日は"+
-current.name+
-"があなたを呼んでいるかも。";
-
-
-/* 日付 */
-
-document
-.getElementById("resultDate")
-.textContent=
-document
-.getElementById("travelDate")
-.value
-||
-"未設定";
-
-
-/* 予算 */
-
-const budget=
-Number(
-document
-.getElementById("budget")
-.value
-);
-
-
-document
-.getElementById("resultBudget")
-.textContent=
-"〜"+
-budget.toLocaleString()+
-"円";
-
-
-/* グルメ */
-
-document
-.getElementById("food")
-.textContent=
-current.food;
-
-
-/* ミッション */
-
-const box=
-document.getElementById("missions");
-
-box.innerHTML="";
-
-
-makeMissions().forEach(m=>{
-
-box.innerHTML+=`
-
-<div class="mission">
-
-<label style="margin:0">
-
-<input type="checkbox">
-
-${m}
-
-</label>
-
-</div>
-
-`;
-
-});
-
-
-/* 天気 */
-
-const date=
-document
-.getElementById("travelDate")
-.value;
-
-
-if(date){
-
-const today=
-new Date();
-
-const target=
-new Date(date);
-
-const days=
-Math.ceil(
-  (target-today)/86400000
-);
-
-
-if(days>=0&&days<=7){
-
-document
-.getElementById("weatherInfo")
-.innerHTML=
-
-"🌦️ <strong>旅行が近い！</strong><br>"+
-"最新の天気を確認して、"+
-"晴れなら屋外、雨なら屋内など、"+
-"ミッションを調整するのがおすすめ。";
-
-}
-
-}
-
-
-/* キーワード */
-
-const keyword=
-document
-.getElementById("keyword")
-.value
-.trim();
-
-
-if(keyword){
-
-document
-.getElementById("resultCatch")
-.innerHTML=
-"🎯 キーワード「"+
-keyword+
-"」を今回の旅に組み込もう！";
-
-}
-
-
-/* 紙吹雪 */
-
-confetti();
-
-
-result.scrollIntoView({
-  behavior:"smooth"
-});
-
-}
-
-
-/* =========================================
-   紙吹雪
-========================================= */
-
-function confetti(){
-
-for(let i=0;i<70;i++){
-
-const piece=
-document.createElement("div");
-
-piece.className=
-"confetti";
-
-piece.style.left=
-Math.random()*100+
-"vw";
-
-piece.style.animationDuration=
-(2+Math.random()*3)+
-"s";
-
-piece.style.transform=
-"rotate("+
-Math.random()*360+
-"deg)";
-
-piece.style.background=
-[
-"#ef4444",
-"#f59e0b",
-"#10b981",
-"#3b82f6",
-"#8b5cf6",
-"#ec4899"
-][
-Math.floor(
-  Math.random()*6
-)
-];
-
-
-document.body.appendChild(piece);
-
-
-setTimeout(
-  ()=>piece.remove(),
-  6000
-);
-
-}
-
-}
-
-
-/* =========================================
-   ホテル
-========================================= */
-
-function nextHotel(){
-
-alert(
-"🏨 次のステップでは、"+
-current.name+
-"＋旅行日＋予算を使ってホテルをルーレットで決めます。"
-);
-
-}
-
-
-/* =========================================
-   交通
-========================================= */
-
-function nextTransport(){
-
-alert(
-"🚆 次のステップでは、出発地＋"+
-current.name+
-"＋予算＋旅行日を使って交通手段をルーレットで決めます。"
-);
-
-}
-
-
-/* =========================================
-   シェア
-========================================= */
-
-function shareResult(){
-
-const keyword=
-document
-.getElementById("keyword")
-.value
-.trim();
-
-
-const text=
-"🎡 旅ルーレットで"+
-current.name+
-"に決まった！"+
-(
-keyword
-?
-" 🎯 キーワード："+keyword
-:
-""
-);
-
-
-if(navigator.share){
-
-navigator.share({
-
-title:"旅ルーレット",
-
-text:text,
-
-url:location.href
-
-});
-
-}else{
-
-alert(text);
-
-}
-
-}
-
-</script>
-
-</body>
-  </html>
+<button class="stop" id="stopBtn" onclick="stopRoulette()">
+🛑 STOP
+</
