@@ -2,339 +2,450 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>旅ルーレット</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:
-  -apple-system,
-  BlinkMacSystemFont,
-  "Noto Sans JP",
-  sans-serif;
-
-  background:linear-gradient(135deg,#eef7ff,#fff4e8);
-  color:#222;
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;
+background:linear-gradient(135deg,#eef7ff,#fff5e9);
+color:#20242a;
 }
 
 header{
-  background:#111827;
-  color:white;
-  text-align:center;
-  padding:25px 15px;
+background:#111827;
+color:white;
+text-align:center;
+padding:25px 15px;
 }
 
 header h1{
-  margin:0;
-  font-size:30px;
+margin:0;
+font-size:30px;
 }
 
 header p{
-  margin:8px 0 0;
-  opacity:.85;
+margin:8px 0 0;
+opacity:.85;
 }
 
 main{
-  max-width:620px;
-  margin:auto;
-  padding:18px 14px 50px;
+max-width:650px;
+margin:auto;
+padding:16px 14px 60px;
 }
 
 .card{
-  background:white;
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 6px 25px rgba(0,0,0,.08);
+background:white;
+border-radius:20px;
+padding:20px;
+margin-bottom:18px;
+box-shadow:0 6px 25px rgba(0,0,0,.08);
 }
 
 h2{
-  text-align:center;
-  margin-top:0;
+text-align:center;
+margin-top:0;
+}
+
+h3{
+margin-bottom:8px;
 }
 
 label{
-  display:block;
-  font-weight:bold;
-  margin:15px 0 7px;
+display:block;
+font-weight:bold;
+margin:14px 0 7px;
 }
 
-input,
-select{
-  width:100%;
-  padding:15px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  font-size:16px;
-  background:white;
-}
-
-.hint{
-  font-size:13px;
-  color:#777;
-  margin-top:7px;
+input,select{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:16px;
+background:white;
 }
 
 button{
-  width:100%;
-  padding:17px;
-  border:0;
-  border-radius:15px;
-  font-size:19px;
-  font-weight:bold;
-  color:white;
-  background:#2563eb;
-  margin-top:15px;
+width:100%;
+padding:16px;
+border:0;
+border-radius:14px;
+font-size:18px;
+font-weight:bold;
+color:white;
+background:#2563eb;
+margin-top:12px;
 }
 
 button:active{
-  transform:scale(.97);
+transform:scale(.97);
 }
 
 button:disabled{
-  background:#aaa;
+background:#aaa;
 }
 
 .stop{
-  background:#ef4444;
+background:#ef4444;
 }
 
-.secondary{
-  background:#111827;
+.dark{
+background:#111827;
 }
 
 .green{
-  background:#16a34a;
+background:#16a34a;
+}
+
+.orange{
+background:#f97316;
+}
+
+.modeGrid{
+display:grid;
+gap:10px;
+}
+
+.smallGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.smallGrid button{
+margin-top:0;
 }
 
 .hidden{
-  display:none;
+display:none;
 }
 
-/* ルーレット */
+.hint{
+font-size:13px;
+color:#777;
+margin-top:6px;
+line-height:1.5;
+}
+
+/* wheel */
 
 .wheelArea{
-  position:relative;
-  width:310px;
-  height:310px;
-  margin:25px auto;
+position:relative;
+width:310px;
+height:310px;
+margin:20px auto;
 }
 
 .pointer{
-  position:absolute;
-  z-index:10;
-  top:-15px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:45px;
+position:absolute;
+z-index:5;
+top:-15px;
+left:50%;
+transform:translateX(-50%);
+font-size:45px;
 }
 
 #wheel{
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  border:8px solid white;
-  box-shadow:0 7px 25px rgba(0,0,0,.2);
+width:300px;
+height:300px;
+border-radius:50%;
+border:8px solid white;
+box-shadow:0 8px 25px rgba(0,0,0,.2);
 }
 
-/* 結果 */
+/* result */
 
 .result{
-  display:none;
-  text-align:center;
+display:none;
+text-align:center;
 }
 
 .resultEmoji{
-  font-size:65px;
+font-size:65px;
 }
 
 .destination{
-  font-size:36px;
-  font-weight:bold;
-  margin:5px 0;
+font-size:36px;
+font-weight:bold;
 }
 
 .catch{
-  color:#555;
-  line-height:1.7;
-}
-
-/* ミッション */
-
-.mission{
-  background:#f3f4f6;
-  border-radius:13px;
-  padding:15px;
-  margin:9px 0;
-  text-align:left;
-  line-height:1.6;
-}
-
-.mission input{
-  width:auto;
-  margin-right:8px;
-}
-
-/* 特別情報 */
-
-.special{
-  background:#fff7d6;
-  border:2px solid #f6c344;
-  border-radius:15px;
-  padding:16px;
-  margin-top:18px;
-  text-align:left;
-  line-height:1.7;
-}
-
-.special h3{
-  margin-top:0;
-}
-
-.warning{
-  background:#fff1f2;
-  border:2px solid #f87171;
-  border-radius:15px;
-  padding:15px;
-  margin-top:12px;
-  text-align:left;
-  line-height:1.6;
+color:#555;
+line-height:1.7;
 }
 
 .info{
-  background:#f8fafc;
-  border-radius:13px;
-  padding:15px;
-  margin-top:12px;
-  text-align:left;
-  line-height:1.7;
+background:#f8fafc;
+border-radius:14px;
+padding:15px;
+margin-top:12px;
+text-align:left;
+line-height:1.7;
+}
+
+.safe{
+background:#ecfdf5;
+}
+
+.warning{
+background:#fff1f2;
+border:2px solid #f87171;
+}
+
+.special{
+background:#fff8dc;
+border:2px solid #f5c542;
+border-radius:15px;
+padding:16px;
+margin-top:15px;
+text-align:left;
+line-height:1.7;
+}
+
+.mission{
+background:#f3f4f6;
+border-radius:13px;
+padding:14px;
+margin:9px 0;
+text-align:left;
+line-height:1.6;
+}
+
+.mission input{
+width:auto;
+margin-right:8px;
 }
 
 .tag{
-  display:inline-block;
-  background:#e0f2fe;
-  color:#0369a1;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:12px;
-  margin:3px;
+display:inline-block;
+padding:4px 9px;
+border-radius:20px;
+background:#e0f2fe;
+color:#0369a1;
+font-size:12px;
+margin:2px;
+}
+
+.count{
+text-align:center;
+font-size:13px;
+color:#777;
+margin-top:10px;
 }
 
 footer{
-  text-align:center;
-  color:#777;
-  font-size:12px;
-  padding:20px;
+text-align:center;
+font-size:12px;
+color:#777;
+padding:20px;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
 <h1>🎡 旅ルーレット</h1>
-
-<p>
-行き先は運に任せて、旅の目的はあなたが決める。
-</p>
-
+<p>行き先も、旅の内容も、運に任せよう。</p>
 </header>
-
 
 <main>
 
-
-<!-- 旅の目的 -->
+<!-- STEP 1 -->
 
 <div class="card">
 
-<h2>🎯 今回の旅の目的</h2>
+<h2>🎯 旅の目的</h2>
 
 <input
-  id="keyword"
-  type="text"
-  placeholder="例：ちいかわ、ラーメン、推し活、温泉"
-/>
+id="keyword"
+placeholder="例：ちいかわ、ラーメン、温泉、推し活、絶景">
 
 <div class="hint">
-好きなもの・やりたいことを自由に入力してください。
+好きなもの・やりたいことを自由に入力できます。
+空欄でもOK。
 </div>
 
 </div>
 
 
-<!-- 旅の範囲 -->
+<!-- STEP 2 -->
 
 <div class="card">
 
-<h2>🌏 旅の範囲</h2>
+<h2>📅 旅の条件</h2>
 
-<label>行き先</label>
+<label>旅行する日</label>
 
-<select id="area">
+<input
+type="date"
+id="travelDate">
 
-<option value="all">
-🌏 日本＋世界
-</option>
+<div class="hint">
+旅行が近づくほど、天気などを重視する設計です。
+</div>
 
-<option value="japan">
-🗾 日本
-</option>
 
-<option value="world">
-🌎 世界
-</option>
+<label>旅行日数</label>
 
+<select id="days">
+<option value="1">日帰り</option>
+<option value="2">1泊2日</option>
+<option value="3">2泊3日</option>
+<option value="4">3泊4日</option>
+<option value="7">1週間</option>
+</select>
+
+
+<label>1人あたり予算</label>
+
+<select id="budget">
+<option value="10000">〜1万円</option>
+<option value="30000">〜3万円</option>
+<option value="50000">〜5万円</option>
+<option value="100000">〜10万円</option>
+<option value="200000">〜20万円</option>
+<option value="9999999">20万円以上</option>
+</select>
+
+
+<label>ミッション数</label>
+
+<select id="missionCount">
+<option value="1">1個</option>
+<option value="3" selected>3個</option>
+<option value="5">5個</option>
+<option value="10">10個</option>
+</select>
+
+
+<label>ミッション難易度</label>
+
+<select id="difficulty">
+<option value="easy">😊 EASY</option>
+<option value="normal" selected>😎 NORMAL</option>
+<option value="hard">🔥 HARD</option>
 </select>
 
 </div>
 
 
-<!-- ルーレット -->
+<!-- STEP 3 -->
 
 <div class="card">
 
-<h2>🎡 運命の旅先</h2>
+<h2>🌏 旅の範囲</h2>
 
-<div class="wheelArea">
+<label>日本？世界？</label>
 
-<div class="pointer">▼</div>
+<select id="area">
+<option value="all">🌏 日本＋世界</option>
+<option value="japan">🗾 日本</option>
+<option value="world">🌎 世界</option>
+</select>
 
-<canvas
-id="wheel"
-width="300"
-height="300">
-</canvas>
+
+<label>地域で絞る</label>
+
+<select id="region">
+<option value="all">すべて</option>
+</select>
+
+<div class="hint">
+「日本＋世界」でも地域を絞ってルーレットできます。
+</div>
 
 </div>
 
 
+<!-- ルーレットモード -->
+
+<div class="card">
+
+<h2>🎰 どうやって決める？</h2>
+
+<div class="modeGrid">
+
+<button onclick="showDestinationRoulette()">
+🎡 行き先だけルーレット
+</button>
+
+<button class="orange" onclick="startAllRoulette()">
+🎰 全部ルーレット
+</button>
+
+</div>
+
+<button class="dark" onclick="showDirectChoice()">
+❤️ 行きたい場所を自分で選ぶ
+</button>
+
+</div>
+
+
+<!-- 行き先ルーレット -->
+
+<div class="card hidden" id="rouletteCard">
+
+<h2>🎡 行き先ルーレット</h2>
+
+<div class="wheelArea">
+<div class="pointer">▼</div>
+<canvas id="wheel" width="300" height="300"></canvas>
+</div>
+
 <button
 id="startButton"
 onclick="startRoulette()">
-
-🎡 ルーレットを回す！
-
+🎡 回す！
 </button>
-
 
 <button
 id="stopButton"
 class="stop"
 onclick="stopRoulette()"
 disabled>
-
 🛑 STOP！
+</button>
 
+<div class="count" id="candidateCount"></div>
+
+</div>
+
+
+<!-- 全部ルーレット -->
+
+<div class="card hidden" id="allRouletteCard">
+
+<h2>🎰 全部ルーレット</h2>
+
+<p>
+ここから旅の条件をもとに、
+順番にルーレットで決めていきます。
+</p>
+
+<div id="allStep"></div>
+
+</div>
+
+
+<!-- 直接選択 -->
+
+<div class="card hidden" id="directCard">
+
+<h2>❤️ 行きたい場所</h2>
+
+<label>場所</label>
+
+<select id="directPlace"></select>
+
+<button onclick="chooseDirect()">
+🎯 この場所にする
 </button>
 
 </div>
@@ -342,470 +453,315 @@ disabled>
 
 <!-- 結果 -->
 
-<div
-class="card result"
-id="result">
+<div class="card result" id="result">
 
-<div
-class="resultEmoji"
-id="resultEmoji">
-🎉
-</div>
+<div class="resultEmoji" id="resultEmoji">🎉</div>
 
+<div class="destination" id="destination"></div>
 
-<div
-class="destination"
-id="destination">
-</div>
+<p class="catch" id="catch"></p>
 
-
-<p
-class="catch"
-id="catch">
-</p>
-
-
-<!-- 安全 -->
+<div id="weatherBox"></div>
 
 <div id="safety"></div>
 
+<h2>🎯 あなた専用ミッション</h2>
 
-<!-- ミッション -->
+<div id="missions"></div>
 
-<h2>
-🎯 あなた専用ミッション
-</h2>
-
-
-<div class="mission">
-
-<label style="display:inline">
-
-<input
-type="checkbox">
-
-<span id="mission1"></span>
-
-</label>
-
-</div>
-
-
-<div class="mission">
-
-<label style="display:inline">
-
-<input
-type="checkbox">
-
-<span id="mission2"></span>
-
-</label>
-
-</div>
-
-
-<div class="mission">
-
-<label style="display:inline">
-
-<input
-type="checkbox">
-
-<span id="mission3"></span>
-
-</label>
-
-</div>
-
-
-<!-- 特別情報 -->
-
-<div
-class="special"
-id="special">
-</div>
-
-
-<!-- グルメ -->
+<div class="special" id="special"></div>
 
 <div class="info">
-
-<strong>
-🍴 ご当地グルメ
-</strong>
-
+<strong>🍴 ご当地グルメ</strong>
 <br>
-
 <span id="food"></span>
-
 </div>
-
-
-<!-- 予算 -->
 
 <div class="info">
-
-<strong>
-💰 予算目安
-</strong>
-
+<strong>💰 予算目安</strong>
 <br>
-
 <span id="price"></span>
-
 </div>
 
 
-<button
-class="secondary"
-onclick="searchHotel()">
-
+<button class="dark" onclick="searchHotel()">
 🏨 ホテルを探す
-
 </button>
 
-
-<button
-class="secondary"
-onclick="searchTransport()">
-
+<button class="dark" onclick="searchTransport()">
 🚆 交通を調べる
-
 </button>
 
-
-<button
-class="green"
-onclick="shareResult()">
-
+<button class="green" onclick="shareResult()">
 📱 友達にシェア
-
 </button>
 
-
-<button
-onclick="location.reload()">
-
+<button onclick="location.reload()">
 🔄 もう一度！
-
 </button>
-
 
 </div>
 
 </main>
 
-
 <footer>
-
 旅ルーレット © 2026
-
 </footer>
 
 
 <script>
 
+/* =====================================
+   日本47都道府県
+===================================== */
 
-/* =========================
-   旅データ
-========================= */
+const japanPlaces=[
 
-const places = [
+["北海道","北海道","🐻","海鮮・自然・温泉"],
+["青森県","東北","🍎","りんご・ねぶた・温泉"],
+["岩手県","東北","🗿","わんこそば・自然"],
+["宮城県","東北","🐮","牛タン・松島"],
+["秋田県","東北","🐕","きりたんぽ・温泉"],
+["山形県","東北","🍒","さくらんぼ・温泉"],
+["福島県","東北","🍑","桃・会津・温泉"],
 
-{
-name:"北海道",
-emoji:"🐻",
-catch:"大自然と美味しいものを楽しむ旅。",
-area:"japan",
-food:"海鮮丼・味噌ラーメン・ジンギスカン",
-price:"3万円以上",
-safety:"safe",
+["茨城県","関東","🌊","海鮮・ひたち海浜公園"],
+["栃木県","関東","♨️","日光・餃子・温泉"],
+["群馬県","関東","♨️","草津温泉"],
+["埼玉県","関東","🏙️","川越・秩父"],
+["千葉県","関東","🏖️","海・テーマパーク"],
+["東京都","関東","🗼","グルメ・ショッピング"],
+["神奈川県","関東","🌊","横浜・鎌倉・箱根"],
 
-missions:[
-"北海道限定グルメを食べる",
-"自然の中で写真を撮る",
-"地元のお土産を1つ買う"
-],
+["新潟県","中部","🍚","米・日本酒・温泉"],
+["富山県","中部","🐟","海鮮・立山"],
+["石川県","中部","🍣","金沢・海鮮"],
+["福井県","中部","🦖","恐竜・海鮮"],
+["山梨県","中部","🗻","富士山・ワイン"],
+["長野県","中部","🏔️","山・温泉・そば"],
+["岐阜県","中部","🏘️","白川郷・飛騨牛"],
+["静岡県","中部","🍵","富士山・お茶・温泉"],
+["愛知県","中部","🍤","名古屋めし・城"],
 
-specialTitle:"🔥 北海道の注目情報",
-special:"季節限定のグルメやイベントをチェックしてから出発しよう！",
-specialTag:"季節限定"
-},
+["三重県","近畿","🦐","伊勢神宮・海鮮"],
+["滋賀県","近畿","🌊","琵琶湖・近江牛"],
+["京都府","近畿","⛩️","寺社・抹茶・和菓子"],
+["大阪府","近畿","🐙","たこ焼き・街歩き"],
+["兵庫県","近畿","🥩","神戸・温泉・淡路島"],
+["奈良県","近畿","🦌","鹿・寺社"],
+["和歌山県","近畿","🐼","温泉・海・熊野"],
 
+["鳥取県","中国","🏜️","砂丘・海鮮"],
+["島根県","⛩️","⛩️","出雲・温泉"],
+["岡山県","🍑","🍑","倉敷・桃"],
+["広島県","🦪","🦪","宮島・お好み焼き"],
+["山口県","🐡","🐡","ふぐ・温泉"],
 
-{
-name:"東京",
-emoji:"🗼",
-catch:"何度行っても新しい発見がある街。",
-area:"japan",
-food:"寿司・ラーメン・もんじゃ",
-price:"1〜3万円",
-safety:"safe",
+["徳島県","四国","💃","阿波踊り・海"],
+["香川県","四国","🍜","讃岐うどん"],
+["愛媛県","🍊","🍊","道後温泉・みかん"],
+["高知県","🐟","🐟","カツオ・自然"],
 
-missions:[
-"行ったことのない駅で降りる",
-"気になる店に入る",
-"東京らしい写真を撮る"
-],
-
-specialTitle:"🔥 東京の注目情報",
-special:"期間限定イベントやコラボカフェを探してみよう！",
-specialTag:"期間限定"
-},
-
-
-{
-name:"京都",
-emoji:"⛩️",
-catch:"歴史と街並みを楽しむ旅。",
-area:"japan",
-food:"抹茶・湯葉・京都ラーメン",
-price:"1〜3万円",
-safety:"safe",
-
-missions:[
-"神社を1つ巡る",
-"抹茶スイーツを食べる",
-"京都らしい写真を3枚撮る"
-],
-
-specialTitle:"🔥 京都の注目情報",
-special:"季節ごとの特別拝観や期間限定イベントをチェック！",
-specialTag:"期間限定"
-},
-
-
-{
-name:"大阪",
-emoji:"🐙",
-catch:"今日は食い倒れ。",
-area:"japan",
-food:"たこ焼き・お好み焼き・串カツ",
-price:"1〜3万円",
-safety:"safe",
-
-missions:[
-"たこ焼きを食べる",
-"知らない商店街を歩く",
-"大阪らしい写真を撮る"
-],
-
-specialTitle:"🔥 大阪の注目情報",
-special:"人気イベントは予約が必要な場合があります。",
-specialTag:"予約注意"
-},
-
-
-{
-name:"沖縄",
-emoji:"🌴",
-catch:"海と南国グルメを楽しむ旅。",
-area:"japan",
-food:"沖縄そば・タコライス",
-price:"3万円以上",
-safety:"safe",
-
-missions:[
-"海を見る",
-"沖縄料理を食べる",
-"夕日を写真に撮る"
-],
-
-specialTitle:"🔥 沖縄の注目情報",
-special:"季節限定のアクティビティやイベントをチェック！",
-specialTag:"季節限定"
-},
-
-
-{
-name:"福岡",
-emoji:"🍜",
-catch:"美味しいものを食べるための旅。",
-area:"japan",
-food:"豚骨ラーメン・もつ鍋",
-price:"1〜3万円",
-safety:"safe",
-
-missions:[
-"屋台に行く",
-"豚骨ラーメンを食べる",
-"知らない店に入る"
-],
-
-specialTitle:"🔥 福岡の注目情報",
-special:"屋台・グルメイベントをチェック！",
-specialTag:"グルメ"
-},
-
-
-{
-name:"台湾",
-emoji:"🇹🇼",
-catch:"食べ歩きと街歩きを楽しむ旅。",
-area:"world",
-food:"小籠包・夜市グルメ",
-price:"3〜6万円",
-safety:"safe",
-
-missions:[
-"夜市に行く",
-"小籠包を食べる",
-"現地のお店で買い物する"
-],
-
-specialTitle:"🔥 台湾の注目情報",
-special:"期間限定イベントや夜市の特別企画を探してみよう！",
-specialTag:"おすすめ"
-},
-
-
-{
-name:"韓国",
-emoji:"🇰🇷",
-catch:"グルメ・ショッピング・街歩き。",
-area:"world",
-food:"韓国料理・スイーツ",
-price:"3〜6万円",
-safety:"safe",
-
-missions:[
-"現地の市場へ行く",
-"韓国料理を食べる",
-"日本にない商品を探す"
-],
-
-specialTitle:"🔥 韓国の注目情報",
-special:"期間限定ポップアップやイベントをチェック！",
-specialTag:"期間限定"
-},
-
-
-{
-name:"タイ",
-emoji:"🇹🇭",
-catch:"南国の街とグルメを楽しむ旅。",
-area:"world",
-food:"タイ料理・マンゴースイーツ",
-price:"5〜10万円",
-safety:"caution",
-
-missions:[
-"屋台グルメを食べる",
-"寺院を訪れる",
-"現地の市場を歩く"
-],
-
-specialTitle:"🔥 タイの注目情報",
-special:"旅行前に最新の安全情報を確認しましょう。",
-specialTag:"安全確認"
-},
-
-
-{
-name:"イタリア",
-emoji:"🇮🇹",
-catch:"本場の料理と歴史を楽しむ旅。",
-area:"world",
-food:"ピザ・パスタ・ジェラート",
-price:"10万円以上",
-safety:"safe",
-
-missions:[
-"本場のピザを食べる",
-"歴史的な場所を見る",
-"ジェラートを食べる"
-],
-
-specialTitle:"🔥 イタリアの注目情報",
-special:"美術館・観光施設には予約が必要な場合があります。",
-specialTag:"予約注意"
-},
-
-
-{
-name:"フランス",
-emoji:"🇫🇷",
-catch:"街並みと美食を楽しむ旅。",
-area:"world",
-food:"クロワッサン・チーズ・フレンチ",
-price:"10万円以上",
-safety:"caution",
-
-missions:[
-"本場のパンを食べる",
-"有名スポットを見る",
-"現地のスーパーに入る"
-],
-
-specialTitle:"🔥 フランスの注目情報",
-special:"人気観光施設は事前予約がおすすめです。",
-specialTag:"予約注意"
-},
-
-
-{
-name:"アメリカ",
-emoji:"🇺🇸",
-catch:"スケールの大きな旅へ。",
-area:"world",
-food:"ハンバーガー・ステーキ",
-price:"10万円以上",
-safety:"caution",
-
-missions:[
-"現地の人気店へ行く",
-"大きな観光スポットを見る",
-"現地限定商品を探す"
-],
-
-specialTitle:"🔥 アメリカの注目情報",
-special:"旅行前に地域ごとの安全情報を確認しましょう。",
-specialTag:"安全確認"
-}
+["福岡県","九州","🍜","豚骨ラーメン・屋台"],
+["佐賀県","🏺","🏺","陶器・温泉"],
+["長崎県","⛪","⛪","夜景・ちゃんぽん"],
+["熊本県","🐻","🐻","熊本城・阿蘇"],
+["大分県","♨️","♨️","別府・湯布院"],
+["宮崎県","🥭","🥭","南国・チキン南蛮"],
+["鹿児島県","🌋","🌋","桜島・黒豚"],
+["沖縄県","🌴","🌴","海・沖縄料理"]
 
 ];
 
 
+/* =====================================
+   世界
+===================================== */
+
+const worldPlaces=[
+
+["韓国","アジア","🇰🇷","韓国料理・カフェ・ショッピング"],
+["台湾","アジア","🇹🇼","夜市・小籠包・街歩き"],
+["タイ","アジア","🇹🇭","屋台・寺院・南国"],
+["ベトナム","アジア","🇻🇳","フォー・市場・街歩き"],
+["シンガポール","アジア","🇸🇬","グルメ・夜景"],
+["マレーシア","アジア","🇲🇾","多文化・グルメ"],
+["インドネシア","アジア","🇮🇩","ビーチ・寺院"],
+["フィリピン","アジア","🇵🇭","海・リゾート"],
+
+["フランス","ヨーロッパ","🇫🇷","パン・美術館・街並み"],
+["イタリア","ヨーロッパ","🇮🇹","ピザ・歴史・美術"],
+["スペイン","ヨーロッパ","🇪🇸","料理・建築・街歩き"],
+["イギリス","ヨーロッパ","🇬🇧","紅茶・歴史・街並み"],
+["ドイツ","ヨーロッパ","🇩🇪","街並み・料理・城"],
+["オーストリア","ヨーロッパ","🇦🇹","音楽・街並み"],
+["スイス","ヨーロッパ","🇨🇭","山・鉄道・絶景"],
+["ポルトガル","ヨーロッパ","🇵🇹","街並み・海・料理"],
+["ギリシャ","ヨーロッパ","🇬🇷","島・遺跡・海"],
+
+["アメリカ","北米","🇺🇸","都市・自然・エンタメ"],
+["カナダ","北米","🇨🇦","自然・街・絶景"],
+["メキシコ","中南米","🇲🇽","料理・遺跡・街歩き"],
+
+["オーストラリア","オセアニア","🇦🇺","海・自然・動物"],
+["ニュージーランド","オセアニア","🇳🇿","自然・絶景・アクティビティ"],
+
+["ブラジル","中南米","🇧🇷","文化・料理・街歩き"],
+["チリ","中南米","🇨🇱","自然・星空・絶景"],
+
+["モロッコ","アフリカ","🇲🇦","市場・料理・街並み"],
+["南アフリカ","アフリカ","🇿🇦","自然・動物・ワイン"]
+
+];
+
+
+/* =====================================
+   データ変換
+===================================== */
+
+function convert(arr,type){
+
+return arr.map(x=>({
+
+name:x[0],
+region:x[1],
+emoji:x[2],
+food:x[3],
+type:type,
+
+catch:
+x[0]+"で、普段とは違う旅を楽しもう。",
+
+price:
+type==="japan"?
+"1〜5万円程度":
+"5万円以上",
+
+safety:
+[
+"日本",
+"韓国",
+"台湾",
+"シンガポール",
+"オーストラリア",
+"ニュージーランド"
+].includes(x[0])
+?"safe":
+"check"
+
+}));
+
+}
+
+const places=[
+...convert(japanPlaces,"japan"),
+...convert(worldPlaces,"world")
+];
+
+
+/* =====================================
+   状態
+===================================== */
+
 let candidates=[];
+let current=null;
+
 let spinning=false;
 let angle=0;
 let animation;
-let current=null;
 
 
-const canvas=
-document.getElementById("wheel");
+/* =====================================
+   DOM
+===================================== */
 
-const ctx=
-canvas.getContext("2d");
+const canvas=document.getElementById("wheel");
+const ctx=canvas.getContext("2d");
 
 
-/* =========================
-   候補作成
-========================= */
+/* =====================================
+   地域選択
+===================================== */
+
+function updateRegions(){
+
+const area=
+document.getElementById("area").value;
+
+const select=
+document.getElementById("region");
+
+select.innerHTML=
+'<option value="all">すべて</option>';
+
+
+let regions=[];
+
+if(area==="japan"||area==="all"){
+
+regions.push(
+"北海道","東北","関東","中部","近畿","中国","四国","九州"
+);
+
+}
+
+if(area==="world"||area==="all"){
+
+regions.push(
+"アジア",
+"ヨーロッパ",
+"北米",
+"中南米",
+"オセアニア",
+"アフリカ"
+);
+
+}
+
+regions.forEach(r=>{
+
+const option=
+document.createElement("option");
+
+option.value=r;
+option.textContent=r;
+
+select.appendChild(option);
+
+});
+
+setCandidates();
+
+}
+
 
 function setCandidates(){
 
 const area=
 document.getElementById("area").value;
 
+const region=
+document.getElementById("region").value;
 
-if(area==="all"){
-
-candidates=[...places];
-
-}
-
-else{
 
 candidates=
-places.filter(
-p=>p.area===area
-);
+places.filter(p=>{
 
-}
+let areaOK=
+area==="all"||p.type===area;
 
+let regionOK=
+region==="all"||p.region===region;
+
+return areaOK&&regionOK;
+
+});
+
+
+document.getElementById(
+"candidateCount"
+).textContent=
+"候補："+candidates.length+"か所";
 
 drawWheel();
 
@@ -813,32 +769,27 @@ drawWheel();
 
 
 document.getElementById("area")
-.addEventListener(
-"change",
-setCandidates
-);
+.addEventListener("change",updateRegions);
+
+document.getElementById("region")
+.addEventListener("change",setCandidates);
 
 
-/* =========================
+/* =====================================
    ルーレット描画
-========================= */
+===================================== */
 
 function drawWheel(){
 
-ctx.clearRect(
-0,
-0,
-300,
-300
-);
+ctx.clearRect(0,0,300,300);
 
+if(!candidates.length)return;
 
 const center=150;
 const radius=142;
 
 const slice=
 Math.PI*2/candidates.length;
-
 
 const colors=[
 "#60a5fa",
@@ -851,23 +802,14 @@ const colors=[
 "#f472b6"
 ];
 
+candidates.forEach((p,i)=>{
 
-candidates.forEach(
-(trip,i)=>{
-
-const start=
-i*slice;
-
-const end=
-start+slice;
-
+const start=i*slice;
+const end=start+slice;
 
 ctx.beginPath();
 
-ctx.moveTo(
-center,
-center
-);
+ctx.moveTo(center,center);
 
 ctx.arc(
 center,
@@ -884,29 +826,25 @@ colors[i%colors.length];
 
 ctx.fill();
 
-
 ctx.save();
 
-ctx.translate(
-center,
-center
-);
+ctx.translate(center,center);
 
-ctx.rotate(
-start+slice/2
-);
+ctx.rotate(start+slice/2);
 
 ctx.fillStyle="white";
 
 ctx.font=
-"bold 13px sans-serif";
+candidates.length>20?
+"bold 9px sans-serif":
+"bold 12px sans-serif";
 
 ctx.textAlign="right";
 
 ctx.fillText(
-trip.name,
-radius-10,
-5
+p.name,
+radius-8,
+4
 );
 
 ctx.restore();
@@ -916,10 +854,766 @@ ctx.restore();
 }
 
 
-/* =========================
-   スタート
-========================= */
+/* =====================================
+   行き先ルーレット
+===================================== */
+
+function showDestinationRoulette(){
+
+hideAll();
+
+document.getElementById(
+"rouletteCard"
+).classList.remove("hidden");
+
+setCandidates();
+
+}
+
 
 function startRoulette(){
 
-if(spinning
+if(spinning)return;
+
+setCandidates();
+
+spinning=true;
+
+document.getElementById(
+"startButton"
+).disabled=true;
+
+document.getElementById(
+"stopButton"
+).disabled=false;
+
+
+function rotate(){
+
+if(!spinning)return;
+
+angle+=.32;
+
+canvas.style.transform=
+"rotate("+angle+"rad)";
+
+animation=
+requestAnimationFrame(rotate);
+
+}
+
+rotate();
+
+}
+
+
+function stopRoulette(){
+
+if(!spinning)return;
+
+spinning=false;
+
+cancelAnimationFrame(animation);
+
+document.getElementById(
+"stopButton"
+).disabled=true;
+
+
+let speed=.30;
+
+function slow(){
+
+angle+=speed;
+
+canvas.style.transform=
+"rotate("+angle+"rad)";
+
+speed*=.94;
+
+if(speed>.01){
+
+requestAnimationFrame(slow);
+
+}else{
+
+finishRoulette();
+
+}
+
+}
+
+slow();
+
+}
+
+
+function finishRoulette(){
+
+const slice=
+Math.PI*2/candidates.length;
+
+let normalized=
+((-angle%(Math.PI*2))+
+Math.PI*2)
+%(Math.PI*2);
+
+let index=
+Math.floor(normalized/slice);
+
+current=
+candidates[index];
+
+showResult();
+
+document.getElementById(
+"startButton"
+).disabled=false;
+
+}
+
+
+/* =====================================
+   全部ルーレット
+===================================== */
+
+function startAllRoulette(){
+
+hideAll();
+
+document.getElementById(
+"allRouletteCard"
+).classList.remove("hidden");
+
+runAllStep();
+
+}
+
+
+function runAllStep(){
+
+const box=
+document.getElementById("allStep");
+
+box.innerHTML=`
+
+<h3>STEP 1 🎡 行き先</h3>
+
+<p>まずは旅先を決めます。</p>
+
+<button onclick="allDestination()">
+🎡 行き先ルーレット
+</button>
+
+`;
+
+}
+
+
+function allDestination(){
+
+setCandidates();
+
+if(!candidates.length)return;
+
+current=
+candidates[
+Math.floor(Math.random()*candidates.length)
+];
+
+const box=
+document.getElementById("allStep");
+
+box.innerHTML=`
+
+<h3>STEP 1 🎡 行き先</h3>
+
+<div class="info">
+
+${current.emoji}
+<strong>${current.name}</strong>
+
+<br>
+
+${current.catch}
+
+</div>
+
+<h3>STEP 2 🏨 ホテル</h3>
+
+<p>
+予算：${Number(
+document.getElementById("budget").value
+).toLocaleString()}円
+</p>
+
+<button onclick="hotelRoulette()">
+🎰 ホテルをルーレット
+</button>
+
+`;
+
+}
+
+
+function hotelRoulette(){
+
+const hotels=[
+"駅近ホテル",
+"温泉旅館",
+"人気ビジネスホテル",
+"デザインホテル",
+"隠れ家的ホテル"
+];
+
+const selected=
+hotels[
+Math.floor(Math.random()*hotels.length)
+];
+
+document.getElementById(
+"allStep"
+).innerHTML+=`
+
+<div class="info">
+
+🏨 <strong>${selected}</strong>
+
+<br>
+
+予算条件に合わせて候補を探すホテルタイプ
+
+</div>
+
+<h3>STEP 3 🚆 交通</h3>
+
+<button onclick="transportRoulette()">
+🎰 交通手段をルーレット
+</button>
+
+`;
+
+}
+
+
+function transportRoulette(){
+
+const transports=[
+"🚄 新幹線",
+"✈️ 飛行機",
+"🚌 高速バス",
+"🚃 電車",
+"🚗 レンタカー"
+];
+
+const selected=
+transports[
+Math.floor(Math.random()*transports.length)
+];
+
+document.getElementById(
+"allStep"
+).innerHTML+=`
+
+<div class="info">
+
+🚆 <strong>${selected}</strong>
+
+</div>
+
+<h3>STEP 4 🍴 食事</h3>
+
+<button onclick="foodRoulette()">
+🎰 ご当地グルメをルーレット
+</button>
+
+`;
+
+}
+
+
+function foodRoulette(){
+
+const foods=
+current.food.split("・");
+
+const selected=
+foods[
+Math.floor(Math.random()*foods.length)
+];
+
+document.getElementById(
+"allStep"
+).innerHTML+=`
+
+<div class="info">
+
+🍴 <strong>${selected}</strong>
+
+</div>
+
+<h3>STEP 5 🎯 ミッション</h3>
+
+<button class="green" onclick="showResult()">
+🎯 最終ミッションを見る
+</button>
+
+`;
+
+}
+
+
+/* =====================================
+   直接選択
+===================================== */
+
+function showDirectChoice(){
+
+hideAll();
+
+document.getElementById(
+"directCard"
+).classList.remove("hidden");
+
+const select=
+document.getElementById("directPlace");
+
+select.innerHTML="";
+
+places.forEach(p=>{
+
+const option=
+document.createElement("option");
+
+option.value=p.name;
+
+option.textContent=
+p.emoji+" "+p.name;
+
+select.appendChild(option);
+
+});
+
+}
+
+
+function chooseDirect(){
+
+const name=
+document.getElementById(
+"directPlace"
+).value;
+
+current=
+places.find(p=>p.name===name);
+
+showResult();
+
+}
+
+
+/* =====================================
+   ミッション生成
+===================================== */
+
+function makeMissions(){
+
+const keyword=
+document.getElementById(
+"keyword"
+).value.trim();
+
+const count=
+Number(
+document.getElementById(
+"missionCount"
+).value
+);
+
+const difficulty=
+document.getElementById(
+"difficulty"
+).value;
+
+let missions=[];
+
+
+if(keyword){
+
+missions.push(
+current.name+
+"で「"+
+keyword+
+"」に関係する場所を1つ探す"
+);
+
+missions.push(
+current.name+
+"で「"+
+keyword+
+"」に関する写真を撮る"
+);
+
+missions.push(
+"旅先で「"+
+keyword+
+"」を感じられるものを1つ発見する"
+);
+
+}
+
+
+missions.push(
+current.name+
+"のご当地グルメを1つ食べる"
+);
+
+missions.push(
+current.name+
+"で行ったことのない場所を1つ訪れる"
+);
+
+missions.push(
+"現地のお土産を1つ探す"
+);
+
+missions.push(
+"旅先で地元らしい写真を3枚撮る"
+);
+
+missions.push(
+"その土地ならではの体験を1つする"
+);
+
+if(difficulty==="hard"){
+
+missions.push(
+"地元の人におすすめを1つ聞いてみる"
+);
+
+missions.push(
+"ガイドブックに載っていない場所を1つ探す"
+);
+
+}
+
+
+return missions.slice(0,count);
+
+}
+
+
+/* =====================================
+   結果表示
+===================================== */
+
+function showResult(){
+
+if(!current)return;
+
+document.getElementById(
+"resultEmoji"
+).textContent=
+current.emoji;
+
+document.getElementById(
+"destination"
+).textContent=
+current.name;
+
+document.getElementById(
+"catch"
+).textContent=
+current.catch;
+
+
+/* ミッション */
+
+const missions=
+makeMissions();
+
+const box=
+document.getElementById("missions");
+
+box.innerHTML="";
+
+missions.forEach((m,i)=>{
+
+box.innerHTML+=`
+
+<div class="mission">
+
+<label style="display:inline">
+
+<input type="checkbox">
+
+${m}
+
+</label>
+
+</div>
+
+`;
+
+});
+
+
+/* グルメ */
+
+document.getElementById(
+"food"
+).textContent=
+current.food;
+
+
+/* 予算 */
+
+document.getElementById(
+"price"
+).textContent=
+current.price;
+
+
+/* 安全 */
+
+if(current.safety==="safe"){
+
+document.getElementById(
+"safety"
+).innerHTML=`
+
+<div class="info safe">
+
+🟢 <strong>比較的旅行計画を立てやすい地域</strong>
+
+<br>
+
+旅行前には最新の公式安全情報を確認してください。
+
+</div>
+
+`;
+
+}else{
+
+document.getElementById(
+"safety"
+).innerHTML=`
+
+<div class="warning">
+
+⚠️ <strong>最新の安全情報を確認してください</strong>
+
+<br>
+
+国や地域によって状況が異なります。
+実際の旅行前に公式情報を確認してください。
+
+</div>
+
+`;
+
+}
+
+
+/* 天気 */
+
+const date=
+document.getElementById(
+"travelDate"
+).value;
+
+let weatherText=
+"旅行日が近づいたら、最新の天気を確認してミッションを調整します。";
+
+if(date){
+
+const target=
+new Date(date);
+
+const today=
+new Date();
+
+const diff=
+Math.ceil(
+(target-today)/86400000
+);
+
+if(diff>=0&&diff<=7){
+
+weatherText=
+"🌦️ 旅行日が近いため、天気を重視してミッションを調整する予定です。";
+
+}
+
+}
+
+document.getElementById(
+"weatherBox"
+).innerHTML=`
+
+<div class="info">
+
+<strong>🌦️ 天気連動</strong>
+
+<br>
+
+${weatherText}
+
+</div>
+
+`;
+
+
+/* 最新情報 */
+
+document.getElementById(
+"special"
+).innerHTML=`
+
+<h3>🔥 今しかできない旅情報</h3>
+
+<span class="tag">期間限定</span>
+<span class="tag">予約確認</span>
+
+<p>
+
+${current.name}で、
+あなたの目的「
+${document.getElementById("keyword").value || "自由な旅"}
+」
+に関係するイベント・期間限定スポットなどを確認できます。
+
+</p>
+
+<p>
+
+⚠️ 現在は試作版のため、
+イベント情報は自動取得していません。
+
+公開版では、
+開催期間・予約開始日・料金・場所などの
+最新情報を確認して表示する仕組みにします。
+
+</p>
+
+`;
+
+
+document.getElementById(
+"result"
+).style.display="block";
+
+
+document.getElementById(
+"result"
+).scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+/* =====================================
+   検索
+===================================== */
+
+function searchHotel(){
+
+if(!current)return;
+
+window.open(
+"https://www.google.com/search?q="+
+encodeURIComponent(
+current.name+" ホテル"
+),
+"_blank"
+);
+
+}
+
+
+function searchTransport(){
+
+if(!current)return;
+
+window.open(
+"https://www.google.com/search?q="+
+encodeURIComponent(
+current.name+" 行き方"
+),
+"_blank"
+);
+
+}
+
+
+/* =====================================
+   シェア
+===================================== */
+
+function shareResult(){
+
+if(!current)return;
+
+const keyword=
+document.getElementById(
+"keyword"
+).value;
+
+const text=
+"🎡 旅ルーレットで"+
+current.name+
+"に決まった！\n"+
+"🎯 旅の目的："+(keyword||"秘密");
+
+if(navigator.share){
+
+navigator.share({
+title:"旅ルーレット",
+text:text,
+url:location.href
+});
+
+}else{
+
+alert(text);
+
+}
+
+}
+
+
+/* =====================================
+   共通
+===================================== */
+
+function hideAll(){
+
+document.getElementById(
+"rouletteCard"
+).classList.add("hidden");
+
+document.getElementById(
+"allRouletteCard"
+).classList.add("hidden");
+
+document.getElementById(
+"directCard"
+).classList.add("hidden");
+
+document.getElementById(
+"result"
+).style.display="none";
+
+}
+
+
+/* 初期化 */
+
+updateRegions();
+
+</script>
+
+</body>
+</html>
