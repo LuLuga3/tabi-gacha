@@ -1,80 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>旅ガチャ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旅ガチャ</title>
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #eef7ff, #fff7ed);
-  color: #20242a;
-}
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans JP",
+        sans-serif;
+      background: linear-gradient(135deg, #eef7ff, #fff7ed);
+      color: #20242a;
+      min-height: 100vh;
+    }
 
-header {
-  background: #111827;
-  color: white;
-  text-align: center;
-  padding: 28px 15px;
-}
+    header {
+      background: #111827;
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+    }
 
-header h1 {
-  margin: 0;
-  font-size: 32px;
-}
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
 
-header p {
-  margin: 8px 0 0;
-  opacity: 0.8;
-}
+    header p {
+      margin: 8px 0 0;
+      opacity: 0.8;
+    }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 25px 16px 50px;
-}
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 16px 50px;
+    }
 
-.card {
-  background: white;
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-}
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
+    .card h2 {
+      margin-top: 0;
+      text-align: center;
+    }
 
-select {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  font-size: 16px;
-  margin-bottom: 18px;
-  background: white;
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 18px 0 8px;
+    }
 
-button {
-  width: 100%;
-  border: none;
-  border-radius: 14px;
-  padding: 17px;
-  font-size: 19px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      background: white;
+    }
 
-.gacha {
-  background: #ff6b35;
-  color: white;
- 
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      margin
