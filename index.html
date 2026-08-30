@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🎰 タビガチャ｜札幌ホテルルーレット</title>
+<title>🎰 タビガチャ</title>
 
 <style>
 
@@ -34,9 +34,9 @@ body{
 }
 
 .container{
-  max-width:560px;
+  max-width:600px;
   margin:auto;
-  padding:18px 14px 50px;
+  padding:18px 14px 60px;
 }
 
 h1{
@@ -108,6 +108,15 @@ h1{
   background:linear-gradient(135deg,#ff4f81,#ff8b5c);
 }
 
+.selected-keywords{
+  margin-top:12px;
+  text-align:center;
+  font-size:13px;
+  color:#e50046;
+  font-weight:bold;
+  min-height:20px;
+}
+
 .place{
   text-align:center;
   font-size:28px;
@@ -115,9 +124,24 @@ h1{
   margin:10px 0;
 }
 
+.small{
+  color:#888;
+  font-size:12px;
+  line-height:1.7;
+  margin-top:8px;
+  text-align:center;
+}
+
+
+/* =========================================
+   ルーレット
+========================================= */
+
 .roulette-area{
   position:relative;
-  min-height:230px;
+  width:100%;
+  height:360px;
+
   display:flex;
   justify-content:center;
   align-items:center;
@@ -125,78 +149,220 @@ h1{
 
 .pointer{
   position:absolute;
-  top:0;
+
+  top:8px;
   left:50%;
+
   transform:translateX(-50%);
-  z-index:5;
+
+  z-index:20;
 
   width:0;
   height:0;
 
-  border-left:15px solid transparent;
-  border-right:15px solid transparent;
-  border-top:30px solid #222;
+  border-left:18px solid transparent;
+  border-right:18px solid transparent;
+  border-top:36px solid #222;
+
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.25));
 }
 
-.roulette{
-  width:210px;
-  height:210px;
+.wheel{
+  position:relative;
+
+  width:310px;
+  height:310px;
 
   border-radius:50%;
-  border:8px solid white;
 
-  box-shadow:0 8px 28px rgba(0,0,0,.2);
+  border:9px solid #fff;
+
+  box-shadow:
+  0 8px 30px rgba(0,0,0,.22);
+
+  overflow:hidden;
+
+  transition:none;
+}
+
+.wheel-bg{
+  position:absolute;
+  inset:0;
+
+  border-radius:50%;
+
+  background:
+  conic-gradient(
+    #ff6b6b 0deg 7.66deg,
+    #ffd166 7.66deg 15.32deg,
+    #06d6a0 15.32deg 22.98deg,
+    #4dabf7 22.98deg 30.64deg,
+    #9b5de5 30.64deg 38.30deg,
+    #ff70a6 38.30deg 45.96deg,
+    #ff9f1c 45.96deg 53.62deg,
+    #2ec4b6 53.62deg 61.28deg,
+    #ff6b6b 61.28deg 68.94deg,
+    #ffd166 68.94deg 76.60deg,
+    #06d6a0 76.60deg 84.26deg,
+    #4dabf7 84.26deg 91.92deg,
+    #9b5de5 91.92deg 99.58deg,
+    #ff70a6 99.58deg 107.24deg,
+    #ff9f1c 107.24deg 114.90deg,
+    #2ec4b6 114.90deg 122.56deg,
+    #ff6b6b 122.56deg 130.22deg,
+    #ffd166 130.22deg 137.88deg,
+    #06d6a0 137.88deg 145.54deg,
+    #4dabf7 145.54deg 153.20deg,
+    #9b5de5 153.20deg 160.86deg,
+    #ff70a6 160.86deg 168.52deg,
+    #ff9f1c 168.52deg 176.18deg,
+    #2ec4b6 176.18deg 183.84deg,
+    #ff6b6b 183.84deg 191.50deg,
+    #ffd166 191.50deg 199.16deg,
+    #06d6a0 199.16deg 206.82deg,
+    #4dabf7 206.82deg 214.48deg,
+    #9b5de5 214.48deg 222.14deg,
+    #ff70a6 222.14deg 229.80deg,
+    #ff9f1c 229.80deg 237.46deg,
+    #2ec4b6 237.46deg 245.12deg,
+    #ff6b6b 245.12deg 252.78deg,
+    #ffd166 252.78deg 260.44deg,
+    #06d6a0 260.44deg 268.10deg,
+    #4dabf7 268.10deg 275.76deg,
+    #9b5de5 275.76deg 283.42deg,
+    #ff70a6 283.42deg 291.08deg,
+    #ff9f1c 291.08deg 298.74deg,
+    #2ec4b6 298.74deg 306.40deg,
+    #ff6b6b 306.40deg 314.06deg,
+    #ffd166 314.06deg 321.72deg,
+    #06d6a0 321.72deg 329.38deg,
+    #4dabf7 329.38deg 337.04deg,
+    #9b5de5 337.04deg 344.70deg,
+    #ff70a6 344.70deg 352.36deg,
+    #ff9f1c 352.36deg 360deg
+  );
+}
+
+.wheel-labels{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+}
+
+.pref-label{
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:72px;
+
+  margin-left:-36px;
+  margin-top:-9px;
+
+  text-align:center;
+
+  font-size:8px;
+  font-weight:900;
+
+  color:#fff;
+
+  text-shadow:
+  0 1px 2px rgba(0,0,0,.8);
+
+  transform-origin:center center;
+
+  white-space:nowrap;
+}
+
+.wheel-center{
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  transform:
+  translate(-50%,-50%);
+
+  width:76px;
+  height:76px;
+
+  border-radius:50%;
+
+  background:#fff;
+
+  border:5px solid #222;
+
+  z-index:10;
 
   display:flex;
+
   justify-content:center;
   align-items:center;
 
   text-align:center;
-  padding:25px;
 
-  font-size:25px;
+  font-size:13px;
   font-weight:900;
 
-  background:
-  conic-gradient(
-    #ff6b6b 0deg 45deg,
-    #ffd166 45deg 90deg,
-    #06d6a0 90deg 135deg,
-    #4dabf7 135deg 180deg,
-    #9b5de5 180deg 225deg,
-    #ff70a6 225deg 270deg,
-    #ff9f1c 270deg 315deg,
-    #2ec4b6 315deg 360deg
-  );
-
-  transition:
-  transform 4s cubic-bezier(.12,.72,.15,1);
+  box-shadow:
+  0 3px 10px rgba(0,0,0,.2);
 }
 
-.spin-btn{
+.spin-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:4px;
+}
+
+.start-btn,
+.stop-btn{
+
   width:100%;
+
   border:0;
+
   border-radius:18px;
-  padding:17px;
+
+  padding:17px 8px;
 
   font-size:20px;
+
   font-weight:900;
+
   color:#fff;
 
+  box-shadow:
+  0 7px 18px rgba(0,0,0,.12);
+}
+
+.start-btn{
   background:
   linear-gradient(
     135deg,
     #ff477e,
     #ff8b3d
   );
-
-  box-shadow:
-  0 7px 18px rgba(255,71,126,.25);
 }
 
-.spin-btn:disabled{
-  opacity:.5;
+.stop-btn{
+  background:
+  linear-gradient(
+    135deg,
+    #333,
+    #666
+  );
 }
+
+button:disabled{
+  opacity:.45;
+}
+
+
+/* =========================================
+   結果
+========================================= */
 
 .result{
   display:none;
@@ -290,13 +456,6 @@ h1{
   font-size:16px;
 }
 
-.small{
-  color:#888;
-  font-size:12px;
-  line-height:1.7;
-  margin-top:10px;
-}
-
 .history-item{
   padding:9px 0;
   border-bottom:1px solid #eee;
@@ -319,6 +478,28 @@ h1{
   margin-right:5px;
 }
 
+
+/* スマホ */
+
+@media(max-width:380px){
+
+  .wheel{
+    width:275px;
+    height:275px;
+  }
+
+  .roulette-area{
+    height:325px;
+  }
+
+  .pref-label{
+    font-size:7px;
+    width:62px;
+    margin-left:-31px;
+  }
+
+}
+
 </style>
 </head>
 
@@ -334,7 +515,9 @@ h1{
 </div>
 
 
-<!-- 行き先 -->
+<!-- =====================================
+     行き先
+===================================== -->
 
 <div class="card">
 
@@ -366,26 +549,9 @@ onclick="selectMode('world')">
 </div>
 
 
-<!-- 現在の旅先 -->
-
-<div class="card">
-
-<div class="title">
-📍 今回の旅先
-</div>
-
-<div
-id="currentPlace"
-class="place">
-
-まだ決まっていません
-
-</div>
-
-</div>
-
-
-<!-- キーワード -->
+<!-- =====================================
+     キーワード
+===================================== -->
 
 <div class="card">
 
@@ -394,7 +560,9 @@ class="place">
 </div>
 
 <div class="small">
-今回の旅で重視したいことを選んでください
+
+好きなだけ選択できます
+
 </div>
 
 <br>
@@ -467,15 +635,29 @@ onclick="chooseKeyword(this,'🍽️ 食事を楽しみたい')">
 
 </div>
 
+<div
+id="selectedKeywords"
+class="selected-keywords">
+
+</div>
+
 </div>
 
 
-<!-- 行き先ルーレット -->
+<!-- =====================================
+     都道府県ルーレット
+===================================== -->
 
 <div class="card">
 
 <div class="title">
-🎰 行き先ルーレット
+🎰 都道府県ルーレット
+</div>
+
+<div class="small">
+
+STARTで回転 → 好きなタイミングでSTOP！
+
 </div>
 
 <div class="roulette-area">
@@ -483,28 +665,81 @@ onclick="chooseKeyword(this,'🍽️ 食事を楽しみたい')">
 <div class="pointer"></div>
 
 <div
-id="placeRoulette"
-class="roulette">
+id="placeWheel"
+class="wheel">
 
-READY
+<div class="wheel-bg"></div>
+
+<div
+id="placeLabels"
+class="wheel-labels">
+</div>
+
+<div
+id="placeCenter"
+class="wheel-center">
+
+START
 
 </div>
 
 </div>
+
+</div>
+
+<div class="spin-controls">
 
 <button
-id="placeSpinBtn"
-class="spin-btn"
-onclick="spinPlace()">
+id="placeStartBtn"
+class="start-btn"
+onclick="startPlace()">
 
-🎰 行き先を決める！
+▶️ START
+
+</button>
+
+<button
+id="placeStopBtn"
+class="stop-btn"
+onclick="stopPlace()"
+disabled>
+
+⏹️ STOP
 
 </button>
 
 </div>
 
+</div>
 
-<!-- 北海道札幌 -->
+
+<!-- =====================================
+     現在の旅先
+===================================== -->
+
+<div
+id="currentPlaceCard"
+class="card"
+style="display:none;">
+
+<div class="title">
+📍 今回の旅先
+</div>
+
+<div
+id="currentPlace"
+class="place">
+
+---
+
+</div>
+
+</div>
+
+
+<!-- =====================================
+     北海道
+===================================== -->
 
 <div
 id="sapporoSection"
@@ -523,7 +758,7 @@ class="place">
 
 </div>
 
-<div class="small" style="text-align:center;">
+<div class="small">
 
 北海道が当たりました！<br>
 今回は札幌ホテルルーレットへ！
@@ -533,7 +768,9 @@ class="place">
 </div>
 
 
-<!-- ホテルルーレット -->
+<!-- =====================================
+     ホテル
+===================================== -->
 
 <div
 id="hotelSection"
@@ -546,40 +783,71 @@ style="display:none;">
 
 <div class="small">
 
-選んだキーワードを確認しながら、
-札幌のホテル10件から運命の1件を抽選！
+選んだキーワードを考慮しながら、
+札幌のホテル10件から抽選！
+
+<br>
+
+STARTで回転 → 好きなタイミングでSTOP！
 
 </div>
-
 
 <div class="roulette-area">
 
 <div class="pointer"></div>
 
 <div
-id="hotelRoulette"
-class="roulette">
+id="hotelWheel"
+class="wheel">
 
-10 HOTEL
+<div class="wheel-bg"></div>
+
+<div
+id="hotelLabels"
+class="wheel-labels">
+</div>
+
+<div
+id="hotelCenter"
+class="wheel-center">
+
+START
 
 </div>
 
 </div>
 
+</div>
+
+<div class="spin-controls">
 
 <button
-id="hotelSpinBtn"
-class="spin-btn"
-onclick="spinHotel()">
+id="hotelStartBtn"
+class="start-btn"
+onclick="startHotel()">
 
-🏨 ホテル10件から抽選！
+▶️ START
+
+</button>
+
+<button
+id="hotelStopBtn"
+class="stop-btn"
+onclick="stopHotel()"
+disabled>
+
+⏹️ STOP
 
 </button>
 
 </div>
 
+</div>
 
-<!-- 最終結果 -->
+
+<!-- =====================================
+     最終結果
+===================================== -->
 
 <div
 id="result"
@@ -599,10 +867,9 @@ class="card result">
 id="finalKeyword"
 class="keyword-result">
 
-🔎 キーワード
+🔎 キーワード：おまかせ
 
 </div>
-
 
 <div class="hotel-box">
 
@@ -610,15 +877,13 @@ class="keyword-result">
 🏨 あなたのホテルは…
 </div>
 
-
 <div
 id="finalHotel"
 class="hotel-name">
 
-ホテル抽選中…
+---
 
 </div>
-
 
 <a
 id="reserveBtn"
@@ -630,7 +895,6 @@ rel="noopener noreferrer">
 🏨 このホテルを予約する →
 
 </a>
-
 
 <div class="small">
 
@@ -644,7 +908,9 @@ rel="noopener noreferrer">
 </div>
 
 
-<!-- 履歴 -->
+<!-- =====================================
+     履歴
+===================================== -->
 
 <div class="card">
 
@@ -653,13 +919,17 @@ rel="noopener noreferrer">
 </div>
 
 <div id="history">
+
 まだありません
-</div>
 
 </div>
 
+</div>
 
-<!-- 説明 -->
+
+<!-- =====================================
+     遊び方
+===================================== -->
 
 <div class="card">
 
@@ -669,11 +939,13 @@ rel="noopener noreferrer">
 
 <br><br>
 
-① 行き先を決める<br>
-② 旅のキーワードを選ぶ<br>
-③ 北海道が出たら札幌へ<br>
-④ 札幌ホテル10件から抽選<br>
-⑤ 最後は運命のホテルへ！
+① 旅のキーワードを好きなだけ選ぶ<br>
+② 47都道府県ルーレットをSTART<br>
+③ 好きなタイミングでSTOP<br>
+④ 北海道が出たら札幌へ<br>
+⑤ 札幌ホテル10件から抽選<br>
+⑥ START → STOPでホテル決定<br>
+⑦ 「このホテルを予約する」から予約！
 
 </div>
 
@@ -689,16 +961,87 @@ rel="noopener noreferrer">
    基本設定
 ========================================= */
 
-let keyword = "";
+let keywords = [];
 
-let spinningPlace = false;
+let placeRunning = false;
 
-let spinningHotel = false;
+let hotelRunning = false;
+
+let placeRotation = 0;
+
+let hotelRotation = 0;
+
+let placeTimer = null;
+
+let hotelTimer = null;
+
+
+/* =========================================
+   47都道府県
+========================================= */
+
+const prefectures = [
+
+"北海道",
+
+"青森県",
+"岩手県",
+"宮城県",
+"秋田県",
+"山形県",
+"福島県",
+
+"茨城県",
+"栃木県",
+"群馬県",
+"埼玉県",
+"千葉県",
+"東京都",
+"神奈川県",
+
+"新潟県",
+"富山県",
+"石川県",
+"福井県",
+"山梨県",
+"長野県",
+"岐阜県",
+"静岡県",
+"愛知県",
+
+"三重県",
+"滋賀県",
+"京都府",
+"大阪府",
+"兵庫県",
+"奈良県",
+"和歌山県",
+
+"鳥取県",
+"島根県",
+"岡山県",
+"広島県",
+"山口県",
+
+"徳島県",
+"香川県",
+"愛媛県",
+"高知県",
+
+"福岡県",
+"佐賀県",
+"長崎県",
+"熊本県",
+"大分県",
+"宮崎県",
+"鹿児島県",
+"沖縄県"
+
+];
 
 
 /* =========================================
    札幌ホテル10件
-   あなたが送ってくれたリンク順
 ========================================= */
 
 const hotels = [
@@ -757,22 +1100,79 @@ const hotels = [
 
 
 /* =========================================
-   キーワード
+   複数キーワード選択
 ========================================= */
 
 function chooseKeyword(button,value){
 
-  document
-  .querySelectorAll(".keyword")
-  .forEach(function(btn){
+  /*
+    すでに選択中なら解除
+  */
 
-    btn.classList.remove("selected");
+  if(
+    keywords.includes(value)
+  ){
 
-  });
+    keywords =
+    keywords.filter(
+      function(item){
+        return item !== value;
+      }
+    );
 
-  button.classList.add("selected");
+    button.classList.remove(
+      "selected"
+    );
 
-  keyword = value;
+  }
+
+  /*
+    未選択なら追加
+  */
+
+  else{
+
+    keywords.push(value);
+
+    button.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  updateSelectedKeywords();
+
+}
+
+
+/* =========================================
+   選択中キーワード表示
+========================================= */
+
+function updateSelectedKeywords(){
+
+  const box =
+  document.getElementById(
+    "selectedKeywords"
+  );
+
+
+  if(
+    keywords.length === 0
+  ){
+
+    box.textContent =
+    "";
+
+    return;
+
+  }
+
+
+  box.textContent =
+  "選択中： " +
+  keywords.join(" ・ ");
 
 }
 
@@ -811,138 +1211,341 @@ function selectMode(mode){
 
 
 /* =========================================
-   ランダム
+   都道府県ラベル
 ========================================= */
 
-function randomItem(array){
+function createPlaceLabels(){
 
-  return array[
-    Math.floor(
-      Math.random() * array.length
-    )
-  ];
+  const box =
+  document.getElementById(
+    "placeLabels"
+  );
+
+  box.innerHTML = "";
+
+
+  const count =
+  prefectures.length;
+
+
+  const radius = 122;
+
+
+  prefectures.forEach(
+    function(name,index){
+
+      const label =
+      document.createElement(
+        "div"
+      );
+
+      label.className =
+      "pref-label";
+
+      label.textContent =
+      name;
+
+
+      const angle =
+      (360 / count) * index - 90;
+
+
+      const rad =
+      angle * Math.PI / 180;
+
+
+      const x =
+      Math.cos(rad) * radius;
+
+
+      const y =
+      Math.sin(rad) * radius;
+
+
+      label.style.transform =
+      "translate(" +
+      x +
+      "px," +
+      y +
+      "px)";
+
+
+      box.appendChild(
+        label
+      );
+
+    }
+  );
 
 }
 
 
 /* =========================================
-   行き先ルーレット
+   ホテルラベル
 ========================================= */
 
-function spinPlace(){
+function createHotelLabels(){
 
-  if(spinningPlace){
+  const box =
+  document.getElementById(
+    "hotelLabels"
+  );
+
+  box.innerHTML = "";
+
+
+  const count =
+  hotels.length;
+
+
+  const radius = 112;
+
+
+  hotels.forEach(
+    function(hotel,index){
+
+      const label =
+      document.createElement(
+        "div"
+      );
+
+      label.className =
+      "pref-label";
+
+      label.textContent =
+      hotel.name;
+
+
+      const angle =
+      (360 / count) * index - 90;
+
+
+      const rad =
+      angle * Math.PI / 180;
+
+
+      const x =
+      Math.cos(rad) * radius;
+
+
+      const y =
+      Math.sin(rad) * radius;
+
+
+      label.style.transform =
+      "translate(" +
+      x +
+      "px," +
+      y +
+      "px)";
+
+
+      box.appendChild(
+        label
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   都道府県 START
+========================================= */
+
+function startPlace(){
+
+  if(placeRunning){
     return;
   }
 
-  spinningPlace = true;
 
-  const btn =
-  document.getElementById(
-    "placeSpinBtn"
+  /*
+    前回の結果を隠す
+  */
+
+  document
+  .getElementById(
+    "result"
+  )
+  .classList.remove(
+    "show"
   );
 
-  btn.disabled = true;
+
+  placeRunning = true;
 
 
-  const roulette =
+  const wheel =
   document.getElementById(
-    "placeRoulette"
+    "placeWheel"
   );
 
 
-  const places = [
+  const center =
+  document.getElementById(
+    "placeCenter"
+  );
 
-    "北海道",
-    "東京都",
-    "大阪府",
-    "京都府",
-    "沖縄県",
-    "福岡県",
-    "長野県",
-    "石川県",
-    "広島県",
-    "宮城県"
 
-  ];
+  const start =
+  document.getElementById(
+    "placeStartBtn"
+  );
+
+
+  const stop =
+  document.getElementById(
+    "placeStopBtn"
+  );
+
+
+  start.disabled = true;
+
+  stop.disabled = false;
+
+
+  center.textContent =
+  "GO!";
+
+
+  placeTimer =
+  setInterval(
+    function(){
+
+      placeRotation += 10;
+
+      wheel.style.transform =
+      "rotate(" +
+      placeRotation +
+      "deg)";
+
+    },
+    30
+  );
+
+}
+
+
+/* =========================================
+   都道府県 STOP
+========================================= */
+
+function stopPlace(){
+
+  if(!placeRunning){
+    return;
+  }
+
+
+  clearInterval(
+    placeTimer
+  );
+
+
+  placeRunning = false;
+
+
+  const wheel =
+  document.getElementById(
+    "placeWheel"
+  );
+
+
+  const center =
+  document.getElementById(
+    "placeCenter"
+  );
+
+
+  const start =
+  document.getElementById(
+    "placeStartBtn"
+  );
+
+
+  const stop =
+  document.getElementById(
+    "placeStopBtn"
+  );
+
+
+  start.disabled = false;
+
+  stop.disabled = true;
+
+
+  const count =
+  prefectures.length;
+
+
+  const sector =
+  360 / count;
+
+
+  let normalized =
+  ((placeRotation % 360) + 360) % 360;
+
+
+  let index =
+  Math.floor(
+    (
+      360 -
+      normalized +
+      sector / 2
+    ) / sector
+  ) % count;
 
 
   const result =
-  randomItem(places);
+  prefectures[index];
 
 
-  const rotations =
-  5 + Math.floor(
-    Math.random() * 4
-  );
+  center.textContent =
+  result;
 
 
-  const deg =
-  Math.floor(
-    Math.random() * 360
-  );
+  document
+  .getElementById(
+    "currentPlaceCard"
+  )
+  .style.display =
+  "block";
 
 
-  roulette.style.transform =
-  "rotate(" +
-  (rotations * 360 + deg) +
-  "deg)";
+  document
+  .getElementById(
+    "currentPlace"
+  )
+  .textContent =
+  result;
 
 
-  roulette.textContent =
-  "GOGO!";
+  if(result === "北海道"){
 
+    showSapporo();
 
-  setTimeout(function(){
+  }
 
-    roulette.style.transform =
-    "rotate(0deg)";
+  else{
 
-
-    roulette.textContent =
-    result;
+    document
+    .getElementById(
+      "sapporoSection"
+    )
+    .style.display =
+    "none";
 
 
     document
     .getElementById(
-      "currentPlace"
+      "hotelSection"
     )
-    .textContent =
-    result;
+    .style.display =
+    "none";
 
-
-    if(result === "北海道"){
-
-      showSapporo();
-
-    }
-
-    else{
-
-      document
-      .getElementById(
-        "sapporoSection"
-      )
-      .style.display =
-      "none";
-
-
-      document
-      .getElementById(
-        "hotelSection"
-      )
-      .style.display =
-      "none";
-
-    }
-
-
-    spinningPlace = false;
-
-    btn.disabled = false;
-
-
-  },4200);
+  }
 
 }
 
@@ -977,90 +1580,171 @@ function showSapporo(){
   "block";
 
 
-  document
-  .getElementById(
-    "hotelSection"
-  )
-  .scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
+  setTimeout(
+    function(){
+
+      document
+      .getElementById(
+        "hotelSection"
+      )
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+    },
+    300
+  );
 
 }
 
 
 /* =========================================
-   ホテルルーレット
+   ホテル START
 ========================================= */
 
-function spinHotel(){
+function startHotel(){
 
-  if(spinningHotel){
+  if(hotelRunning){
     return;
   }
 
-  spinningHotel = true;
+
+  hotelRunning = true;
 
 
-  const btn =
+  const wheel =
   document.getElementById(
-    "hotelSpinBtn"
+    "hotelWheel"
   );
 
-  btn.disabled = true;
 
-
-  const roulette =
+  const center =
   document.getElementById(
-    "hotelRoulette"
+    "hotelCenter"
   );
+
+
+  const start =
+  document.getElementById(
+    "hotelStartBtn"
+  );
+
+
+  const stop =
+  document.getElementById(
+    "hotelStopBtn"
+  );
+
+
+  start.disabled = true;
+
+  stop.disabled = false;
+
+
+  center.textContent =
+  "GO!";
+
+
+  hotelTimer =
+  setInterval(
+    function(){
+
+      hotelRotation += 10;
+
+      wheel.style.transform =
+      "rotate(" +
+      hotelRotation +
+      "deg)";
+
+    },
+    30
+  );
+
+}
+
+
+/* =========================================
+   ホテル STOP
+========================================= */
+
+function stopHotel(){
+
+  if(!hotelRunning){
+    return;
+  }
+
+
+  clearInterval(
+    hotelTimer
+  );
+
+
+  hotelRunning = false;
+
+
+  const wheel =
+  document.getElementById(
+    "hotelWheel"
+  );
+
+
+  const center =
+  document.getElementById(
+    "hotelCenter"
+  );
+
+
+  const start =
+  document.getElementById(
+    "hotelStartBtn"
+  );
+
+
+  const stop =
+  document.getElementById(
+    "hotelStopBtn"
+  );
+
+
+  start.disabled = false;
+
+  stop.disabled = true;
+
+
+  const count =
+  hotels.length;
+
+
+  const sector =
+  360 / count;
+
+
+  let normalized =
+  ((hotelRotation % 360) + 360) % 360;
+
+
+  let index =
+  Math.floor(
+    (
+      360 -
+      normalized +
+      sector / 2
+    ) / sector
+  ) % count;
 
 
   const result =
-  randomItem(hotels);
+  hotels[index];
 
 
-  const rotations =
-  6 + Math.floor(
-    Math.random() * 3
+  center.textContent =
+  "決定";
+
+
+  showFinalResult(
+    result
   );
-
-
-  const deg =
-  Math.floor(
-    Math.random() * 360
-  );
-
-
-  roulette.style.transform =
-  "rotate(" +
-  (rotations * 360 + deg) +
-  "deg)";
-
-
-  roulette.textContent =
-  "GOGO!";
-
-
-  setTimeout(function(){
-
-    roulette.style.transform =
-    "rotate(0deg)";
-
-
-    roulette.textContent =
-    result.name;
-
-
-    showFinalResult(result);
-
-
-    spinningHotel = false;
-
-    btn.disabled = false;
-
-
-  },4200);
 
 }
 
@@ -1085,7 +1769,11 @@ function showFinalResult(hotel){
   )
   .textContent =
   "🔎 キーワード：" +
-  (keyword || "おまかせ");
+  (
+    keywords.length
+    ? keywords.join("・")
+    : "おまかせ"
+  );
 
 
   document
@@ -1100,8 +1788,7 @@ function showFinalResult(hotel){
   document
   .getElementById(
     "reserveBtn"
-  )
-  .href =
+  ).href =
   hotel.url;
 
 
@@ -1169,14 +1856,20 @@ function saveHistory(hotelName){
 
   "北海道・札幌｜" +
 
-  (keyword || "おまかせ") +
+  (
+    keywords.length
+    ? keywords.join("・")
+    : "おまかせ"
+  ) +
 
   "｜🏨 " +
 
   hotelName;
 
 
-  history.prepend(item);
+  history.prepend(
+    item
+  );
 
 
   while(
@@ -1190,6 +1883,15 @@ function saveHistory(hotelName){
   }
 
 }
+
+
+/* =========================================
+   初期化
+========================================= */
+
+createPlaceLabels();
+
+createHotelLabels();
 
 </script>
 
