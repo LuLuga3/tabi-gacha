@@ -2,10 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>🎰 タビガチャ｜次の旅を運で決めよう</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎰 タビガチャ｜札幌ホテルルーレット</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -14,18 +16,24 @@
 body{
   margin:0;
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Noto Sans JP",
-    "Hiragino Kaku Gothic ProN",
-    Meiryo,
-    sans-serif;
-  background:linear-gradient(180deg,#f7fbff 0%,#fff8f0 100%);
+  -apple-system,
+  BlinkMacSystemFont,
+  "Noto Sans JP",
+  "Hiragino Kaku Gothic ProN",
+  Meiryo,
+  sans-serif;
+
+  background:
+  linear-gradient(
+    180deg,
+    #f5fbff 0%,
+    #fff7f0 100%
+  );
+
   color:#222;
 }
 
 .container{
-  width:100%;
   max-width:560px;
   margin:auto;
   padding:18px 14px 50px;
@@ -52,16 +60,10 @@ h1{
   box-shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
-.section-title{
-  font-size:19px;
+.title{
+  font-size:20px;
   font-weight:900;
   margin-bottom:12px;
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  margin:12px 0 7px;
 }
 
 .mode{
@@ -72,8 +74,8 @@ label{
 
 .mode button{
   border:0;
-  border-radius:18px;
-  padding:13px 8px;
+  border-radius:17px;
+  padding:14px 8px;
   font-size:16px;
   font-weight:bold;
   background:#eee;
@@ -95,63 +97,80 @@ label{
   border:1px solid #ddd;
   background:#fff;
   border-radius:15px;
-  padding:12px 7px;
+  padding:13px 7px;
   font-size:14px;
   font-weight:bold;
 }
 
 .keyword.selected{
   color:#fff;
-  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
   border-color:transparent;
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+}
+
+.place{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+  margin:10px 0;
 }
 
 .roulette-area{
   position:relative;
-  margin:18px auto;
-  width:100%;
-  min-height:210px;
+  min-height:230px;
   display:flex;
-  align-items:center;
   justify-content:center;
-}
-
-.roulette{
-  width:200px;
-  height:200px;
-  border-radius:50%;
-  border:8px solid #fff;
-  box-shadow:0 8px 25px rgba(0,0,0,.18);
-  display:flex;
   align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:25px;
-  font-weight:bold;
-  font-size:25px;
-  background:
-    conic-gradient(
-      #ff6b6b 0deg 60deg,
-      #ffd166 60deg 120deg,
-      #06d6a0 120deg 180deg,
-      #4dabf7 180deg 240deg,
-      #9b5de5 240deg 300deg,
-      #ff70a6 300deg 360deg
-    );
-  transition:transform 4s cubic-bezier(.12,.72,.15,1);
 }
 
 .pointer{
   position:absolute;
-  top:-2px;
+  top:0;
   left:50%;
   transform:translateX(-50%);
   z-index:5;
+
   width:0;
   height:0;
-  border-left:14px solid transparent;
-  border-right:14px solid transparent;
-  border-top:28px solid #222;
+
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:30px solid #222;
+}
+
+.roulette{
+  width:210px;
+  height:210px;
+
+  border-radius:50%;
+  border:8px solid white;
+
+  box-shadow:0 8px 28px rgba(0,0,0,.2);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  padding:25px;
+
+  font-size:25px;
+  font-weight:900;
+
+  background:
+  conic-gradient(
+    #ff6b6b 0deg 45deg,
+    #ffd166 45deg 90deg,
+    #06d6a0 90deg 135deg,
+    #4dabf7 135deg 180deg,
+    #9b5de5 180deg 225deg,
+    #ff70a6 225deg 270deg,
+    #ff9f1c 270deg 315deg,
+    #2ec4b6 315deg 360deg
+  );
+
+  transition:
+  transform 4s cubic-bezier(.12,.72,.15,1);
 }
 
 .spin-btn{
@@ -159,11 +178,20 @@ label{
   border:0;
   border-radius:18px;
   padding:17px;
+
   font-size:20px;
-  font-weight:bold;
+  font-weight:900;
   color:#fff;
-  background:linear-gradient(135deg,#ff477e,#ff8b3d);
-  box-shadow:0 7px 18px rgba(255,71,126,.25);
+
+  background:
+  linear-gradient(
+    135deg,
+    #ff477e,
+    #ff8b3d
+  );
+
+  box-shadow:
+  0 7px 18px rgba(255,71,126,.25);
 }
 
 .spin-btn:disabled{
@@ -181,118 +209,119 @@ label{
 }
 
 @keyframes pop{
+
   0%{
     transform:scale(.7);
     opacity:0;
   }
+
   100%{
     transform:scale(1);
     opacity:1;
   }
-}
 
-.result-title{
-  color:#777;
-  font-size:14px;
 }
 
 .result-place{
-  font-size:34px;
+  font-size:32px;
   font-weight:900;
-  margin:5px 0 12px;
 }
 
 .keyword-result{
   display:inline-block;
-  background:#fff0f4;
-  color:#e50046;
-  padding:7px 13px;
+
+  padding:7px 14px;
+
   border-radius:20px;
+
+  background:#fff0f4;
+
+  color:#e50046;
+
   font-weight:bold;
-  margin-bottom:12px;
 }
 
-.area-box,
 .hotel-box{
-  background:#f8f8ff;
-  border-radius:18px;
-  padding:15px;
-  margin-top:12px;
+
+  margin-top:16px;
+
+  padding:18px;
+
+  border-radius:20px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #f7f7ff,
+    #fff
+  );
+
+  border:1px solid #eee;
 }
 
-.area-label,
 .hotel-label{
-  font-size:13px;
   color:#777;
-}
-
-.area-name,
-.hotel-name{
-  font-size:21px;
-  font-weight:900;
-  margin:5px 0 12px;
+  font-size:13px;
 }
 
 .hotel-name{
   font-size:23px;
+  font-weight:900;
+  margin:8px 0 14px;
+  line-height:1.4;
 }
 
 .reserve-btn{
+
   display:block;
+
   text-decoration:none;
+
   color:#fff;
+
   background:#e50046;
-  border-radius:14px;
-  padding:14px;
-  font-weight:bold;
+
+  border-radius:15px;
+
+  padding:15px;
+
+  font-weight:900;
+
+  font-size:16px;
 }
 
 .small{
   color:#888;
   font-size:12px;
+  line-height:1.7;
   margin-top:10px;
-  line-height:1.6;
-}
-
-.history{
-  font-size:13px;
 }
 
 .history-item{
   padding:9px 0;
   border-bottom:1px solid #eee;
+  font-size:13px;
 }
 
 .badge{
+
   display:inline-block;
+
   background:#fff0f4;
   color:#e50046;
+
   border-radius:20px;
+
   padding:3px 8px;
+
   font-size:11px;
+
   margin-right:5px;
-}
-
-.hotel-loading{
-  font-size:20px;
-  font-weight:bold;
-  animation:blink .5s infinite alternate;
-}
-
-@keyframes blink{
-  from{opacity:.4}
-  to{opacity:1}
-}
-
-.notice{
-  text-align:center;
-  color:#777;
-  font-size:13px;
-  line-height:1.7;
 }
 
 </style>
 </head>
+
 
 <body>
 
@@ -309,22 +338,47 @@ label{
 
 <div class="card">
 
-<div class="section-title">
-🌏 まずは行き先
+<div class="title">
+🌏 行き先
 </div>
 
 <div class="mode">
 
-<button id="japanBtn"
+<button
+id="japanBtn"
 class="active"
-onclick="setMode('japan')">
+onclick="selectMode('japan')">
+
 🇯🇵 日本
+
 </button>
 
-<button id="worldBtn"
-onclick="setMode('world')">
+<button
+id="worldBtn"
+onclick="selectMode('world')">
+
 🌎 世界
+
 </button>
+
+</div>
+
+</div>
+
+
+<!-- 現在の旅先 -->
+
+<div class="card">
+
+<div class="title">
+📍 今回の旅先
+</div>
+
+<div
+id="currentPlace"
+class="place">
+
+まだ決まっていません
 
 </div>
 
@@ -335,54 +389,80 @@ onclick="setMode('world')">
 
 <div class="card">
 
-<div class="section-title">
+<div class="title">
 🔎 旅のキーワード
 </div>
 
-<div class="notice">
-今回の旅で重視したいことを1つ選んでください
+<div class="small">
+今回の旅で重視したいことを選んでください
 </div>
+
+<br>
 
 <div class="keyword-grid">
 
-<button class="keyword"
-onclick="selectKeyword(this,'♨️ 温泉')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'♨️ 温泉')">
+
 ♨️ 温泉
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'💰 安く泊まりたい')">
-💰 安く泊まりたい
+<button
+class="keyword"
+onclick="chooseKeyword(this,'💰 安く泊まりたい')">
+
+💰 安さ
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'🍳 朝食を楽しみたい')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'🍳 朝食を楽しみたい')">
+
 🍳 朝食
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'🏙️ 観光に便利')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'🏙️ 観光に便利')">
+
 🏙️ 観光
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'🚉 駅近')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'🚉 駅近')">
+
 🚉 駅近
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'🌿 ゆっくりしたい')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'🌿 ゆっくりしたい')">
+
 🌿 癒やし
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'✨ ちょっと贅沢')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'✨ ちょっと贅沢')">
+
 ✨ 贅沢
+
 </button>
 
-<button class="keyword"
-onclick="selectKeyword(this,'🍽️ 食事を楽しみたい')">
+<button
+class="keyword"
+onclick="chooseKeyword(this,'🍽️ 食事を楽しみたい')">
+
 🍽️ 食事
+
 </button>
 
 </div>
@@ -390,11 +470,11 @@ onclick="selectKeyword(this,'🍽️ 食事を楽しみたい')">
 </div>
 
 
-<!-- ルーレット -->
+<!-- 行き先ルーレット -->
 
 <div class="card">
 
-<div class="section-title">
+<div class="title">
 🎰 行き先ルーレット
 </div>
 
@@ -402,68 +482,200 @@ onclick="selectKeyword(this,'🍽️ 食事を楽しみたい')">
 
 <div class="pointer"></div>
 
-<div id="roulette" class="roulette">
+<div
+id="placeRoulette"
+class="roulette">
+
 READY
+
 </div>
 
 </div>
 
 <button
-id="spinButton"
+id="placeSpinBtn"
 class="spin-btn"
-onclick="spin()">
-🎰 ガチャを回す！
+onclick="spinPlace()">
+
+🎰 行き先を決める！
+
 </button>
 
 </div>
 
 
-<!-- 結果 -->
+<!-- 北海道札幌 -->
 
-<div id="result" class="card result">
+<div
+id="sapporoSection"
+class="card"
+style="display:none;">
 
-<div class="result-title">
-🎉 今回の旅先は…
+<div class="title">
+📍 北海道のエリア
 </div>
 
-<div id="resultPlace" class="result-place">
-北海道
+<div
+id="areaText"
+class="place">
+
+札幌
+
 </div>
 
-<div id="keywordResult"
+<div class="small" style="text-align:center;">
+
+北海道が当たりました！<br>
+今回は札幌ホテルルーレットへ！
+
+</div>
+
+</div>
+
+
+<!-- ホテルルーレット -->
+
+<div
+id="hotelSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+🏨 札幌ホテルルーレット
+</div>
+
+<div class="small">
+
+選んだキーワードを確認しながら、
+札幌のホテル10件から運命の1件を抽選！
+
+</div>
+
+
+<div class="roulette-area">
+
+<div class="pointer"></div>
+
+<div
+id="hotelRoulette"
+class="roulette">
+
+10 HOTEL
+
+</div>
+
+</div>
+
+
+<button
+id="hotelSpinBtn"
+class="spin-btn"
+onclick="spinHotel()">
+
+🏨 ホテル10件から抽選！
+
+</button>
+
+</div>
+
+
+<!-- 最終結果 -->
+
+<div
+id="result"
+class="card result">
+
+<div class="result-place">
+🎉 旅が決定！
+</div>
+
+<div id="finalPlace">
+北海道・札幌
+</div>
+
+<br>
+
+<div
+id="finalKeyword"
 class="keyword-result">
+
 🔎 キーワード
+
 </div>
 
-<div id="areaResult"></div>
 
-<div id="hotelResult"></div>
+<div class="hotel-box">
+
+<div class="hotel-label">
+🏨 あなたのホテルは…
+</div>
+
+
+<div
+id="finalHotel"
+class="hotel-name">
+
+ホテル抽選中…
+
+</div>
+
+
+<a
+id="reserveBtn"
+class="reserve-btn"
+href="#"
+target="_blank"
+rel="noopener noreferrer">
+
+🏨 このホテルを予約する →
+
+</a>
+
+
+<div class="small">
+
+楽天トラベルの予約ページが開きます。<br>
+料金・空室状況は予約ページでご確認ください。
+
+</div>
+
+</div>
 
 </div>
 
 
 <!-- 履歴 -->
 
-<div class="card history">
+<div class="card">
 
-<b>📜 最近のガチャ結果</b>
+<div class="title">
+📜 最近の結果
+</div>
 
-<div id="historyList">
+<div id="history">
 まだありません
 </div>
 
 </div>
 
 
-<div class="card small">
+<!-- 説明 -->
 
-<b>💡 タビガチャの遊び方</b><br><br>
+<div class="card">
 
-① 行き先をガチャで決める<br>
+<div class="small">
+
+<b>🎰 タビガチャの遊び方</b>
+
+<br><br>
+
+① 行き先を決める<br>
 ② 旅のキーワードを選ぶ<br>
-③ 当たった場所のエリアを抽選<br>
-④ キーワードを考慮してホテルを10件から抽選<br>
+③ 北海道が出たら札幌へ<br>
+④ 札幌ホテル10件から抽選<br>
 ⑤ 最後は運命のホテルへ！
+
+</div>
 
 </div>
 
@@ -472,547 +684,514 @@ class="keyword-result">
 
 <script>
 
-/* =========================
-   現在の設定
-========================= */
 
-let currentMode = "japan";
-let selectedKeyword = "";
+/* =========================================
+   基本設定
+========================================= */
 
-let spinning = false;
+let keyword = "";
 
+let spinningPlace = false;
 
-/* =========================
-   日本
-========================= */
-
-const japanPlaces = [
-
-"北海道",
-"東京都",
-"大阪府",
-"京都府",
-"沖縄県",
-"福岡県",
-"神奈川県",
-"愛知県",
-"千葉県",
-"埼玉県",
-"兵庫県",
-"広島県",
-"宮城県",
-"長野県",
-"静岡県",
-"石川県",
-"熊本県",
-"鹿児島県",
-"奈良県",
-"岐阜県",
-"三重県",
-"岡山県",
-"香川県",
-"愛媛県",
-"長崎県"
-
-];
+let spinningHotel = false;
 
 
-/* =========================
-   世界
-========================= */
+/* =========================================
+   札幌ホテル10件
+   あなたが送ってくれたリンク順
+========================================= */
 
-const worldPlaces = [
-
-"韓国",
-"台湾",
-"タイ",
-"シンガポール",
-"ベトナム",
-"ハワイ",
-"グアム",
-"オーストラリア",
-"フランス",
-"イタリア",
-"スペイン",
-"イギリス",
-"アメリカ",
-"カナダ",
-"ドイツ",
-"フィリピン",
-"インドネシア",
-"マレーシア"
-
-];
-
-
-/* =========================
-   北海道6エリア
-========================= */
-
-const hokkaidoAreas = [
+const hotels = [
 
 {
- name:"札幌",
- url:"https://a.r10.to/hPPMCt",
- hotels:[
-  "札幌ホテル候補 01",
-  "札幌ホテル候補 02",
-  "札幌ホテル候補 03",
-  "札幌ホテル候補 04",
-  "札幌ホテル候補 05",
-  "札幌ホテル候補 06",
-  "札幌ホテル候補 07",
-  "札幌ホテル候補 08",
-  "札幌ホテル候補 09",
-  "札幌ホテル候補 10"
- ]
+  name:"JRタワーホテル日航札幌",
+  url:"https://a.r10.to/hPHwkR"
 },
 
 {
- name:"函館",
- url:"https://a.r10.to/hPJvth",
- hotels:[
-  "函館ホテル候補 01",
-  "函館ホテル候補 02",
-  "函館ホテル候補 03",
-  "函館ホテル候補 04",
-  "函館ホテル候補 05",
-  "函館ホテル候補 06",
-  "函館ホテル候補 07",
-  "函館ホテル候補 08",
-  "函館ホテル候補 09",
-  "函館ホテル候補 10"
- ]
+  name:"ホテルモントレ エーデルホフ札幌",
+  url:"https://a.r10.to/h5sCsm"
 },
 
 {
- name:"小樽",
- url:"https://a.r10.to/hk5v7l",
- hotels:[
-  "小樽ホテル候補 01",
-  "小樽ホテル候補 02",
-  "小樽ホテル候補 03",
-  "小樽ホテル候補 04",
-  "小樽ホテル候補 05",
-  "小樽ホテル候補 06",
-  "小樽ホテル候補 07",
-  "小樽ホテル候補 08",
-  "小樽ホテル候補 09",
-  "小樽ホテル候補 10"
- ]
+  name:"ソラリア西鉄ホテル札幌",
+  url:"https://a.r10.to/hgD3ku"
 },
 
 {
- name:"旭川",
- url:"https://a.r10.to/hF1xVQ",
- hotels:[
-  "旭川ホテル候補 01",
-  "旭川ホテル候補 02",
-  "旭川ホテル候補 03",
-  "旭川ホテル候補 04",
-  "旭川ホテル候補 05",
-  "旭川ホテル候補 06",
-  "旭川ホテル候補 07",
-  "旭川ホテル候補 08",
-  "旭川ホテル候補 09",
-  "旭川ホテル候補 10"
- ]
+  name:"札幌ホテル by グランベル",
+  url:"https://a.r10.to/hPlmGl"
 },
 
 {
- name:"登別",
- url:"https://a.r10.to/h5QccX",
- hotels:[
-  "登別ホテル候補 01",
-  "登別ホテル候補 02",
-  "登別ホテル候補 03",
-  "登別ホテル候補 04",
-  "登別ホテル候補 05",
-  "登別ホテル候補 06",
-  "登別ホテル候補 07",
-  "登別ホテル候補 08",
-  "登別ホテル候補 09",
-  "登別ホテル候補 10"
- ]
+  name:"ONSEN RYOKAN 由縁 札幌",
+  url:"https://a.r10.to/hYVGq6"
 },
 
 {
- name:"富良野",
- url:"https://a.r10.to/hRubqK",
- hotels:[
-  "富良野ホテル候補 01",
-  "富良野ホテル候補 02",
-  "富良野ホテル候補 03",
-  "富良野ホテル候補 04",
-  "富良野ホテル候補 05",
-  "富良野ホテル候補 06",
-  "富良野ホテル候補 07",
-  "富良野ホテル候補 08",
-  "富良野ホテル候補 09",
-  "富良野ホテル候補 10"
- ]
+  name:"ニューオータニイン札幌",
+  url:"https://a.r10.to/h5YmNL"
+},
+
+{
+  name:"ホテル京阪 札幌",
+  url:"https://a.r10.to/hFdmKn"
+},
+
+{
+  name:"ホテルエミシア札幌",
+  url:"https://a.r10.to/h5njrJ"
+},
+
+{
+  name:"札幌グランドホテル",
+  url:"https://a.r10.to/hPljXP"
+},
+
+{
+  name:"クロスホテル札幌",
+  url:"https://a.r10.to/h57Fzw"
 }
 
 ];
 
 
-/* =========================
-   モード変更
-========================= */
+/* =========================================
+   キーワード
+========================================= */
 
-function setMode(mode){
+function chooseKeyword(button,value){
 
- currentMode = mode;
+  document
+  .querySelectorAll(".keyword")
+  .forEach(function(btn){
 
- document.getElementById("japanBtn")
- .classList.toggle(
-   "active",
-   mode === "japan"
- );
+    btn.classList.remove("selected");
 
- document.getElementById("worldBtn")
- .classList.toggle(
-   "active",
-   mode === "world"
- );
+  });
+
+  button.classList.add("selected");
+
+  keyword = value;
 
 }
 
 
-/* =========================
-   キーワード選択
-========================= */
+/* =========================================
+   日本 / 世界
+========================================= */
 
-function selectKeyword(button,keyword){
+function selectMode(mode){
 
- document
- .querySelectorAll(".keyword")
- .forEach(function(btn){
+  if(mode === "japan"){
 
-   btn.classList.remove("selected");
+    document
+    .getElementById("japanBtn")
+    .classList.add("active");
 
- });
+    document
+    .getElementById("worldBtn")
+    .classList.remove("active");
 
- button.classList.add("selected");
+  }
 
- selectedKeyword = keyword;
+  else{
+
+    document
+    .getElementById("worldBtn")
+    .classList.add("active");
+
+    document
+    .getElementById("japanBtn")
+    .classList.remove("active");
+
+  }
 
 }
 
 
-/* =========================
+/* =========================================
    ランダム
-========================= */
+========================================= */
 
 function randomItem(array){
 
- return array[
-   Math.floor(
-     Math.random()*array.length
-   )
- ];
+  return array[
+    Math.floor(
+      Math.random() * array.length
+    )
+  ];
 
 }
 
 
-/* =========================
-   ガチャ
-========================= */
+/* =========================================
+   行き先ルーレット
+========================================= */
 
-function spin(){
+function spinPlace(){
 
- if(spinning) return;
+  if(spinningPlace){
+    return;
+  }
 
- spinning = true;
+  spinningPlace = true;
 
- const button =
-   document.getElementById("spinButton");
+  const btn =
+  document.getElementById(
+    "placeSpinBtn"
+  );
 
- button.disabled = true;
-
- const roulette =
-   document.getElementById("roulette");
-
- const result =
-   document.getElementById("result");
-
- result.classList.remove("show");
+  btn.disabled = true;
 
 
- /* キーワード未選択なら自動選択 */
-
- if(!selectedKeyword){
-
-   const buttons =
-     document.querySelectorAll(".keyword");
-
-   const randomButton =
-     buttons[
-       Math.floor(
-         Math.random()*buttons.length
-       )
-     ];
-
-   const keywordText =
-     randomButton.textContent.trim();
-
-   selectKeyword(
-     randomButton,
-     keywordText
-   );
-
- }
+  const roulette =
+  document.getElementById(
+    "placeRoulette"
+  );
 
 
- let place;
+  const places = [
 
- if(currentMode === "japan"){
+    "北海道",
+    "東京都",
+    "大阪府",
+    "京都府",
+    "沖縄県",
+    "福岡県",
+    "長野県",
+    "石川県",
+    "広島県",
+    "宮城県"
 
-   place = randomItem(japanPlaces);
-
- }else{
-
-   place = randomItem(worldPlaces);
-
- }
-
-
- /* ルーレット演出 */
-
- const rotations =
-   5 + Math.floor(Math.random()*4);
-
- const randomDeg =
-   Math.floor(Math.random()*360);
-
- roulette.style.transform =
-   "rotate(" +
-   (rotations*360+randomDeg) +
-   "deg)";
-
- roulette.textContent = "GOGO!";
+  ];
 
 
- setTimeout(function(){
+  const result =
+  randomItem(places);
 
-   roulette.style.transform =
-     "rotate(0deg)";
 
-   roulette.textContent =
-     place;
+  const rotations =
+  5 + Math.floor(
+    Math.random() * 4
+  );
 
-   showResult(place);
 
-   spinning = false;
+  const deg =
+  Math.floor(
+    Math.random() * 360
+  );
 
-   button.disabled = false;
 
- },4200);
+  roulette.style.transform =
+  "rotate(" +
+  (rotations * 360 + deg) +
+  "deg)";
+
+
+  roulette.textContent =
+  "GOGO!";
+
+
+  setTimeout(function(){
+
+    roulette.style.transform =
+    "rotate(0deg)";
+
+
+    roulette.textContent =
+    result;
+
+
+    document
+    .getElementById(
+      "currentPlace"
+    )
+    .textContent =
+    result;
+
+
+    if(result === "北海道"){
+
+      showSapporo();
+
+    }
+
+    else{
+
+      document
+      .getElementById(
+        "sapporoSection"
+      )
+      .style.display =
+      "none";
+
+
+      document
+      .getElementById(
+        "hotelSection"
+      )
+      .style.display =
+      "none";
+
+    }
+
+
+    spinningPlace = false;
+
+    btn.disabled = false;
+
+
+  },4200);
 
 }
 
 
-/* =========================
-   結果
-========================= */
+/* =========================================
+   北海道 → 札幌
+========================================= */
 
-function showResult(place){
+function showSapporo(){
 
- const result =
-   document.getElementById("result");
-
- const resultPlace =
-   document.getElementById("resultPlace");
-
- const keywordResult =
-   document.getElementById("keywordResult");
-
- const areaResult =
-   document.getElementById("areaResult");
-
- const hotelResult =
-   document.getElementById("hotelResult");
+  document
+  .getElementById(
+    "sapporoSection"
+  )
+  .style.display =
+  "block";
 
 
- resultPlace.textContent =
-   place;
-
- keywordResult.textContent =
-   "🔎 キーワード：" +
-   selectedKeyword;
-
- areaResult.innerHTML = "";
- hotelResult.innerHTML = "";
+  document
+  .getElementById(
+    "areaText"
+  )
+  .textContent =
+  "札幌";
 
 
- /* 北海道 */
-
- if(place === "北海道"){
-
-   const area =
-     randomItem(hokkaidoAreas);
-
-
-   areaResult.innerHTML =
-
-   '<div class="area-box">' +
-
-   '<div class="area-label">' +
-   '🎯 北海道のエリア抽選' +
-   '</div>' +
-
-   '<div class="area-name">' +
-   '📍 ' + area.name +
-   '</div>' +
-
-   '</div>';
+  document
+  .getElementById(
+    "hotelSection"
+  )
+  .style.display =
+  "block";
 
 
-   hotelResult.innerHTML =
-
-   '<div class="hotel-box">' +
-
-   '<div class="hotel-label">' +
-   '🏨 キーワードを考慮してホテル抽選中…' +
-   '</div>' +
-
-   '<div class="hotel-name hotel-loading">' +
-   '🎰 01 → 02 → 03 → 04 → 05…' +
-   '</div>' +
-
-   '</div>';
-
-
-   /* ホテル抽選演出 */
-
-   setTimeout(function(){
-
-     const hotel =
-       randomItem(area.hotels);
-
-     hotelResult.innerHTML =
-
-     '<div class="hotel-box">' +
-
-     '<div class="hotel-label">' +
-     '🎉 あなたのホテルは…' +
-     '</div>' +
-
-     '<div class="hotel-name">' +
-     '🏨 ' + hotel +
-     '</div>' +
-
-     '<a class="reserve-btn"' +
-     ' href="' + area.url + '"' +
-     ' target="_blank"' +
-     ' rel="noopener noreferrer">' +
-
-     '🏨 このエリアのホテルを予約する →' +
-
-     '</a>' +
-
-     '<div class="small">' +
-     '楽天トラベルの予約ページが開きます。' +
-     '</div>' +
-
-     '</div>';
-
-
-     saveHistory(
-       "北海道・" +
-       area.name +
-       "｜" +
-       selectedKeyword
-     );
-
-   },1600);
-
-
- }else{
-
-   areaResult.innerHTML =
-
-   '<div class="area-box">' +
-
-   '<div class="area-name">' +
-   '✨ ' + place +
-   '</div>' +
-
-   '<div class="small">' +
-   'この場所でキーワードに合うホテルを探してみよう！' +
-   '</div>' +
-
-   '</div>';
-
-
-   saveHistory(
-     place +
-     "｜" +
-     selectedKeyword
-   );
-
- }
-
-
- result.classList.add("show");
-
-
- setTimeout(function(){
-
-   result.scrollIntoView({
-     behavior:"smooth",
-     block:"center"
-   });
-
- },300);
+  document
+  .getElementById(
+    "hotelSection"
+  )
+  .scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
 
 }
 
 
-/* =========================
+/* =========================================
+   ホテルルーレット
+========================================= */
+
+function spinHotel(){
+
+  if(spinningHotel){
+    return;
+  }
+
+  spinningHotel = true;
+
+
+  const btn =
+  document.getElementById(
+    "hotelSpinBtn"
+  );
+
+  btn.disabled = true;
+
+
+  const roulette =
+  document.getElementById(
+    "hotelRoulette"
+  );
+
+
+  const result =
+  randomItem(hotels);
+
+
+  const rotations =
+  6 + Math.floor(
+    Math.random() * 3
+  );
+
+
+  const deg =
+  Math.floor(
+    Math.random() * 360
+  );
+
+
+  roulette.style.transform =
+  "rotate(" +
+  (rotations * 360 + deg) +
+  "deg)";
+
+
+  roulette.textContent =
+  "GOGO!";
+
+
+  setTimeout(function(){
+
+    roulette.style.transform =
+    "rotate(0deg)";
+
+
+    roulette.textContent =
+    result.name;
+
+
+    showFinalResult(result);
+
+
+    spinningHotel = false;
+
+    btn.disabled = false;
+
+
+  },4200);
+
+}
+
+
+/* =========================================
+   最終結果
+========================================= */
+
+function showFinalResult(hotel){
+
+  document
+  .getElementById(
+    "finalPlace"
+  )
+  .textContent =
+  "🇯🇵 北海道・札幌";
+
+
+  document
+  .getElementById(
+    "finalKeyword"
+  )
+  .textContent =
+  "🔎 キーワード：" +
+  (keyword || "おまかせ");
+
+
+  document
+  .getElementById(
+    "finalHotel"
+  )
+  .textContent =
+  "🏨 " +
+  hotel.name;
+
+
+  document
+  .getElementById(
+    "reserveBtn"
+  )
+  .href =
+  hotel.url;
+
+
+  document
+  .getElementById(
+    "result"
+  )
+  .classList.add(
+    "show"
+  );
+
+
+  saveHistory(
+    hotel.name
+  );
+
+
+  document
+  .getElementById(
+    "result"
+  )
+  .scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+
+/* =========================================
    履歴
-========================= */
+========================================= */
 
-function saveHistory(text){
+function saveHistory(hotelName){
 
- const list =
-   document.getElementById(
-     "historyList"
-   );
-
-
- if(list.textContent === "まだありません"){
-
-   list.innerHTML = "";
-
- }
+  const history =
+  document.getElementById(
+    "history"
+  );
 
 
- const item =
-   document.createElement("div");
+  if(
+    history.textContent ===
+    "まだありません"
+  ){
 
- item.className =
-   "history-item";
+    history.innerHTML = "";
 
- item.innerHTML =
-   '<span class="badge">NEW</span>' +
-   text;
-
-
- list.prepend(item);
+  }
 
 
- while(list.children.length > 5){
+  const item =
+  document.createElement(
+    "div"
+  );
 
-   list.removeChild(
-     list.lastChild
-   );
 
- }
+  item.className =
+  "history-item";
+
+
+  item.innerHTML =
+
+  '<span class="badge">NEW</span>' +
+
+  "北海道・札幌｜" +
+
+  (keyword || "おまかせ") +
+
+  "｜🏨 " +
+
+  hotelName;
+
+
+  history.prepend(item);
+
+
+  while(
+    history.children.length > 5
+  ){
+
+    history.removeChild(
+      history.lastChild
+    );
+
+  }
 
 }
 
 </script>
 
 </body>
-  </html>
+</html>
