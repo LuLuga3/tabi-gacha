@@ -479,7 +479,7 @@ onclick="selectMode('overseas')">
 </div>
 
 
-<!-- 追加：行き先を選ぶ -->
+<!-- 行き先を選ぶ -->
 
 <br>
 
@@ -511,6 +511,12 @@ onclick="selectDestination('京都府')">
 class="keyword"
 onclick="selectDestination('大阪府')">
 大阪府
+</button>
+
+<button
+class="keyword"
+onclick="selectDestination('東京都')">
+東京都
 </button>
 
 </div>
@@ -701,11 +707,8 @@ style="display:none;">
 📍 北海道のエリア
 </div>
 
-<div
-class="place">
-
+<div class="place">
 札幌
-
 </div>
 
 <div class="small">
@@ -729,11 +732,8 @@ style="display:none;">
 📍 京都のホテル
 </div>
 
-<div
-class="place">
-
+<div class="place">
 京都
-
 </div>
 
 <div class="small">
@@ -757,17 +757,39 @@ style="display:none;">
 📍 大阪のホテル
 </div>
 
-<div
-class="place">
-
+<div class="place">
 大阪
-
 </div>
 
 <div class="small">
 
 大阪府が当たりました！<br>
 今回は大阪ホテルルーレットへ！
+
+</div>
+
+</div>
+
+
+<!-- 東京 -->
+
+<div
+id="tokyoSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+📍 東京都のエリア
+</div>
+
+<div class="place">
+東京
+</div>
+
+<div class="small">
+
+東京都が当たりました！<br>
+今回は東京ホテルルーレットへ！
 
 </div>
 
@@ -996,6 +1018,80 @@ disabled>
 </div>
 
 
+<!-- 東京ホテル -->
+
+<div
+id="tokyoHotelSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+🏨 東京ホテルルーレット
+</div>
+
+<div class="small">
+
+東京のホテル10件から抽選！<br>
+STARTで回転 → 好きなタイミングでSTOP！
+
+</div>
+
+<div class="roulette-area">
+
+<div class="pointer"></div>
+
+<div
+id="tokyoHotelWheel"
+class="wheel">
+
+<div
+id="tokyoHotelWheelBg"
+class="wheel-bg">
+</div>
+
+<div
+id="tokyoHotelLabels"
+class="wheel-labels">
+</div>
+
+<div
+id="tokyoHotelCenter"
+class="wheel-center">
+
+START
+
+</div>
+
+</div>
+
+</div>
+
+<div class="spin-controls">
+
+<button
+id="tokyoHotelStartBtn"
+class="start-btn"
+onclick="startTokyoHotel()">
+
+▶️ START
+
+</button>
+
+<button
+id="tokyoHotelStopBtn"
+class="stop-btn"
+onclick="stopTokyoHotel()"
+disabled>
+
+⏹️ STOP
+
+</button>
+
+</div>
+
+</div>
+
+
 <!-- 最終結果 -->
 
 <div
@@ -1113,16 +1209,19 @@ let placeRunning = false;
 let hotelRunning = false;
 let kyotoHotelRunning = false;
 let osakaHotelRunning = false;
+let tokyoHotelRunning = false;
 
 let placeRotation = 0;
 let hotelRotation = 0;
 let kyotoHotelRotation = 0;
 let osakaHotelRotation = 0;
+let tokyoHotelRotation = 0;
 
 let placeTimer = null;
 let hotelTimer = null;
 let kyotoHotelTimer = null;
 let osakaHotelTimer = null;
+let tokyoHotelTimer = null;
 
 
 /* =========================================
@@ -1374,6 +1473,65 @@ url:"https://a.r10.to/hgcQ68"
 {
 name:"ザ ロイヤルパークホテル アイコニック 大阪御堂筋",
 url:"https://a.r10.to/hXi5On"
+}
+
+];
+
+
+/* =========================================
+   東京ホテル
+========================================= */
+
+const tokyoHotels = [
+
+{
+name:"ホテルミュッセ銀座名鉄",
+url:"https://a.r10.to/hPDUsh"
+},
+
+{
+name:"からくさホテル 東京ステーション",
+url:"https://a.r10.to/hPfUGg"
+},
+
+{
+name:"三井ガーデンホテル銀座プレミア",
+url:"https://a.r10.to/hP6bAf"
+},
+
+{
+name:"三井ガーデンホテル日本橋プレミア",
+url:"https://a.r10.to/h50zik"
+},
+
+{
+name:"パークホテル東京",
+url:"https://a.r10.to/hgp4eY"
+},
+
+{
+name:"MIMARU東京 日本橋水天宮前",
+url:"https://a.r10.to/hPJKcu"
+},
+
+{
+name:"帝国ホテル 東京",
+url:"https://a.r10.to/hk7QVa"
+},
+
+{
+name:"グランド ハイアット 東京",
+url:"https://a.r10.to/hgePLf"
+},
+
+{
+name:"ザ・ペニンシュラ東京",
+url:"https://a.r10.to/h5q12U"
+},
+
+{
+name:"マンダリン オリエンタル 東京",
+url:"https://a.r10.to/hP5ZFe"
 }
 
 ];
@@ -1649,6 +1807,12 @@ createHotelWheel(
 osakaHotels
 );
 
+createHotelWheel(
+"tokyoHotelLabels",
+"tokyoHotelWheelBg",
+tokyoHotels
+);
+
 }
 
 
@@ -1862,6 +2026,18 @@ showOsaka();
 }
 
 
+/* 東京 */
+
+else if(
+currentMode === "japan" &&
+result === "東京都"
+){
+
+showTokyo();
+
+}
+
+
 /* その他 */
 
 else{
@@ -1875,7 +2051,6 @@ hideAllHotelSections();
 
 /* =========================================
    行き先を自分で選ぶ
-   ※既存ルーレットは変更しない
 ========================================= */
 
 function selectDestination(place){
@@ -1917,6 +2092,15 @@ showOsaka();
 
 }
 
+
+/* 東京 */
+
+else if(place === "東京都"){
+
+showTokyo();
+
+}
+
 }
 
 
@@ -1942,6 +2126,11 @@ document.getElementById(
 "none";
 
 document.getElementById(
+"tokyoSection"
+).style.display =
+"none";
+
+document.getElementById(
 "hotelSection"
 ).style.display =
 "none";
@@ -1953,6 +2142,11 @@ document.getElementById(
 
 document.getElementById(
 "osakaHotelSection"
+).style.display =
+"none";
+
+document.getElementById(
+"tokyoHotelSection"
 ).style.display =
 "none";
 
@@ -2052,6 +2246,41 @@ function(){
 
 document.getElementById(
 "osakaHotelSection"
+).scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+},
+300
+);
+
+}
+
+
+/* =========================================
+   東京
+========================================= */
+
+function showTokyo(){
+
+hideAllHotelSections();
+
+document.getElementById(
+"tokyoSection"
+).style.display =
+"block";
+
+document.getElementById(
+"tokyoHotelSection"
+).style.display =
+"block";
+
+setTimeout(
+function(){
+
+document.getElementById(
+"tokyoHotelSection"
 ).scrollIntoView({
 behavior:"smooth",
 block:"center"
@@ -2306,6 +2535,89 @@ osakaHotelRotation
 showFinalResult(
 result,
 "🇯🇵 大阪府・大阪"
+);
+
+}
+
+
+/* =========================================
+   東京ホテル START
+========================================= */
+
+function startTokyoHotel(){
+
+if(tokyoHotelRunning){
+return;
+}
+
+tokyoHotelRunning = true;
+
+document.getElementById(
+"tokyoHotelStartBtn"
+).disabled = true;
+
+document.getElementById(
+"tokyoHotelStopBtn"
+).disabled = false;
+
+document.getElementById(
+"tokyoHotelCenter"
+).textContent =
+"GO!";
+
+tokyoHotelTimer =
+setInterval(
+function(){
+
+tokyoHotelRotation += 10;
+
+document.getElementById(
+"tokyoHotelWheel"
+).style.transform =
+"rotate(" +
+tokyoHotelRotation +
+"deg)";
+
+},
+30
+);
+
+}
+
+
+/* =========================================
+   東京ホテル STOP
+========================================= */
+
+function stopTokyoHotel(){
+
+if(!tokyoHotelRunning){
+return;
+}
+
+clearInterval(
+tokyoHotelTimer
+);
+
+tokyoHotelRunning = false;
+
+document.getElementById(
+"tokyoHotelStartBtn"
+).disabled = false;
+
+document.getElementById(
+"tokyoHotelStopBtn"
+).disabled = true;
+
+const result =
+getWheelResult(
+tokyoHotels,
+tokyoHotelRotation
+);
+
+showFinalResult(
+result,
+"🇯🇵 東京都・東京"
 );
 
 }
