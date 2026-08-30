@@ -132,11 +132,6 @@ h1{
   text-align:center;
 }
 
-
-/* =========================================
-   ルーレット
-========================================= */
-
 .roulette-area{
   position:relative;
   width:100%;
@@ -308,11 +303,6 @@ button:disabled{
   opacity:.45;
 }
 
-
-/* =========================================
-   結果
-========================================= */
-
 .result{
   display:none;
   text-align:center;
@@ -426,7 +416,6 @@ button:disabled{
 
   margin-right:5px;
 }
-
 
 @media(max-width:380px){
 
@@ -581,7 +570,6 @@ onclick="chooseKeyword(this,'🍽️ 食事を楽しみたい')">
 <div
 id="selectedKeywords"
 class="selected-keywords">
-
 </div>
 
 </div>
@@ -710,7 +698,35 @@ class="place">
 </div>
 
 
-<!-- ホテル -->
+<!-- 京都 -->
+
+<div
+id="kyotoSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+📍 京都のホテル
+</div>
+
+<div
+class="place">
+
+京都
+
+</div>
+
+<div class="small">
+
+京都府が当たりました！<br>
+今回は京都ホテルルーレットへ！
+
+</div>
+
+</div>
+
+
+<!-- 札幌ホテル -->
 
 <div
 id="hotelSection"
@@ -788,6 +804,84 @@ disabled>
 </div>
 
 
+<!-- 京都ホテル -->
+
+<div
+id="kyotoHotelSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+🏨 京都ホテルルーレット
+</div>
+
+<div class="small">
+
+選んだキーワードを考慮しながら、
+京都のホテル10件から抽選！
+
+<br><br>
+
+STARTで回転 → 好きなタイミングでSTOP！
+
+</div>
+
+<div class="roulette-area">
+
+<div class="pointer"></div>
+
+<div
+id="kyotoHotelWheel"
+class="wheel">
+
+<div
+id="kyotoHotelWheelBg"
+class="wheel-bg">
+</div>
+
+<div
+id="kyotoHotelLabels"
+class="wheel-labels">
+</div>
+
+<div
+id="kyotoHotelCenter"
+class="wheel-center">
+
+START
+
+</div>
+
+</div>
+
+</div>
+
+<div class="spin-controls">
+
+<button
+id="kyotoHotelStartBtn"
+class="start-btn"
+onclick="startKyotoHotel()">
+
+▶️ START
+
+</button>
+
+<button
+id="kyotoHotelStopBtn"
+class="stop-btn"
+onclick="stopKyotoHotel()"
+disabled>
+
+⏹️ STOP
+
+</button>
+
+</div>
+
+</div>
+
+
 <!-- 最終結果 -->
 
 <div
@@ -799,7 +893,7 @@ class="card result">
 </div>
 
 <div id="finalPlace">
-北海道・札幌
+---
 </div>
 
 <br>
@@ -880,8 +974,8 @@ rel="noopener noreferrer">
 ② 旅のキーワードを好きなだけ選ぶ<br>
 ③ 行き先ルーレットをSTART<br>
 ④ 好きなタイミングでSTOP<br>
-⑤ 北海道が出たら札幌へ<br>
-⑥ 札幌ホテル10件から抽選<br>
+⑤ 北海道が出たら札幌ホテル10件から抽選<br>
+⑥ 京都府が出たら京都ホテル10件から抽選<br>
 ⑦ 最後は運命のホテルへ！
 
 </div>
@@ -906,13 +1000,19 @@ let placeRunning = false;
 
 let hotelRunning = false;
 
+let kyotoHotelRunning = false;
+
 let placeRotation = 0;
 
 let hotelRotation = 0;
 
+let kyotoHotelRotation = 0;
+
 let placeTimer = null;
 
 let hotelTimer = null;
+
+let kyotoHotelTimer = null;
 
 
 /* =========================================
@@ -1052,7 +1152,66 @@ const hotels = [
 
 
 /* =========================================
-   ★ ルーレット背景色を項目数に合わせる
+   京都ホテル10件
+========================================= */
+
+const kyotoHotels = [
+
+{
+  name:"HOTEL ARU KYOTO 三条木屋町通り",
+  url:"https://a.r10.to/hPRzvh"
+},
+
+{
+  name:"ホテル グラン・エムズ京都",
+  url:"https://a.r10.to/hgLs22"
+},
+
+{
+  name:"ホテルグランヴィア京都",
+  url:"https://a.r10.to/h8QXhX"
+},
+
+{
+  name:"THE BLOSSOM KYOTO",
+  url:"https://a.r10.to/h5gYSt"
+},
+
+{
+  name:"ヒルトン京都",
+  url:"https://a.r10.to/hg1s96"
+},
+
+{
+  name:"エースホテル京都",
+  url:"https://a.r10.to/hPiJUn"
+},
+
+{
+  name:"ホテル ザ ミツイ キョウト",
+  url:"https://a.r10.to/hYvzZa"
+},
+
+{
+  name:"The Hotel Seiryu Kyoto Kiyomizu",
+  url:"https://a.r10.to/h8rJW7"
+},
+
+{
+  name:"Park Hyatt Kyoto",
+  url:"https://a.r10.to/h57FJ2"
+},
+
+{
+  name:"フォーシーズンズホテル京都",
+  url:"https://a.r10.to/hgDehp"
+}
+
+];
+
+
+/* =========================================
+   ルーレット色
 ========================================= */
 
 const wheelColors = [
@@ -1282,7 +1441,23 @@ function selectMode(mode){
 
   document
   .getElementById(
+    "kyotoSection"
+  )
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById(
     "hotelSection"
+  )
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById(
+    "kyotoHotelSection"
   )
   .style.display =
   "none";
@@ -1346,10 +1521,6 @@ function createPlaceLabels(){
   : 112;
 
 
-  /*
-    ★ ここで項目数に合わせて背景を変更
-  */
-
   setWheelColors(
     document.getElementById(
       "placeWheelBg"
@@ -1400,7 +1571,7 @@ function createPlaceLabels(){
 
 
       box.appendChild(
-        label
+      label
       );
 
     }
@@ -1427,10 +1598,6 @@ function createHotelLabels(){
   hotels.length;
 
 
-  /*
-    ★ ホテル10件に合わせて10分割
-  */
-
   setWheelColors(
     document.getElementById(
       "hotelWheelBg"
@@ -1448,7 +1615,88 @@ function createHotelLabels(){
 
       const label =
       document.createElement(
-        "div"
+      "div"
+      );
+
+
+      label.className =
+      "pref-label";
+
+
+      label.textContent =
+      hotel.name;
+
+
+      const angle =
+      (360 / count) * index - 90;
+
+
+      const rad =
+      angle * Math.PI / 180;
+
+
+      const x =
+      Math.cos(rad) * radius;
+
+
+      const y =
+      Math.sin(rad) * radius;
+
+
+      label.style.transform =
+      "translate(" +
+      x +
+      "px," +
+      y +
+      "px)";
+
+
+      box.appendChild(
+      label
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   京都ホテルラベル
+========================================= */
+
+function createKyotoHotelLabels(){
+
+  const box =
+  document.getElementById(
+    "kyotoHotelLabels"
+  );
+
+  box.innerHTML = "";
+
+
+  const count =
+  kyotoHotels.length;
+
+
+  setWheelColors(
+    document.getElementById(
+      "kyotoHotelWheelBg"
+    ),
+    count
+  );
+
+
+  const radius =
+  112;
+
+
+  kyotoHotels.forEach(
+    function(hotel,index){
+
+      const label =
+      document.createElement(
+      "div"
       );
 
 
@@ -1667,6 +1915,15 @@ function stopPlace(){
 
   }
 
+  else if(
+    currentMode === "japan" &&
+    result === "京都府"
+  ){
+
+    showKyoto();
+
+  }
+
   else{
 
     document
@@ -1679,7 +1936,23 @@ function stopPlace(){
 
     document
     .getElementById(
+      "kyotoSection"
+    )
+    .style.display =
+    "none";
+
+
+    document
+    .getElementById(
       "hotelSection"
+    )
+    .style.display =
+    "none";
+
+
+    document
+    .getElementById(
+      "kyotoHotelSection"
     )
     .style.display =
     "none";
@@ -1739,7 +2012,48 @@ function showSapporo(){
 
 
 /* =========================================
-   ホテル START
+   京都
+========================================= */
+
+function showKyoto(){
+
+  document
+  .getElementById(
+    "kyotoSection"
+  )
+  .style.display =
+  "block";
+
+
+  document
+  .getElementById(
+    "kyotoHotelSection"
+  )
+  .style.display =
+  "block";
+
+
+  setTimeout(
+    function(){
+
+      document
+      .getElementById(
+        "kyotoHotelSection"
+      )
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+    },
+    300
+  );
+
+}
+
+
+/* =========================================
+   札幌ホテル START
 ========================================= */
 
 function startHotel(){
@@ -1805,7 +2119,7 @@ function startHotel(){
 
 
 /* =========================================
-   ホテル STOP
+   札幌ホテル STOP
 ========================================= */
 
 function stopHotel(){
@@ -1883,7 +2197,160 @@ function stopHotel(){
 
 
   showFinalResult(
-    result
+    result,
+    "🇯🇵 北海道・札幌"
+  );
+
+}
+
+
+/* =========================================
+   京都ホテル START
+========================================= */
+
+function startKyotoHotel(){
+
+  if(kyotoHotelRunning){
+    return;
+  }
+
+
+  kyotoHotelRunning = true;
+
+
+  const wheel =
+  document.getElementById(
+    "kyotoHotelWheel"
+  );
+
+
+  const center =
+  document.getElementById(
+    "kyotoHotelCenter"
+  );
+
+
+  const start =
+  document.getElementById(
+    "kyotoHotelStartBtn"
+  );
+
+
+  const stop =
+  document.getElementById(
+    "kyotoHotelStopBtn"
+  );
+
+
+  start.disabled = true;
+
+  stop.disabled = false;
+
+
+  center.textContent =
+  "GO!";
+
+
+  kyotoHotelTimer =
+  setInterval(
+    function(){
+
+      kyotoHotelRotation += 10;
+
+
+      wheel.style.transform =
+      "rotate(" +
+      kyotoHotelRotation +
+      "deg)";
+
+    },
+    30
+  );
+
+}
+
+
+/* =========================================
+   京都ホテル STOP
+========================================= */
+
+function stopKyotoHotel(){
+
+  if(!kyotoHotelRunning){
+    return;
+  }
+
+
+  clearInterval(
+    kyotoHotelTimer
+  );
+
+
+  kyotoHotelRunning = false;
+
+
+  const wheel =
+  document.getElementById(
+    "kyotoHotelWheel"
+  );
+
+
+  const center =
+  document.getElementById(
+    "kyotoHotelCenter"
+  );
+
+
+  const start =
+  document.getElementById(
+    "kyotoHotelStartBtn"
+  );
+
+
+  const stop =
+  document.getElementById(
+    "kyotoHotelStopBtn"
+  );
+
+
+  start.disabled = false;
+
+  stop.disabled = true;
+
+
+  const count =
+  kyotoHotels.length;
+
+
+  const sector =
+  360 / count;
+
+
+  let normalized =
+  ((kyotoHotelRotation % 360) + 360) % 360;
+
+
+  let index =
+  Math.floor(
+    (
+      360 -
+      normalized +
+      sector / 2
+    ) / sector
+  ) % count;
+
+
+  const result =
+  kyotoHotels[index];
+
+
+  center.textContent =
+  "決定";
+
+
+  showFinalResult(
+    result,
+    "🇯🇵 京都府・京都"
   );
 
 }
@@ -1893,14 +2360,17 @@ function stopHotel(){
    最終結果
 ========================================= */
 
-function showFinalResult(hotel){
+function showFinalResult(
+  hotel,
+  place
+){
 
   document
   .getElementById(
     "finalPlace"
   )
   .textContent =
-  "🇯🇵 北海道・札幌";
+  place;
 
 
   document
@@ -1943,7 +2413,8 @@ function showFinalResult(hotel){
 
 
   saveHistory(
-    hotel.name
+    hotel.name,
+    place
   );
 
 
@@ -1963,7 +2434,10 @@ function showFinalResult(hotel){
    履歴
 ========================================= */
 
-function saveHistory(hotelName){
+function saveHistory(
+  hotelName,
+  place
+){
 
   const history =
   document.getElementById(
@@ -1995,7 +2469,9 @@ function saveHistory(hotelName){
 
   '<span class="badge">NEW</span>' +
 
-  "北海道・札幌｜" +
+  place +
+
+  "｜" +
 
   (
     keywords.length
@@ -2033,6 +2509,8 @@ function saveHistory(hotelName){
 createPlaceLabels();
 
 createHotelLabels();
+
+createKyotoHotelLabels();
 
 </script>
 
