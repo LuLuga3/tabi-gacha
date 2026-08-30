@@ -478,6 +478,43 @@ onclick="selectMode('overseas')">
 
 </div>
 
+
+<!-- 追加：行き先を選ぶ -->
+
+<br>
+
+<div class="title">
+📍 行き先を選ぶ
+</div>
+
+<div class="small">
+ルーレットを使わず、自分で行き先を選べます
+</div>
+
+<br>
+
+<div class="keyword-grid">
+
+<button
+class="keyword"
+onclick="selectDestination('北海道')">
+北海道
+</button>
+
+<button
+class="keyword"
+onclick="selectDestination('京都府')">
+京都府
+</button>
+
+<button
+class="keyword"
+onclick="selectDestination('大阪府')">
+大阪府
+</button>
+
+</div>
+
 </div>
 
 
@@ -1049,12 +1086,10 @@ rel="noopener noreferrer">
 
 ① 日本か海外を選ぶ<br>
 ② 旅のキーワードを好きなだけ選ぶ<br>
-③ 行き先ルーレットをSTART<br>
+③ 行き先をルーレットまたは自分で選ぶ<br>
 ④ 好きなタイミングでSTOP<br>
-⑤ 北海道が出たら札幌ホテル10件から抽選<br>
-⑥ 京都府が出たら京都ホテル10件から抽選<br>
-⑦ 大阪府が出たら大阪ホテル10件から抽選<br>
-⑧ 最後は運命のホテルへ！
+⑤ 対応している場所ならホテル10件から抽選<br>
+⑥ 最後は運命のホテルへ！
 
 </div>
 
@@ -1286,7 +1321,7 @@ url:"https://a.r10.to/hgDehp"
 
 
 /* =========================================
-   大阪ホテル10件
+   大阪ホテル
 ========================================= */
 
 const osakaHotels = [
@@ -1839,6 +1874,53 @@ hideAllHotelSections();
 
 
 /* =========================================
+   行き先を自分で選ぶ
+   ※既存ルーレットは変更しない
+========================================= */
+
+function selectDestination(place){
+
+document.getElementById(
+"currentPlaceCard"
+).style.display =
+"block";
+
+document.getElementById(
+"currentPlace"
+).textContent =
+place;
+
+
+/* 北海道 */
+
+if(place === "北海道"){
+
+showSapporo();
+
+}
+
+
+/* 京都 */
+
+else if(place === "京都府"){
+
+showKyoto();
+
+}
+
+
+/* 大阪 */
+
+else if(place === "大阪府"){
+
+showOsaka();
+
+}
+
+}
+
+
+/* =========================================
    全ホテルエリア非表示
 ========================================= */
 
@@ -1983,7 +2065,7 @@ block:"center"
 
 
 /* =========================================
-   共通ホテルSTART
+   札幌ホテル START
 ========================================= */
 
 function startHotel(){
@@ -2028,7 +2110,7 @@ hotelRotation +
 
 
 /* =========================================
-   札幌ホテルSTOP
+   札幌ホテル STOP
 ========================================= */
 
 function stopHotel(){
@@ -2064,7 +2146,7 @@ result,
 
 
 /* =========================================
-   京都ホテルSTART
+   京都ホテル START
 ========================================= */
 
 function startKyotoHotel(){
@@ -2109,7 +2191,7 @@ kyotoHotelRotation +
 
 
 /* =========================================
-   京都ホテルSTOP
+   京都ホテル STOP
 ========================================= */
 
 function stopKyotoHotel(){
@@ -2147,7 +2229,7 @@ result,
 
 
 /* =========================================
-   大阪ホテルSTART
+   大阪ホテル START
 ========================================= */
 
 function startOsakaHotel(){
@@ -2192,7 +2274,7 @@ osakaHotelRotation +
 
 
 /* =========================================
-   大阪ホテルSTOP
+   大阪ホテル STOP
 ========================================= */
 
 function stopOsakaHotel(){
@@ -2392,4 +2474,4 @@ createHotelLabels();
 </script>
 
 </body>
-</html>
+  </html>
