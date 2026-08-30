@@ -193,53 +193,14 @@ h1{
 
   background:
   conic-gradient(
-    #ff6b6b 0deg 7.66deg,
-    #ffd166 7.66deg 15.32deg,
-    #06d6a0 15.32deg 22.98deg,
-    #4dabf7 22.98deg 30.64deg,
-    #9b5de5 30.64deg 38.30deg,
-    #ff70a6 38.30deg 45.96deg,
-    #ff9f1c 45.96deg 53.62deg,
-    #2ec4b6 53.62deg 61.28deg,
-    #ff6b6b 61.28deg 68.94deg,
-    #ffd166 68.94deg 76.60deg,
-    #06d6a0 76.60deg 84.26deg,
-    #4dabf7 84.26deg 91.92deg,
-    #9b5de5 91.92deg 99.58deg,
-    #ff70a6 99.58deg 107.24deg,
-    #ff9f1c 107.24deg 114.90deg,
-    #2ec4b6 114.90deg 122.56deg,
-    #ff6b6b 122.56deg 130.22deg,
-    #ffd166 130.22deg 137.88deg,
-    #06d6a0 137.88deg 145.54deg,
-    #4dabf7 145.54deg 153.20deg,
-    #9b5de5 153.20deg 160.86deg,
-    #ff70a6 160.86deg 168.52deg,
-    #ff9f1c 168.52deg 176.18deg,
-    #2ec4b6 176.18deg 183.84deg,
-    #ff6b6b 183.84deg 191.50deg,
-    #ffd166 191.50deg 199.16deg,
-    #06d6a0 199.16deg 206.82deg,
-    #4dabf7 206.82deg 214.48deg,
-    #9b5de5 214.48deg 222.14deg,
-    #ff70a6 222.14deg 229.80deg,
-    #ff9f1c 229.80deg 237.46deg,
-    #2ec4b6 237.46deg 245.12deg,
-    #ff6b6b 245.12deg 252.78deg,
-    #ffd166 252.78deg 260.44deg,
-    #06d6a0 260.44deg 268.10deg,
-    #4dabf7 268.10deg 275.76deg,
-    #9b5de5 275.76deg 283.42deg,
-    #ff70a6 283.42deg 291.08deg,
-    #ff9f1c 291.08deg 298.74deg,
-    #2ec4b6 298.74deg 306.40deg,
-    #ff6b6b 306.40deg 314.06deg,
-    #ffd166 314.06deg 321.72deg,
-    #06d6a0 321.72deg 329.38deg,
-    #4dabf7 329.38deg 337.04deg,
-    #9b5de5 337.04deg 344.70deg,
-    #ff70a6 344.70deg 352.36deg,
-    #ff9f1c 352.36deg 360deg
+    #ff6b6b 0deg 45deg,
+    #ffd166 45deg 90deg,
+    #06d6a0 90deg 135deg,
+    #4dabf7 135deg 180deg,
+    #9b5de5 180deg 225deg,
+    #ff70a6 225deg 270deg,
+    #ff9f1c 270deg 315deg,
+    #2ec4b6 315deg 360deg
   );
 }
 
@@ -255,20 +216,20 @@ h1{
   left:50%;
   top:50%;
 
-  width:72px;
+  width:75px;
 
-  margin-left:-36px;
+  margin-left:-37.5px;
   margin-top:-9px;
 
   text-align:center;
 
-  font-size:8px;
+  font-size:9px;
   font-weight:900;
 
   color:#fff;
 
   text-shadow:
-  0 1px 2px rgba(0,0,0,.8);
+  0 1px 2px rgba(0,0,0,.9);
 
   transform-origin:center center;
 
@@ -284,8 +245,8 @@ h1{
   transform:
   translate(-50%,-50%);
 
-  width:76px;
-  height:76px;
+  width:78px;
+  height:78px;
 
   border-radius:50%;
 
@@ -479,7 +440,9 @@ button:disabled{
 }
 
 
-/* スマホ */
+/* =========================================
+   スマホ
+========================================= */
 
 @media(max-width:380px){
 
@@ -537,10 +500,10 @@ onclick="selectMode('japan')">
 </button>
 
 <button
-id="worldBtn"
-onclick="selectMode('world')">
+id="overseasBtn"
+onclick="selectMode('overseas')">
 
-🌎 世界
+🌎 海外
 
 </button>
 
@@ -645,16 +608,18 @@ class="selected-keywords">
 
 
 <!-- =====================================
-     都道府県ルーレット
+     行き先ルーレット
 ===================================== -->
 
 <div class="card">
 
-<div class="title">
+<div class="title" id="rouletteTitle">
 🎰 都道府県ルーレット
 </div>
 
-<div class="small">
+<div
+id="rouletteDescription"
+class="small">
 
 STARTで回転 → 好きなタイミングでSTOP！
 
@@ -786,7 +751,7 @@ style="display:none;">
 選んだキーワードを考慮しながら、
 札幌のホテル10件から抽選！
 
-<br>
+<br><br>
 
 STARTで回転 → 好きなタイミングでSTOP！
 
@@ -939,13 +904,13 @@ rel="noopener noreferrer">
 
 <br><br>
 
-① 旅のキーワードを好きなだけ選ぶ<br>
-② 47都道府県ルーレットをSTART<br>
-③ 好きなタイミングでSTOP<br>
-④ 北海道が出たら札幌へ<br>
-⑤ 札幌ホテル10件から抽選<br>
-⑥ START → STOPでホテル決定<br>
-⑦ 「このホテルを予約する」から予約！
+① 日本か海外を選ぶ<br>
+② 旅のキーワードを好きなだけ選ぶ<br>
+③ 行き先ルーレットをSTART<br>
+④ 好きなタイミングでSTOP<br>
+⑤ 北海道が出たら札幌へ<br>
+⑥ 札幌ホテル10件から抽選<br>
+⑦ 最後は運命のホテルへ！
 
 </div>
 
@@ -962,6 +927,8 @@ rel="noopener noreferrer">
 ========================================= */
 
 let keywords = [];
+
+let currentMode = "japan";
 
 let placeRunning = false;
 
@@ -1041,6 +1008,26 @@ const prefectures = [
 
 
 /* =========================================
+   海外10か国
+========================================= */
+
+const overseas = [
+
+"🇰🇷 韓国",
+"🇹🇼 台湾",
+"🇹🇭 タイ",
+"🇸🇬 シンガポール",
+"🇻🇳 ベトナム",
+"🇺🇸 アメリカ",
+"🇫🇷 フランス",
+"🇮🇹 イタリア",
+"🇬🇧 イギリス",
+"🇦🇺 オーストラリア"
+
+];
+
+
+/* =========================================
    札幌ホテル10件
 ========================================= */
 
@@ -1100,14 +1087,10 @@ const hotels = [
 
 
 /* =========================================
-   複数キーワード選択
+   キーワード複数選択
 ========================================= */
 
 function chooseKeyword(button,value){
-
-  /*
-    すでに選択中なら解除
-  */
 
   if(
     keywords.includes(value)
@@ -1126,10 +1109,6 @@ function chooseKeyword(button,value){
 
   }
 
-  /*
-    未選択なら追加
-  */
-
   else{
 
     keywords.push(value);
@@ -1140,14 +1119,13 @@ function chooseKeyword(button,value){
 
   }
 
-
   updateSelectedKeywords();
 
 }
 
 
 /* =========================================
-   選択中キーワード表示
+   選択中キーワード
 ========================================= */
 
 function updateSelectedKeywords(){
@@ -1178,40 +1156,165 @@ function updateSelectedKeywords(){
 
 
 /* =========================================
-   日本 / 世界
+   日本 / 海外 切り替え
 ========================================= */
 
 function selectMode(mode){
 
+  currentMode = mode;
+
+
+  const japanBtn =
+  document.getElementById(
+    "japanBtn"
+  );
+
+
+  const overseasBtn =
+  document.getElementById(
+    "overseasBtn"
+  );
+
+
   if(mode === "japan"){
 
-    document
-    .getElementById("japanBtn")
-    .classList.add("active");
+    japanBtn.classList.add(
+      "active"
+    );
+
+    overseasBtn.classList.remove(
+      "active"
+    );
+
 
     document
-    .getElementById("worldBtn")
-    .classList.remove("active");
+    .getElementById(
+      "rouletteTitle"
+    )
+    .textContent =
+    "🎰 都道府県ルーレット";
+
+
+    document
+    .getElementById(
+      "rouletteDescription"
+    )
+    .textContent =
+    "47都道府県から抽選";
+
+
+    document
+    .getElementById(
+      "placeCenter"
+    )
+    .textContent =
+    "START";
+
+
+    createPlaceLabels();
 
   }
 
   else{
 
-    document
-    .getElementById("worldBtn")
-    .classList.add("active");
+    overseasBtn.classList.add(
+      "active"
+    );
+
+    japanBtn.classList.remove(
+      "active"
+    );
+
 
     document
-    .getElementById("japanBtn")
-    .classList.remove("active");
+    .getElementById(
+      "rouletteTitle"
+    )
+    .textContent =
+    "🎰 海外ルーレット";
+
+
+    document
+    .getElementById(
+      "rouletteDescription"
+    )
+    .textContent =
+    "海外10か国から抽選";
+
+
+    document
+    .getElementById(
+      "placeCenter"
+    )
+    .textContent =
+    "START";
+
+
+    createPlaceLabels();
 
   }
+
+
+  /*
+    前回の結果をリセット
+  */
+
+  document
+  .getElementById(
+    "currentPlaceCard"
+  )
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById(
+    "sapporoSection"
+  )
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById(
+    "hotelSection"
+  )
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById(
+    "result"
+  )
+  .classList.remove(
+    "show"
+  );
 
 }
 
 
 /* =========================================
-   都道府県ラベル
+   現在のルーレット項目
+========================================= */
+
+function getCurrentItems(){
+
+  if(
+    currentMode === "japan"
+  ){
+
+    return prefectures;
+
+  }
+
+  return overseas;
+
+}
+
+
+/* =========================================
+   ラベル作成
 ========================================= */
 
 function createPlaceLabels(){
@@ -1224,14 +1327,21 @@ function createPlaceLabels(){
   box.innerHTML = "";
 
 
+  const items =
+  getCurrentItems();
+
+
   const count =
-  prefectures.length;
+  items.length;
 
 
-  const radius = 122;
+  const radius =
+  count === 47
+  ? 122
+  : 112;
 
 
-  prefectures.forEach(
+  items.forEach(
     function(name,index){
 
       const label =
@@ -1239,8 +1349,10 @@ function createPlaceLabels(){
         "div"
       );
 
+
       label.className =
       "pref-label";
+
 
       label.textContent =
       name;
@@ -1298,7 +1410,8 @@ function createHotelLabels(){
   hotels.length;
 
 
-  const radius = 112;
+  const radius =
+  112;
 
 
   hotels.forEach(
@@ -1309,8 +1422,10 @@ function createHotelLabels(){
         "div"
       );
 
+
       label.className =
       "pref-label";
+
 
       label.textContent =
       hotel.name;
@@ -1341,7 +1456,7 @@ function createHotelLabels(){
 
 
       box.appendChild(
-        label
+      label
       );
 
     }
@@ -1351,7 +1466,7 @@ function createHotelLabels(){
 
 
 /* =========================================
-   都道府県 START
+   行き先 START
 ========================================= */
 
 function startPlace(){
@@ -1359,19 +1474,6 @@ function startPlace(){
   if(placeRunning){
     return;
   }
-
-
-  /*
-    前回の結果を隠す
-  */
-
-  document
-  .getElementById(
-    "result"
-  )
-  .classList.remove(
-    "show"
-  );
 
 
   placeRunning = true;
@@ -1416,6 +1518,7 @@ function startPlace(){
 
       placeRotation += 10;
 
+
       wheel.style.transform =
       "rotate(" +
       placeRotation +
@@ -1429,7 +1532,7 @@ function startPlace(){
 
 
 /* =========================================
-   都道府県 STOP
+   行き先 STOP
 ========================================= */
 
 function stopPlace(){
@@ -1476,8 +1579,12 @@ function stopPlace(){
   stop.disabled = true;
 
 
+  const items =
+  getCurrentItems();
+
+
   const count =
-  prefectures.length;
+  items.length;
 
 
   const sector =
@@ -1499,7 +1606,7 @@ function stopPlace(){
 
 
   const result =
-  prefectures[index];
+  items[index];
 
 
   center.textContent =
@@ -1522,7 +1629,14 @@ function stopPlace(){
   result;
 
 
-  if(result === "北海道"){
+  /*
+    北海道なら札幌へ
+  */
+
+  if(
+    currentMode === "japan" &&
+    result === "北海道"
+  ){
 
     showSapporo();
 
@@ -1652,6 +1766,7 @@ function startHotel(){
 
       hotelRotation += 10;
 
+
       wheel.style.transform =
       "rotate(" +
       hotelRotation +
@@ -1755,6 +1870,14 @@ function stopHotel(){
 
 function showFinalResult(hotel){
 
+  let placeText =
+  document
+  .getElementById(
+    "currentPlace"
+  )
+  .textContent;
+
+
   document
   .getElementById(
     "finalPlace"
@@ -1788,7 +1911,8 @@ function showFinalResult(hotel){
   document
   .getElementById(
     "reserveBtn"
-  ).href =
+  )
+  .href =
   hotel.url;
 
 
@@ -1896,4 +2020,4 @@ createHotelLabels();
 </script>
 
 </body>
-</html>
+  </html>
