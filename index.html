@@ -1,1758 +1,607 @@
-<!DOCTYPE html>
-<html lang="ja">
+<!DOCTYPE html><html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎰 タビガチャ</title>
-
-<style>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>タビAI｜旅行を考えるのをやめよう</title><style>
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+ box-sizing:border-box;
+ -webkit-tap-highlight-color:transparent;
 }
 
 body{
-  margin:0;
-  font-family:
-  -apple-system,
-  BlinkMacSystemFont,
-  "Noto Sans JP",
-  "Hiragino Kaku Gothic ProN",
-  Meiryo,
-  sans-serif;
-  background:linear-gradient(180deg,#f5fbff 0%,#fff7f0 100%);
-  color:#222;
+ margin:0;
+ font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",
+ "Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+ background:linear-gradient(180deg,#f5fbff,#fff7f0);
+ color:#222;
 }
 
 .container{
-  max-width:600px;
-  margin:auto;
-  padding:18px 14px 60px;
+ max-width:600px;
+ margin:auto;
+ padding:18px 14px 70px;
 }
 
 h1{
-  text-align:center;
-  font-size:30px;
-  margin:8px 0 4px;
+ text-align:center;
+ font-size:30px;
+ margin:8px 0 4px;
 }
 
 .subtitle{
-  text-align:center;
-  color:#777;
-  font-size:14px;
-  margin-bottom:18px;
+ text-align:center;
+ color:#777;
+ font-size:14px;
+ margin-bottom:22px;
 }
 
 .card{
-  background:#fff;
-  border-radius:22px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 8px 25px rgba(0,0,0,.07);
+ background:#fff;
+ border-radius:22px;
+ padding:18px;
+ margin-bottom:16px;
+ box-shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
 .title{
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:12px;
+ font-size:20px;
+ font-weight:900;
+ margin-bottom:12px;
 }
 
-.small{
-  color:#888;
-  font-size:12px;
-  line-height:1.7;
-  margin-top:8px;
-  text-align:center;
+label{
+ display:block;
+ font-size:13px;
+ font-weight:bold;
+ margin:14px 0 6px;
 }
 
-.mode{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+input,select{
+ width:100%;
+ padding:14px;
+ border:1px solid #ddd;
+ border-radius:14px;
+ font-size:16px;
+ background:#fff;
 }
 
-.mode button{
-  border:0;
-  border-radius:17px;
-  padding:14px 8px;
-  font-size:16px;
-  font-weight:bold;
-  background:#eee;
-  color:#555;
-}
-
-.mode button.active{
-  color:#fff;
-  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
-}
-
-.keyword-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.keyword{
-  border:1px solid #ddd;
-  background:#fff;
-  border-radius:15px;
-  padding:13px 7px;
-  font-size:14px;
-  font-weight:bold;
-}
-
-.keyword.selected{
-  color:#fff;
-  border-color:transparent;
-  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
-}
-
-.selected-keywords{
-  margin-top:12px;
-  text-align:center;
-  font-size:13px;
-  color:#e50046;
-  font-weight:bold;
-  min-height:20px;
-}
-
-.main-menu{
-  display:grid;
-  gap:12px;
-}
-
-.main-menu button{
-  border:0;
-  border-radius:20px;
-  padding:19px 15px;
-  font-size:18px;
-  font-weight:900;
-  color:#fff;
-  box-shadow:0 7px 18px rgba(0,0,0,.12);
-}
-
-.gacha-btn{
-  background:linear-gradient(135deg,#ff477e,#ff8b3d);
-}
-
-.place-search-btn{
-  background:linear-gradient(135deg,#5b5be7,#8e7dff);
-}
-
-.screen{
-  display:none;
-}
-
-.screen.active{
-  display:block;
-}
-
-.back-btn{
-  width:100%;
-  border:0;
-  background:#eee;
-  border-radius:15px;
-  padding:13px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-.next-btn{
-  width:100%;
-  border:0;
-  border-radius:17px;
-  padding:17px;
-  font-size:18px;
-  font-weight:900;
-  color:#fff;
-  background:linear-gradient(135deg,#ff477e,#ff8b3d);
-  margin-top:14px;
-}
-
-.input{
-  width:100%;
-  padding:16px;
-  border:1px solid #ddd;
-  border-radius:15px;
-  font-size:16px;
-  outline:none;
-}
-
-.input:focus{
-  border-color:#777;
-}
-
-.option-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
 }
 
 .option{
-  border:1px solid #ddd;
-  background:#fff;
-  border-radius:15px;
-  padding:14px 8px;
-  font-size:14px;
-  font-weight:bold;
+ border:1px solid #ddd;
+ background:#fff;
+ border-radius:15px;
+ padding:13px 8px;
+ font-size:14px;
+ font-weight:bold;
 }
 
 .option.selected{
-  color:#fff;
-  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+ background:linear-gradient(135deg,#ff477e,#ff8b3d);
+ color:#fff;
+ border-color:transparent;
 }
 
-.roulette-area{
-  position:relative;
-  width:100%;
-  height:350px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
+.main-btn{
+ width:100%;
+ border:0;
+ border-radius:18px;
+ padding:17px;
+ margin-top:18px;
+ font-size:18px;
+ font-weight:900;
+ color:#fff;
+ background:linear-gradient(135deg,#ff477e,#ff8b3d);
+ box-shadow:0 7px 18px rgba(0,0,0,.12);
 }
 
-.pointer{
-  position:absolute;
-  top:10px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:20;
-  width:0;
-  height:0;
-  border-left:18px solid transparent;
-  border-right:18px solid transparent;
-  border-top:36px solid #222;
+.secondary-btn{
+ width:100%;
+ border:0;
+ border-radius:15px;
+ padding:14px;
+ margin-top:10px;
+ font-size:15px;
+ font-weight:bold;
+ background:#eee;
 }
 
-.wheel{
-  position:relative;
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  border:8px solid #fff;
-  box-shadow:0 8px 30px rgba(0,0,0,.22);
-  overflow:hidden;
+.hidden{
+ display:none;
 }
 
-.wheel-bg{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
+.hero{
+ text-align:center;
+ padding:12px 0 5px;
 }
 
-.wheel-labels{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
+.hero-icon{
+ font-size:52px;
 }
 
-.pref-label{
-  position:absolute;
-  left:50%;
-  top:50%;
-  text-align:center;
-  font-weight:900;
-  color:#fff;
-  text-shadow:0 1px 2px #333;
-  white-space:nowrap;
-  pointer-events:none;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+.hero h2{
+ margin:5px 0;
+ font-size:25px;
 }
 
-.wheel-center{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  background:#fff;
-  border:5px solid #222;
-  z-index:10;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  font-size:12px;
-  font-weight:900;
+.hero p{
+ color:#777;
+ font-size:13px;
+ line-height:1.7;
 }
 
-.spin-controls{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.result-title{
+ font-size:22px;
+ font-weight:900;
 }
 
-.start-btn,
-.stop-btn{
-  border:0;
-  border-radius:17px;
-  padding:17px 8px;
-  font-size:19px;
-  font-weight:900;
-  color:#fff;
+.plan{
+ background:#f8f8ff;
+ border:1px solid #eee;
+ border-radius:18px;
+ padding:15px;
+ margin-top:12px;
 }
 
-.start-btn{
-  background:linear-gradient(135deg,#ff477e,#ff8b3d);
+.plan-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
 }
 
-.stop-btn{
-  background:linear-gradient(135deg,#333,#666);
-}
-
-button:disabled{
-  opacity:.45;
-}
-
-.place{
-  text-align:center;
-  font-size:28px;
-  font-weight:900;
-  margin:10px 0;
-}
-
-.result{
-  display:none;
-}
-
-.result.show{
-  display:block;
-}
-
-.result-place{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-}
-
-.hotel-box{
-  margin-top:16px;
-  padding:18px;
-  border-radius:20px;
-  background:linear-gradient(135deg,#f7f7ff,#fff);
-  border:1px solid #eee;
-}
-
-.hotel-label{
-  color:#777;
-  font-size:13px;
-}
-
-.hotel-name{
-  font-size:22px;
-  font-weight:900;
-  margin:8px 0 14px;
-  line-height:1.4;
-}
-
-.reserve-btn,
-.compare-link{
-  display:block;
-  text-decoration:none;
-  color:#fff;
-  background:#e50046;
-  border-radius:15px;
-  padding:15px;
-  text-align:center;
-  font-weight:900;
-}
-
-.compare-box{
-  margin-top:18px;
-}
-
-.compare-btn{
-  width:100%;
-  border:0;
-  border-radius:16px;
-  padding:15px;
-  color:#fff;
-  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
-  font-size:16px;
-  font-weight:900;
-}
-
-.compare-results{
-  display:none;
-  margin-top:14px;
-}
-
-.compare-results.show{
-  display:block;
-}
-
-.compare-item{
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:16px;
-  padding:13px;
-  margin-bottom:9px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.compare-rank{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#f2f2f2;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:900;
-  flex-shrink:0;
-}
-
-.compare-info{
-  flex:1;
-}
-
-.compare-site{
-  font-weight:900;
-  font-size:15px;
-}
-
-.compare-price{
-  font-size:13px;
-  color:#e50046;
-  font-weight:bold;
-  margin-top:3px;
-}
-
-.compare-link{
-  background:#333;
-  padding:8px 10px;
-  font-size:11px;
-}
-
-.destination-result{
-  margin-top:15px;
-}
-
-.destination-hotel{
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:10px;
-}
-
-.destination-hotel-name{
-  font-size:18px;
-  font-weight:900;
-}
-
-.distance{
-  display:inline-block;
-  margin-top:7px;
-  padding:5px 9px;
-  border-radius:12px;
-  background:#eef7ff;
-  color:#2877b8;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.price{
-  color:#e50046;
-  font-weight:900;
-  margin-top:7px;
-}
-
-.recommend{
-  display:inline-block;
-  background:#fff0c8;
-  border-radius:12px;
-  padding:5px 8px;
-  font-size:11px;
-  font-weight:bold;
-  margin-top:7px;
-}
-
-.transport-box{
-  margin-top:15px;
-  background:#f7f7f7;
-  border-radius:17px;
-  padding:15px;
-}
-
-.transport-title{
-  font-weight:900;
-  margin-bottom:7px;
-}
-
-.history-item{
-  padding:9px 0;
-  border-bottom:1px solid #eee;
-  font-size:13px;
+.plan-name{
+ font-size:18px;
+ font-weight:900;
 }
 
 .badge{
-  display:inline-block;
-  background:#fff0f4;
-  color:#e50046;
-  border-radius:20px;
-  padding:3px 8px;
-  font-size:11px;
-  margin-right:5px;
+ background:#fff0f4;
+ color:#e50046;
+ border-radius:20px;
+ padding:5px 9px;
+ font-size:11px;
+ font-weight:bold;
 }
 
-@media(max-width:360px){
-  .wheel{
-    width:270px;
-    height:270px;
-  }
+.price{
+ color:#e50046;
+ font-size:20px;
+ font-weight:900;
+ margin-top:8px;
 }
-</style>
-</head>
 
-<body>
-
-<div class="container">
-
-<h1>🎰 タビガチャ</h1>
-<div class="subtitle">
-次の旅を、運にまかせて決めよう！
-</div>
-
-
-<!-- =========================================
-     TOP
-========================================= -->
-
-<div id="topScreen" class="screen active">
-
-<div class="card">
-<div class="title">✈️ 旅行の探し方</div>
-
-<div class="main-menu">
-
-<button class="gacha-btn" onclick="showScreen('conditionScreen')">
-🎰 おまかせで決める
-</button>
-
-<button class="place-search-btn" onclick="showScreen('destinationScreen')">
-📍 行きたい場所から探す
-</button>
-
-</div>
-</div>
-
-<div class="card">
-<div class="small">
-🎰 おまかせならスロットで旅先を決定<br>
-📍 行きたい場所があるならホテル・距離・交通までチェック
-</div>
-</div>
-
-</div>
-
-
-<!-- =========================================
-     条件入力
-========================================= -->
-
-<div id="conditionScreen" class="screen">
-
-<button class="back-btn" onclick="showScreen('topScreen')">
-← 戻る
-</button>
-
-<div class="card">
-
-<div class="title">📝 旅行条件</div>
-
-<div class="small">
-先に条件を選んでからスロットへ！
-</div>
-
-<br>
-
-<div class="title">🌙 何泊する？</div>
-
-<div class="option-grid">
-<button class="option" onclick="selectOption(this,'nights','1泊')">1泊</button>
-<button class="option" onclick="selectOption(this,'nights','2泊')">2泊</button>
-<button class="option" onclick="selectOption(this,'nights','3泊')">3泊</button>
-<button class="option" onclick="selectOption(this,'nights','4泊以上')">4泊以上</button>
-</div>
-
-<br>
-
-<div class="title">👥 何名？</div>
-
-<div class="option-grid">
-<button class="option" onclick="selectOption(this,'people','1名')">1名</button>
-<button class="option" onclick="selectOption(this,'people','2名')">2名</button>
-<button class="option" onclick="selectOption(this,'people','3名')">3名</button>
-<button class="option" onclick="selectOption(this,'people','4名以上')">4名以上</button>
-</div>
-
-<br>
-
-<div class="title">🍳 朝食</div>
-
-<div class="option-grid">
-<button class="option" onclick="selectOption(this,'breakfast','朝食あり')">🍳 あり</button>
-<button class="option" onclick="selectOption(this,'breakfast','朝食なし')">なし</button>
-</div>
-
-<br>
-
-<div class="title">🔄 キャンセル</div>
-
-<div class="option-grid">
-<button class="option" onclick="selectOption(this,'cancel','無料キャンセル希望')">無料希望</button>
-<button class="option" onclick="selectOption(this,'cancel','どちらでも')">どちらでも</button>
-</div>
-
-<br>
-
-<div class="title">🔎 旅のキーワード</div>
-
-<div class="keyword-grid">
-
-<button class="keyword" onclick="chooseKeyword(this,'♨️ 温泉')">♨️ 温泉</button>
-<button class="keyword" onclick="chooseKeyword(this,'💰 安さ')">💰 安さ</button>
-<button class="keyword" onclick="chooseKeyword(this,'🍳 朝食')">🍳 朝食</button>
-<button class="keyword" onclick="chooseKeyword(this,'🏙️ 観光')">🏙️ 観光</button>
-<button class="keyword" onclick="chooseKeyword(this,'🚉 駅近')">🚉 駅近</button>
-<button class="keyword" onclick="chooseKeyword(this,'🌿 癒やし')">🌿 癒やし</button>
-<button class="keyword" onclick="chooseKeyword(this,'✨ 贅沢')">✨ 贅沢</button>
-<button class="keyword" onclick="chooseKeyword(this,'🍽️ 食事')">🍽️ 食事</button>
-
-</div>
-
-<div id="selectedKeywords" class="selected-keywords"></div>
-
-<button class="next-btn" onclick="goToGacha()">
-🎰 条件を決定してスロットへ
-</button>
-
-</div>
-</div>
-
-
-<!-- =========================================
-     スロット
-========================================= -->
-
-<div id="gachaScreen" class="screen">
-
-<button class="back-btn" onclick="showScreen('conditionScreen')">
-← 条件入力に戻る
-</button>
-
-<div class="card">
-
-<div class="title" id="rouletteTitle">
-🎰 都道府県スロット
-</div>
-
-<div id="rouletteDescription" class="small">
-47都道府県から抽選
-</div>
-
-<div class="roulette-area">
-
-<div class="pointer"></div>
-
-<div id="placeWheel" class="wheel">
-
-<div id="placeWheelBg" class="wheel-bg"></div>
-<div id="placeLabels" class="wheel-labels"></div>
-
-<div id="placeCenter" class="wheel-center">
-START
-</div>
-
-</div>
-</div>
-
-<div class="spin-controls">
-
-<button id="placeStartBtn"
-class="start-btn"
-onclick="startPlace()">
-▶️ START
-</button>
-
-<button id="placeStopBtn"
-class="stop-btn"
-onclick="stopPlace()"
-disabled>
-⏹️ STOP
-</button>
-
-</div>
-
-</div>
-
-<div id="currentPlaceCard" class="card" style="display:none;">
-
-<div class="title">
-📍 今回の旅先
-</div>
-
-<div id="currentPlace" class="place">
----
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     行きたい場所検索
-========================================= -->
-
-<div id="destinationScreen" class="screen">
-
-<button class="back-btn" onclick="showScreen('topScreen')">
-← 戻る
-</button>
-
-<div class="card">
-
-<div class="title">
-📍 行きたい場所から探す
-</div>
-
-<div class="small">
-「四国水族館」「USJ」「東京ディズニーランド」など、行きたい場所を入力
-</div>
-
-<br>
-
-<input
-id="destinationInput"
-class="input"
-type="text"
-placeholder="例：四国水族館"
->
-
-<button
-class="next-btn"
-onclick="searchDestination()">
-🔎 周辺ホテルを探す
-</button>
-
-</div>
-
-
-<div id="destinationResult"
-class="card destination-result"
-style="display:none;">
-
-<div class="title">
-🏨 おすすめホテル
-</div>
-
-<div id="destinationResultText"></div>
-
-<div class="transport-box">
-
-<div class="transport-title">
-🚗 交通について
-</div>
-
-<div id="transportText">
-目的地とホテルの位置関係を確認できます。
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     最終結果
-========================================= -->
-
-<div id="result" class="card result">
-
-<div class="result-place">
-🎉 旅が決定！
-</div>
-
-<div id="finalPlace" class="place">
----
-</div>
-
-<div id="finalKeyword" class="keyword-result">
-🔎 キーワード：おまかせ
-</div>
-
-<div class="hotel-box">
-
-<div class="hotel-label">
-🏨 あなたのホテルは…
-</div>
-
-<div id="finalHotel" class="hotel-name">
----
-</div>
-
-<a
-id="reserveBtn"
-class="reserve-btn"
-href="#"
-target="_blank"
-rel="noopener noreferrer">
-🏨 楽天トラベルで予約する →
-</a>
-
-
-<div class="compare-box">
-
-<div class="title">
-💰 予約サイトを比較
-</div>
-
-<div class="small">
-このホテルを複数の予約サイトで確認できます。
-</div>
-
-<br>
-
-<button
-class="compare-btn"
-onclick="showComparison()">
-🔎 安い予約サイトを比較する
-</button>
-
-<div
-id="compareResults"
-class="compare-results">
-
-<div class="compare-item">
-
-<div class="compare-rank">🥇</div>
-
-<div class="compare-info">
-<div class="compare-site">
-楽天トラベル
-</div>
-
-<div class="compare-price">
-料金を確認
-</div>
-</div>
-
-<a
-id="rakutenCompare"
-class="compare-link"
-href="#"
-target="_blank">
-見る
-</a>
-
-</div>
-
-
-<div class="compare-item">
-
-<div class="compare-rank">🥈</div>
-
-<div class="compare-info">
-<div class="compare-site">
-じゃらん
-</div>
-
-<div class="compare-price">
-料金を確認
-</div>
-</div>
-
-<a
-class="compare-link"
-href="https://www.jalan.net/"
-target="_blank">
-見る
-</a>
-
-</div>
-
-
-<div class="compare-item">
-
-<div class="compare-rank">🥉</div>
-
-<div class="compare-info">
-<div class="compare-site">
-Booking.com
-</div>
-
-<div class="compare-price">
-料金を確認
-</div>
-</div>
-
-<a
-class="compare-link"
-href="https://www.booking.com/"
-target="_blank">
-見る
-</a>
-
-</div>
-
-
-<div class="compare-item">
-
-<div class="compare-rank">④</div>
-
-<div class="compare-info">
-<div class="compare-site">
-Agoda
-</div>
-
-<div class="compare-price">
-料金を確認
-</div>
-</div>
-
-<a
-class="compare-link"
-href="https://www.agoda.com/"
-target="_blank">
-見る
-</a>
-
-</div>
-
-
-<div class="small">
-※現在は各サイトのリアルタイム料金を取得していません。
-<br>
-料金APIを接続すると実際の料金を安い順に自動表示できます。
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     履歴
-========================================= -->
-
-<div class="card">
-
-<div class="title">
-📜 最近の結果
-</div>
-
-<div id="history">
-まだありません
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="small">
-
-<b>🎰 タビガチャの遊び方</b>
-
-<br><br>
-
-① おまかせ or 行きたい場所を選ぶ<br>
-② おまかせなら旅行条件を入力<br>
-③ スロットで旅先を決定<br>
-④ ホテルを抽選<br>
-⑤ 予約サイトを比較<br>
-⑥ 行きたい場所検索なら周辺ホテルを探す<br>
-⑦ 将来的には料金・交通・距離まで自動比較！
-
-</div>
-
-</div>
-
-</div>
-
-
-<script>
-
-/* =========================================
-   状態
-========================================= */
-
-let keywords = [];
-
-let conditions = {
-  nights:"",
-  people:"",
-  breakfast:"",
-  cancel:""
+.info{
+ color:#666;
+ font-size:13px;
+ line-height:1.8;
+ margin-top:7px;
+}
+
+.recommend{
+ border:2px solid #ff6b81;
+}
+
+.recommend::before{
+ content:"🏆 AIおすすめ";
+ display:block;
+ color:#e50046;
+ font-weight:900;
+ margin-bottom:7px;
+}
+
+.route{
+ padding:12px 0;
+ border-bottom:1px solid #eee;
+}
+
+.route:last-child{
+ border-bottom:0;
+}
+
+.route-title{
+ font-weight:900;
+}
+
+.route-price{
+ color:#e50046;
+ font-weight:bold;
+}
+
+.restaurant{
+ background:#fffaf4;
+ border-radius:16px;
+ padding:14px;
+ margin-top:10px;
+}
+
+.day{
+ margin-top:15px;
+ padding:15px;
+ border-radius:18px;
+ background:#f7fbff;
+}
+
+.day-title{
+ font-size:18px;
+ font-weight:900;
+ margin-bottom:8px;
+}
+
+.timeline{
+ font-size:14px;
+ line-height:2;
+}
+
+.action{
+ display:block;
+ width:100%;
+ text-align:center;
+ text-decoration:none;
+ border-radius:14px;
+ padding:13px;
+ margin-top:10px;
+ background:#333;
+ color:#fff;
+ font-weight:bold;
+ font-size:14px;
+}
+
+.pdf-btn{
+ background:linear-gradient(135deg,#6c5ce7,#8e7dff);
+}
+
+.back{
+ margin-top:10px;
+ text-align:center;
+ color:#777;
+ font-size:13px;
+}
+
+.small{
+ color:#888;
+ font-size:11px;
+ line-height:1.7;
+ text-align:center;
+ margin-top:12px;
+}
+</style></head><body><div class="container"><!-- ==============================
+     HOME
+============================== --><section id="home"><div class="hero">
+ <div class="hero-icon">🧳</div>
+ <h1>タビAI</h1>
+ <h2>旅行を考えるの、やめよう。</h2>
+ <p>
+ 行きたい場所と希望を入力するだけ。<br>
+ 交通・ホテル・食事・観光まで<br>
+ AIが旅行プランをまとめます。
+ </p>
+</div><div class="card"><div class="title">📍 まずは行きたい場所</div><label>行きたい場所</label>
+<input id="destination"
+placeholder="例：四国水族館、USJ、京都">
+
+<label>出発地</label>
+<input id="departure"
+placeholder="例：大阪、東京">
+
+<label>旅行日</label>
+<input id="date" type="date">
+
+<label>泊数</label>
+<select id="nights">
+
+<option value="1">1泊</option>
+<option value="2">2泊</option>
+<option value="3">3泊</option>
+<option value="4">4泊</option>
+<option value="5">5泊以上</option>
+</select><label>人数</label>
+<select id="people">
+
+<option value="1">1名</option>
+<option value="2" selected>2名</option>
+<option value="3">3名</option>
+<option value="4">4名</option>
+<option value="5">5名</option>
+<option value="6">6名以上</option>
+</select></div><div class="card"><div class="title">🚗 交通手段</div><div class="grid"><button class="option selected" onclick="toggleOption(this,'transport','🚄 電車・新幹線')">🚄 電車</button>
+<button class="option" onclick="toggleOption(this,'transport','✈️ 飛行機')">✈️ 飛行機</button>
+<button class="option" onclick="toggleOption(this,'transport','🚌 バス')">🚌 バス</button>
+<button class="option" onclick="toggleOption(this,'transport','🚗 車')">🚗 車</button>
+
+</div></div><div class="card"><div class="title">🍽️ 夜ご飯</div><div class="grid"><button class="option" onclick="toggleOption(this,'food','🥩 肉')">🥩 肉</button>
+<button class="option" onclick="toggleOption(this,'food','🐟 魚')">🐟 魚</button>
+<button class="option" onclick="toggleOption(this,'food','🍣 和食')">🍣 和食</button>
+<button class="option" onclick="toggleOption(this,'food','🍝 洋食')">🍝 洋食</button>
+<button class="option" onclick="toggleOption(this,'food','🍜 麺類')">🍜 麺類</button>
+<button class="option selected" onclick="toggleOption(this,'food','🤷 おまかせ')">🤷 おまかせ</button>
+
+</div></div><div class="card"><div class="title">🎉 旅行の目的</div><div class="grid"><button class="option" onclick="toggleOption(this,'purpose','🎂 誕生日')">🎂 誕生日</button>
+<button class="option" onclick="toggleOption(this,'purpose','💑 記念日')">💑 記念日</button>
+<button class="option" onclick="toggleOption(this,'purpose','👨‍👩‍👧 家族旅行')">👨‍👩‍👧 家族</button>
+<button class="option" onclick="toggleOption(this,'purpose','💼 出張')">💼 出張</button>
+<button class="option" onclick="toggleOption(this,'purpose','🎉 イベント')">🎉 イベント</button>
+<button class="option selected" onclick="toggleOption(this,'purpose','🤷 特になし')">🤷 おまかせ</button>
+
+</div></div><div class="card"><div class="title">💰 予算</div><select id="budget">
+<option value="30000">3万円以内</option>
+<option value="50000" selected>5万円以内</option>
+<option value="80000">8万円以内</option>
+<option value="100000">10万円以内</option>
+<option value="150000">15万円以内</option>
+<option value="999999">予算は気にしない</option>
+</select><button class="main-btn" onclick="createTrip()">
+✨ AIに旅行を決めてもらう
+</button><div class="small">
+※現在はデモデータを使用しています。<br>
+API接続後、実際の料金・空室・経路などに置き換えられます。
+</div></div></section><!-- ==============================
+     RESULT
+============================== --><section id="resultScreen" class="hidden"><div class="hero">
+ <div class="hero-icon">✨</div>
+ <h2>あなたの旅行プラン</h2>
+ <p>入力した条件からAIがプランを組み立てました。</p>
+</div><div class="card"><div class="result-title">📍 <span id="resultDestination"></span></div><div class="info">
+出発地：<span id="resultDeparture"></span><br>
+人数：<span id="resultPeople"></span>名<br>
+宿泊：<span id="resultNights"></span>泊<br>
+目的：<span id="resultPurpose"></span><br>
+夕食：<span id="resultFood"></span>
+</div></div><!-- 交通 --><div class="card"><div class="title">🚗 行き方</div><div class="route">
+<div class="route-title">🥇 AIおすすめ｜バランス重視</div>
+<div>所要時間：約3時間10分</div>
+<div class="route-price">約8,000円〜</div>
+</div><div class="route">
+<div class="route-title">💰 最安重視</div>
+<div>高速バスなどを利用</div>
+<div class="route-price">約4,500円〜</div>
+</div><div class="route">
+<div class="route-title">⚡ 最速重視</div>
+<div>新幹線・飛行機など</div>
+<div class="route-price">約12,000円〜</div>
+</div><div class="route">
+<div class="route-title">😌 楽さ重視</div>
+<div>乗換を減らしたルート</div>
+<div class="route-price">約10,000円〜</div>
+</div></div><!-- ホテル --><div class="card"><div class="title">🏨 ホテル</div><div class="plan recommend"><div class="plan-head">
+<div class="plan-name">AIおすすめホテル</div>
+<div class="badge">条件一致</div>
+</div><div class="price">24,800円〜</div><div class="info">
+🍳 朝食付き<br>
+⭕ キャンセル無料<br>
+📍 行き先まで約12分<br>
+⭐ 4.4<br>
+💰 予約サイトを比較して最安を確認
+</div><a class="action" href="#" onclick="alert('API接続後、実際の最安予約ページへ移動します。');return false;">
+💰 料金を比較する
+</a></div><div class="plan"><div class="plan-head">
+<div class="plan-name">🏨 コスパ重視ホテル</div>
+<div class="badge">安さ</div>
+</div><div class="price">19,800円〜</div><div class="info">
+📍 行き先まで約20分<br>
+⭐ 4.1<br>
+🍳 朝食オプションあり
+</div></div><div class="plan"><div class="plan-head">
+<div class="plan-name">✨ 快適さ重視ホテル</div>
+<div class="badge">贅沢</div>
+</div><div class="price">34,800円〜</div><div class="info">
+♨️ 大浴場<br>
+🍳 朝食付き<br>
+⭐ 4.6
+</div></div></div><!-- 食事 --><div class="card"><div class="title">🍽️ 夜ご飯</div><div class="restaurant"><div class="plan-name">🐟 おすすめレストラン</div><div class="info">
+魚料理・記念日利用向け<br>
+🏨 ホテルから約8分<br>
+⭐ 4.5<br>
+💰 1人約4,800円〜
+</div><a class="action" href="#" onclick="alert('API接続後、実際の店舗・予約ページへ移動します。');return false;">
+🍽️ 店舗を見る
+</a></div></div><!-- 旅程 --><div class="card"><div class="title">📅 旅程</div><div class="day"><div class="day-title">1日目</div><div class="timeline">
+08:00 🚗 出発<br>
+↓<br>
+11:30 📍 行きたい場所へ到着<br>
+↓<br>
+15:30 🏨 ホテルチェックイン<br>
+↓<br>
+18:30 🍽️ 夜ご飯<br>
+↓<br>
+20:30 🌃 周辺散策
+</div></div><div class="day"><div class="day-title">2日目</div><div class="timeline">
+08:00 🍳 朝食<br>
+↓<br>
+10:00 📍 周辺観光<br>
+↓<br>
+13:00 🍽️ 昼食<br>
+↓<br>
+15:00 🚗 帰宅
+</div></div></div><!-- マイトリップ --><div class="card"><div class="title">📱 マイトリップ</div><div class="plan"><div class="plan-name">🏨 ホテル</div>
+<div class="info">
+チェックイン 15:00<br>
+チェックアウト 10:00
+</div><a class="action" href="#">
+🏨 チェックイン情報
+</a></div><div class="plan"><div class="plan-name">✈️ 交通</div>
+<div class="info">
+出発・到着時間、便名、予約番号などをまとめて表示します。
+</div><a class="action" href="#">
+✈️ 交通情報
+</a></div></div><!-- しおり --><div class="card"><div class="title">📖 旅のしおり</div><div class="info">
+今回の旅行情報を1つにまとめて保存できます。
+</div><button class="main-btn pdf-btn" onclick="makeShiori()">
+📖 旅のしおりを作る
+</button><button class="secondary-btn" onclick="alert('メール送信機能はメールサービス接続後に利用できます。')">
+📧 メールで送る
+</button><button class="secondary-btn" onclick="alert('共有リンク機能はサーバー接続後に利用できます。')">
+🔗 旅行を共有する
+</button></div><div class="card"><div class="title">🔄 もう一度作る</div><button class="secondary-btn" onclick="backHome()">
+条件を変更する
+</button></div></section></div><script>
+
+let selections={
+ transport:"🚄 電車・新幹線",
+ food:"🤷 おまかせ",
+ purpose:"🤷 特になし"
 };
 
-let currentMode = "japan";
+function toggleOption(button,type,value){
 
-let placeRunning = false;
-let placeRotation = 0;
-let placeTimer = null;
+const parent=button.parentElement;
 
-let currentHotel = null;
-
-
-/* =========================================
-   画面切り替え
-========================================= */
-
-function showScreen(id){
-
-document.querySelectorAll(".screen")
-.forEach(function(screen){
-  screen.classList.remove("active");
+[...parent.children].forEach(btn=>{
+ btn.classList.remove("selected");
 });
 
-document.getElementById(id)
-.classList.add("active");
+button.classList.add("selected");
+
+selections[type]=value;
+
+}
+
+function createTrip(){
+
+const destination=
+document.getElementById("destination").value.trim();
+
+const departure=
+document.getElementById("departure").value.trim();
+
+if(!destination){
+ alert("行きたい場所を入力してください");
+ return;
+}
+
+if(!departure){
+ alert("出発地を入力してください");
+ return;
+}
+
+document.getElementById("resultDestination")
+.textContent=destination;
+
+document.getElementById("resultDeparture")
+.textContent=departure;
+
+document.getElementById("resultPeople")
+.textContent=
+document.getElementById("people").value;
+
+document.getElementById("resultNights")
+.textContent=
+document.getElementById("nights").value;
+
+document.getElementById("resultPurpose")
+.textContent=
+selections.purpose;
+
+document.getElementById("resultFood")
+.textContent=
+selections.food;
+
+document.getElementById("home")
+.classList.add("hidden");
+
+document.getElementById("resultScreen")
+.classList.remove("hidden");
 
 window.scrollTo({
-  top:0,
-  behavior:"smooth"
+top:0,
+behavior:"smooth"
 });
 
 }
 
+function backHome(){
 
-/* =========================================
-   条件
-========================================= */
+document.getElementById("resultScreen")
+.classList.add("hidden");
 
-function selectOption(button,type,value){
+document.getElementById("home")
+.classList.remove("hidden");
 
-conditions[type] = value;
-
-const parent = button.parentElement;
-
-parent.querySelectorAll(".option")
-.forEach(function(btn){
-  btn.classList.remove("selected");
-});
-
-button.classList.add("selected");
-
-}
-
-
-/* =========================================
-   キーワード
-========================================= */
-
-function chooseKeyword(button,value){
-
-if(keywords.includes(value)){
-
-keywords = keywords.filter(function(item){
-  return item !== value;
-});
-
-button.classList.remove("selected");
-
-}else{
-
-keywords.push(value);
-
-button.classList.add("selected");
-
-}
-
-document.getElementById("selectedKeywords")
-.textContent =
-keywords.length
-? "選択中： " + keywords.join(" ・ ")
-: "";
-
-}
-
-
-/* =========================================
-   Gacha開始
-========================================= */
-
-function goToGacha(){
-
-showScreen("gachaScreen");
-
-createPlaceLabels();
-
-}
-
-
-/* =========================================
-   都道府県
-========================================= */
-
-const prefectures = [
-
-"北海道","青森県","岩手県","宮城県","秋田県",
-"山形県","福島県","茨城県","栃木県","群馬県",
-"埼玉県","千葉県","東京都","神奈川県","新潟県",
-"富山県","石川県","福井県","山梨県","長野県",
-"岐阜県","静岡県","愛知県","三重県","滋賀県",
-"京都府","大阪府","兵庫県","奈良県","和歌山県",
-"鳥取県","島根県","岡山県","広島県","山口県",
-"徳島県","香川県","愛媛県","高知県","福岡県",
-"佐賀県","長崎県","熊本県","大分県","宮崎県",
-"鹿児島県","沖縄県"
-
-];
-
-
-/* =========================================
-   ホテルデータ
-========================================= */
-
-const hotelData = {
-
-"北海道":[
-["JRタワーホテル日航札幌","https://a.r10.to/hPHwkR"],
-["ホテルモントレ エーデルホフ札幌","https://a.r10.to/h5sCsm"],
-["ソラリア西鉄ホテル札幌","https://a.r10.to/hgD3ku"],
-["札幌ホテル by グランベル","https://a.r10.to/hPlmGl"],
-["ONSEN RYOKAN 由縁 札幌","https://a.r10.to/hYVGq6"],
-["ニューオータニイン札幌","https://a.r10.to/h5YmNL"],
-["ホテル京阪 札幌","https://a.r10.to/hFdmKn"],
-["ホテルエミシア札幌","https://a.r10.to/h5njrJ"],
-["札幌グランドホテル","https://a.r10.to/hPljXP"],
-["クロスホテル札幌","https://a.r10.to/h57Fzw"]
-],
-
-"京都府":[
-["HOTEL ARU KYOTO 三条木屋町通り","https://a.r10.to/hPRzvh"],
-["ホテル グラン・エムズ京都","https://a.r10.to/hgLs22"],
-["ホテルグランヴィア京都","https://a.r10.to/h8QXhX"],
-["THE BLOSSOM KYOTO","https://a.r10.to/h5gYSt"],
-["ヒルトン京都","https://a.r10.to/hg1s96"],
-["エースホテル京都","https://a.r10.to/hPiJUn"],
-["ホテル ザ ミツイ キョウト","https://a.r10.to/hYvzZa"],
-["The Hotel Seiryu Kyoto Kiyomizu","https://a.r10.to/h8rJW7"],
-["Park Hyatt Kyoto","https://a.r10.to/h57FJ2"],
-["フォーシーズンズホテル京都","https://a.r10.to/hgDehp"]
-],
-
-"大阪府":[
-["KOKO HOTEL 大阪心斎橋","https://a.r10.to/hk0aeA"],
-["黒門クリスタルホテル","https://a.r10.to/hgElkZ"],
-["大阪グランベルホテル","https://a.r10.to/hgclXy"],
-["ホテルヴィスキオ大阪","https://a.r10.to/TLKYG6"],
-["ホテルリソルトリニティ大阪","https://a.r10.to/hgjoEJ"],
-["都シティ 大阪本町","https://a.r10.to/hFcH5m"],
-["ホテル阪急レスパイア大阪","https://a.r10.to/h575rE"],
-["ホテルグランヴィア大阪","https://a.r10.to/hRiIkf"],
-["帝国ホテル 大阪","https://a.r10.to/hgcQ68"],
-["ザ ロイヤルパークホテル アイコニック 大阪御堂筋","https://a.r10.to/hXi5On"]
-],
-
-"東京都":[
-["ホテルミュッセ銀座名鉄","https://a.r10.to/hPDUsh"],
-["からくさホテル 東京ステーション","https://a.r10.to/hPfUGg"],
-["三井ガーデンホテル銀座プレミア","https://a.r10.to/hP6bAf"],
-["三井ガーデンホテル日本橋プレミア","https://a.r10.to/h50zik"],
-["パークホテル東京","https://a.r10.to/hgp4eY"],
-["MIMARU東京 日本橋水天宮前","https://a.r10.to/hPJKcu"],
-["帝国ホテル 東京","https://a.r10.to/hk7QVa"],
-["グランド ハイアット 東京","https://a.r10.to/hgePLf"],
-["ザ・ペニンシュラ東京","https://a.r10.to/h5q12U"],
-["マンダリン オリエンタル 東京","https://a.r10.to/hP5ZFe"]
-],
-
-"福岡県":[
-["博多エクセルホテル東急","https://a.r10.to/hP8xv3"],
-["西鉄ホテル クルーム博多","https://a.r10.to/T3JpPu"],
-["ホテルモントレ福岡","https://a.r10.to/h8fA4F"],
-["三井ガーデンホテル福岡中洲","https://a.r10.to/hYwIlp"],
-["三井ガーデンホテル福岡祇園","https://a.r10.to/hPKHkK"],
-["ホテル日航福岡","https://a.r10.to/hkBbbN"],
-["福岡ホテル7","https://a.r10.to/hRVG8U"],
-["福岡ホテル8","https://a.r10.to/hPUKDH"],
-["福岡ホテル9","https://a.r10.to/h5uO2O"],
-["福岡ホテル10","https://a.r10.to/hkQi0X"]
-]
-
-};
-
-
-/* =========================================
-   47都道府県スロット
-========================================= */
-
-const wheelColors = [
-"#ff6b6b",
-"#ffd166",
-"#06d6a0",
-"#4dabf7",
-"#9b5de5",
-"#ff70a6",
-"#ff9f1c",
-"#2ec4b6"
-];
-
-
-function setWheelColors(element,count){
-
-let angle = 360 / count;
-let gradient = "";
-
-for(let i=0;i<count;i++){
-
-let start = i * angle;
-let end = (i+1) * angle;
-
-gradient +=
-wheelColors[i % wheelColors.length]
-+ " "
-+ start
-+ "deg "
-+ end
-+ "deg";
-
-if(i < count-1){
-gradient += ",";
-}
-
-}
-
-element.style.background =
-"conic-gradient(" + gradient + ")";
-
-}
-
-
-function createPlaceLabels(){
-
-const box =
-document.getElementById("placeLabels");
-
-box.innerHTML = "";
-
-const count = prefectures.length;
-
-setWheelColors(
-document.getElementById("placeWheelBg"),
-count
-);
-
-const sector = 360 / count;
-
-prefectures.forEach(function(name,index){
-
-const label =
-document.createElement("div");
-
-label.className = "pref-label";
-label.textContent = name;
-
-const angle =
-index * sector
-+ sector/2
-- 90;
-
-const rad =
-angle * Math.PI / 180;
-
-const radius = 105;
-
-const x = Math.cos(rad) * radius;
-const y = Math.sin(rad) * radius;
-
-label.style.width = "42px";
-label.style.height = "24px";
-label.style.marginLeft = "-21px";
-label.style.marginTop = "-12px";
-label.style.fontSize = "7px";
-
-label.style.transform =
-"translate("
-+x+"px,"
-+y+"px) rotate("
-+(angle+90)
-+"deg)";
-
-box.appendChild(label);
-
+window.scrollTo({
+top:0,
+behavior:"smooth"
 });
 
 }
 
+function makeShiori(){
 
-function startPlace(){
+const destination=
+document.getElementById("resultDestination").textContent;
 
-if(placeRunning){
-return;
-}
+const departure=
+document.getElementById("resultDeparture").textContent;
 
-placeRunning = true;
+const people=
+document.getElementById("resultPeople").textContent;
 
-document.getElementById("placeStartBtn")
-.disabled = true;
+const nights=
+document.getElementById("resultNights").textContent;
 
-document.getElementById("placeStopBtn")
-.disabled = false;
+const text=
+`
+【タビAI｜旅行のしおり】
 
-document.getElementById("placeCenter")
-.textContent = "GO!";
+📍 行き先
+${destination}
 
-placeTimer =
-setInterval(function(){
+🚉 出発地
+${departure}
 
-placeRotation += 12;
+👥 人数
+${people}名
 
-document.getElementById("placeWheel")
-.style.transform =
-"rotate("+placeRotation+"deg)";
+🏨 宿泊
+${nights}泊
 
-},30);
+🎉 目的
+${selections.purpose}
 
-}
+🍽️ 夕食
+${selections.food}
 
+━━━━━━━━━━━━━━
 
-function stopPlace(){
+📅 1日目
 
-if(!placeRunning){
-return;
-}
+08:00 出発
+11:30 観光
+15:30 ホテルチェックイン
+18:30 夜ご飯
+20:30 周辺散策
 
-clearInterval(placeTimer);
+📅 2日目
 
-placeRunning = false;
+08:00 朝食
+10:00 周辺観光
+13:00 昼食
+15:00 帰宅
 
-document.getElementById("placeStartBtn")
-.disabled = false;
+━━━━━━━━━━━━━━
 
-document.getElementById("placeStopBtn")
-.disabled = true;
+※現在はデモ版です。
+`;
 
-const count = prefectures.length;
-const sector = 360 / count;
+const blob=
+new Blob([text],{type:"text/plain"});
 
-let normalized =
-((placeRotation % 360)+360)%360;
+const url=
+URL.createObjectURL(blob);
 
-let index =
-Math.floor(
-(360-normalized+sector/2)/sector
-)%count;
+const a=
+document.createElement("a");
 
-const result =
-prefectures[index];
+a.href=url;
+a.download="タビAI_旅のしおり.txt";
 
-document.getElementById("placeCenter")
-.textContent = result;
+a.click();
 
-document.getElementById("currentPlaceCard")
-.style.display = "block";
-
-document.getElementById("currentPlace")
-.textContent = result;
-
-showHotelForPlace(result);
-
-}
-
-
-/* =========================================
-   当選県のホテル
-========================================= */
-
-function showHotelForPlace(place){
-
-if(!hotelData[place]){
-
-alert(
-place+
-"のホテルデータは現在準備中です。"
-);
-
-return;
+URL.revokeObjectURL(url);
 
 }
 
-const list = hotelData[place];
-
-const random =
-list[Math.floor(Math.random()*list.length)];
-
-currentHotel = {
-name:random[0],
-url:random[1]
-};
-
-showFinalResult(
-currentHotel,
-"🇯🇵 "+place
-);
-
-}
-
-
-/* =========================================
-   最終結果
-========================================= */
-
-function showFinalResult(hotel,place){
-
-currentHotel = hotel;
-
-document.getElementById("finalPlace")
-.textContent = place;
-
-document.getElementById("finalKeyword")
-.textContent =
-"🔎 キーワード："
-+
-(
-keywords.length
-? keywords.join("・")
-: "おまかせ"
-);
-
-document.getElementById("finalHotel")
-.textContent =
-"🏨 "+hotel.name;
-
-document.getElementById("reserveBtn")
-.href = hotel.url;
-
-document.getElementById("result")
-.classList.add("show");
-
-document.getElementById("compareResults")
-.classList.remove("show");
-
-saveHistory(
-hotel.name,
-place
-);
-
-document.getElementById("result")
-.scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-}
-
-
-/* =========================================
-   予約サイト比較
-========================================= */
-
-function showComparison(){
-
-if(!currentHotel){
-return;
-}
-
-document.getElementById("rakutenCompare")
-.href = currentHotel.url;
-
-document.getElementById("compareResults")
-.classList.add("show");
-
-}
-
-
-/* =========================================
-   行きたい場所検索
-========================================= */
-
-/*
-  ★ここが将来APIを接続する場所です。
-
-  現在：
-  「四国水族館」などを入力すると
-  サンプルのホテル候補を表示。
-
-  将来：
-  Google Maps等で目的地を検索
-  ↓
-  周辺ホテルを取得
-  ↓
-  距離・所要時間取得
-  ↓
-  料金API取得
-  ↓
-  安い順・近い順・総合順を表示
-*/
-
-
-const destinationSamples = {
-
-"四国水族館":[
-
-{
-name:"宇多津グランドホテル",
-distance:"車で約8分",
-price:"料金を確認",
-recommend:"水族館へのアクセス重視"
-},
-
-{
-name:"ホテルアネシス瀬戸大橋",
-distance:"車で約10分",
-price:"料金を確認",
-recommend:"駅・観光にも便利"
-},
-
-{
-name:"坂出グランドホテル",
-distance:"車で約15分",
-price:"料金を確認",
-recommend:"価格重視"
-}
-
-],
-
-"USJ":[
-
-{
-name:"ザ パーク フロント ホテル",
-distance:"徒歩約1分",
-price:"料金を確認",
-recommend:"USJ最優先ならおすすめ"
-},
-
-{
-name:"ホテル ユニバーサル ポート",
-distance:"徒歩約5分",
-price:"料金を確認",
-recommend:"USJに近い"
-},
-
-{
-name:"ホテル京阪 ユニバーサル・タワー",
-distance:"徒歩約2分",
-price:"料金を確認",
-recommend:"駅にも便利"
-}
-
-],
-
-"東京ディズニーランド":[
-
-{
-name:"東京ディズニーランドホテル",
-distance:"徒歩約5分",
-price:"料金を確認",
-recommend:"アクセス最優先"
-},
-
-{
-name:"東京ベイ舞浜ホテル",
-distance:"車で約5分",
-price:"料金を確認",
-recommend:"ファミリー向け"
-},
-
-{
-name:"ホテルオークラ東京ベイ",
-distance:"車で約5分",
-price:"料金を確認",
-recommend:"ゆっくり過ごしたい人向け"
-}
-
-]
-
-};
-
-
-function searchDestination(){
-
-const input =
-document.getElementById("destinationInput")
-.value
-.trim();
-
-if(!input){
-
-alert("行きたい場所を入力してください");
-
-return;
-
-}
-
-let results =
-destinationSamples[input];
-
-if(!results){
-
-results = [
-
-{
-name:"周辺ホテル候補A",
-distance:"距離をAPIで取得予定",
-price:"料金をAPIで取得予定",
-recommend:"総合評価を計算予定"
-},
-
-{
-name:"周辺ホテル候補B",
-distance:"距離をAPIで取得予定",
-price:"料金をAPIで取得予定",
-recommend:"価格重視候補"
-},
-
-{
-name:"周辺ホテル候補C",
-distance:"距離をAPIで取得予定",
-price:"料金をAPIで取得予定",
-recommend:"アクセス重視候補"
-}
-
-];
-
-}
-
-const box =
-document.getElementById("destinationResultText");
-
-box.innerHTML = "";
-
-results.forEach(function(hotel,index){
-
-const div =
-document.createElement("div");
-
-div.className =
-"destination-hotel";
-
-div.innerHTML =
-
-"<div class='destination-hotel-name'>"
-+(index+1)
-+". "
-+hotel.name+
-"</div>"
-
-+
-
-"<div class='distance'>📍 "
-+hotel.distance+
-"</div>"
-
-+
-
-"<div class='price'>💰 "
-+hotel.price+
-"</div>"
-
-+
-
-"<div class='recommend'>⭐ "
-+hotel.recommend+
-"</div>"
-
-+
-
-"<br><br>"
-
-+
-
-"<a class='reserve-btn' href='#' onclick='alert(\"料金API接続後に予約サイトへ移動できます\")'>"
-+"ホテルをチェック →"
-+"</a>";
-
-box.appendChild(div);
-
-});
-
-
-document.getElementById("transportText")
-.innerHTML =
-
-"📍 目的地：<b>"
-+input+
-"</b><br><br>"
-+"現在はサンプル表示です。<br>"
-+"地図APIを接続すると、ホテルから目的地までの距離・徒歩/車/電車の所要時間を自動表示できます。";
-
-
-document.getElementById("destinationResult")
-.style.display = "block";
-
-document.getElementById("destinationResult")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}
-
-
-/* =========================================
-   履歴
-========================================= */
-
-function saveHistory(hotelName,place){
-
-const history =
-document.getElementById("history");
-
-if(history.textContent === "まだありません"){
-history.innerHTML = "";
-}
-
-const item =
-document.createElement("div");
-
-item.className =
-"history-item";
-
-item.innerHTML =
-'<span class="badge">NEW</span>'
-+
-place
-+
-"｜"
-+
-(
-keywords.length
-? keywords.join("・")
-: "おまかせ"
-)
-+
-"｜🏨 "
-+
-hotelName;
-
-history.prepend(item);
-
-while(history.children.length > 5){
-
-history.removeChild(
-history.lastChild
-);
-
-}
-
-}
-
-
-/* =========================================
-   初期化
-========================================= */
-
-createPlaceLabels();
-
-</script>
-
-</body>
- </html>
+</script></body>
+</html>
