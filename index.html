@@ -162,10 +162,6 @@ h1{
   filter:drop-shadow(0 3px 2px rgba(0,0,0,.25));
 }
 
-/* =========================================
-   ルーレット本体
-========================================= */
-
 .wheel{
   position:relative;
 
@@ -196,10 +192,6 @@ h1{
   border-radius:50%;
 }
 
-/* =========================================
-   都道府県・ホテル文字
-========================================= */
-
 .pref-label{
   position:absolute;
 
@@ -225,10 +217,6 @@ h1{
   justify-content:center;
   align-items:center;
 }
-
-/* =========================================
-   スマホ用
-========================================= */
 
 @media(max-width:420px){
 
@@ -531,6 +519,11 @@ onclick="selectDestination('東京都')">
 東京都
 </button>
 
+<button class="keyword"
+onclick="selectDestination('福岡県')">
+福岡県
+</button>
+
 </div>
 
 </div>
@@ -778,6 +771,29 @@ style="display:none;">
 </div>
 
 
+<!-- 福岡 -->
+
+<div
+id="fukuokaSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+📍 福岡県のホテル
+</div>
+
+<div class="place">
+福岡
+</div>
+
+<div class="small">
+福岡県が当たりました！<br>
+今回は福岡ホテルルーレットへ！
+</div>
+
+</div>
+
+
 <!-- 札幌ホテル -->
 
 <div
@@ -1002,6 +1018,62 @@ disabled>
 </div>
 
 
+<!-- 福岡ホテル -->
+
+<div
+id="fukuokaHotelSection"
+class="card"
+style="display:none;">
+
+<div class="title">
+🏨 福岡ホテルルーレット
+</div>
+
+<div class="small">
+福岡のホテル10件から抽選！<br>
+STARTで回転 → 好きなタイミングでSTOP！
+</div>
+
+<div class="roulette-area">
+
+<div class="pointer"></div>
+
+<div id="fukuokaHotelWheel" class="wheel">
+
+<div id="fukuokaHotelWheelBg" class="wheel-bg"></div>
+
+<div id="fukuokaHotelLabels" class="wheel-labels"></div>
+
+<div id="fukuokaHotelCenter" class="wheel-center">
+START
+</div>
+
+</div>
+
+</div>
+
+<div class="spin-controls">
+
+<button
+id="fukuokaHotelStartBtn"
+class="start-btn"
+onclick="startFukuokaHotel()">
+▶️ START
+</button>
+
+<button
+id="fukuokaHotelStopBtn"
+class="stop-btn"
+onclick="stopFukuokaHotel()"
+disabled>
+⏹️ STOP
+</button>
+
+</div>
+
+</div>
+
+
 <!-- 最終結果 -->
 
 <div
@@ -1109,18 +1181,21 @@ let hotelRunning = false;
 let kyotoHotelRunning = false;
 let osakaHotelRunning = false;
 let tokyoHotelRunning = false;
+let fukuokaHotelRunning = false;
 
 let placeRotation = 0;
 let hotelRotation = 0;
 let kyotoHotelRotation = 0;
 let osakaHotelRotation = 0;
 let tokyoHotelRotation = 0;
+let fukuokaHotelRotation = 0;
 
 let placeTimer = null;
 let hotelTimer = null;
 let kyotoHotelTimer = null;
 let osakaHotelTimer = null;
 let tokyoHotelTimer = null;
+let fukuokaHotelTimer = null;
 
 
 /* =========================================
@@ -1164,7 +1239,7 @@ const overseas = [
 
 
 /* =========================================
-   ホテル
+   札幌ホテル
 ========================================= */
 
 const hotels = [
@@ -1183,6 +1258,10 @@ const hotels = [
 ];
 
 
+/* =========================================
+   京都ホテル
+========================================= */
+
 const kyotoHotels = [
 
 {name:"HOTEL ARU KYOTO 三条木屋町通り",url:"https://a.r10.to/hPRzvh"},
@@ -1198,6 +1277,10 @@ const kyotoHotels = [
 
 ];
 
+
+/* =========================================
+   大阪ホテル
+========================================= */
 
 const osakaHotels = [
 
@@ -1215,6 +1298,10 @@ const osakaHotels = [
 ];
 
 
+/* =========================================
+   東京ホテル
+========================================= */
+
 const tokyoHotels = [
 
 {name:"ホテルミュッセ銀座名鉄",url:"https://a.r10.to/hPDUsh"},
@@ -1227,6 +1314,26 @@ const tokyoHotels = [
 {name:"グランド ハイアット 東京",url:"https://a.r10.to/hgePLf"},
 {name:"ザ・ペニンシュラ東京",url:"https://a.r10.to/h5q12U"},
 {name:"マンダリン オリエンタル 東京",url:"https://a.r10.to/hP5ZFe"}
+
+];
+
+
+/* =========================================
+   福岡ホテル
+========================================= */
+
+const fukuokaHotels = [
+
+{name:"博多エクセルホテル東急",url:"https://a.r10.to/hP8xv3"},
+{name:"西鉄ホテル クルーム博多",url:"https://a.r10.to/T3JpPu"},
+{name:"ホテルモントレ福岡",url:"https://a.r10.to/h8fA4F"},
+{name:"三井ガーデンホテル福岡中洲",url:"https://a.r10.to/hYwIlp"},
+{name:"三井ガーデンホテル福岡祇園",url:"https://a.r10.to/hPKHkK"},
+{name:"ホテル日航福岡",url:"https://a.r10.to/hkBbbN"},
+{name:"ＪＲ九州ホテル ブラッサム博多中央",url:"https://a.r10.to/hRVG8U"},
+{name:"THE BLOSSOM HAKATA Premier（ザ ブラッサム博多プレミア）",url:"https://a.r10.to/hPUKDH"},
+{name:"ヒルトン福岡シーホーク",url:"https://a.r10.to/h5uO2O"},
+{name:"ザ・リッツ・カールトン福岡",url:"https://a.r10.to/hkQi0X"}
 
 ];
 
@@ -1390,8 +1497,6 @@ return currentMode === "japan"
 
 /* =========================================
    行き先ラベル
-   ★各色の区画の「中央」に配置
-   ★文字が区画からはみ出しにくいよう調整
 ========================================= */
 
 function createPlaceLabels(){
@@ -1416,20 +1521,8 @@ document.getElementById(
 count
 );
 
-/*
-  各区画の中央角度を計算。
-  以前は区画の境界側に文字が配置されていたため、
-  今回は「開始角度 + 半分」を使って
-  各色のど真ん中に文字を置く。
-*/
-
 const sector =
 360 / count;
-
-/*
-  47都道府県の場合は中心寄りに配置。
-  海外10か国の場合は少し外側。
-*/
 
 const radius =
 count === 47 ? 105 : 120;
@@ -1446,10 +1539,6 @@ label.className =
 label.textContent =
 name;
 
-/*
-  各色の区画の中央角度
-*/
-
 const angle =
 (index * sector)
 + (sector / 2)
@@ -1463,11 +1552,6 @@ Math.cos(rad) * radius;
 
 const y =
 Math.sin(rad) * radius;
-
-/*
-  都道府県名を区画中央に配置。
-  文字も区画の向きに合わせる。
-*/
 
 label.style.width =
 count === 47 ? "42px" : "64px";
@@ -1483,11 +1567,6 @@ count === 47 ? "-14px" : "-12px";
 
 label.style.fontSize =
 count === 47 ? "7px" : "9px";
-
-/*
-  文字を各区画の中心へ移動。
-  さらに区画の方向へ回転。
-*/
 
 label.style.transform =
 "translate(" +
@@ -1533,6 +1612,12 @@ createHotelWheel(
 "tokyoHotelLabels",
 "tokyoHotelWheelBg",
 tokyoHotels
+);
+
+createHotelWheel(
+"fukuokaHotelLabels",
+"fukuokaHotelWheelBg",
+fukuokaHotels
 );
 
 }
@@ -1754,6 +1839,15 @@ showTokyo();
 
 }
 
+else if(
+currentMode === "japan" &&
+result === "福岡県"
+){
+
+showFukuoka();
+
+}
+
 else{
 
 hideAllHotelSections();
@@ -1803,6 +1897,12 @@ showTokyo();
 
 }
 
+else if(place === "福岡県"){
+
+showFukuoka();
+
+}
+
 }
 
 
@@ -1817,10 +1917,12 @@ function hideAllHotelSections(){
 "kyotoSection",
 "osakaSection",
 "tokyoSection",
+"fukuokaSection",
 "hotelSection",
 "kyotoHotelSection",
 "osakaHotelSection",
-"tokyoHotelSection"
+"tokyoHotelSection",
+"fukuokaHotelSection"
 ].forEach(
 id => {
 
@@ -1938,6 +2040,34 @@ document.getElementById(
 
 document.getElementById(
 "tokyoHotelSection"
+).scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+
+/* =========================================
+   福岡
+========================================= */
+
+function showFukuoka(){
+
+hideAllHotelSections();
+
+document.getElementById(
+"fukuokaSection"
+).style.display =
+"block";
+
+document.getElementById(
+"fukuokaHotelSection"
+).style.display =
+"block";
+
+document.getElementById(
+"fukuokaHotelSection"
 ).scrollIntoView({
 behavior:"smooth",
 block:"center"
@@ -2189,6 +2319,43 @@ tokyoHotels,
 "tokyoHotelStartBtn",
 "tokyoHotelStopBtn",
 "🇯🇵 東京都・東京"
+);
+
+}
+
+
+/* =========================================
+   福岡
+========================================= */
+
+const fukuokaState = {
+running:false,
+rotation:0,
+timer:null
+};
+
+function startFukuokaHotel(){
+
+startWheel(
+fukuokaState,
+"fukuokaHotelWheel",
+"fukuokaHotelCenter",
+"fukuokaHotelStartBtn",
+"fukuokaHotelStopBtn"
+);
+
+}
+
+function stopFukuokaHotel(){
+
+stopWheel(
+fukuokaState,
+fukuokaHotels,
+"fukuokaHotelWheel",
+"fukuokaHotelCenter",
+"fukuokaHotelStartBtn",
+"fukuokaHotelStopBtn",
+"🇯🇵 福岡県・福岡"
 );
 
 }
