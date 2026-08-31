@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>🎰 タビガチャ</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -22,14 +20,7 @@ body{
   "Hiragino Kaku Gothic ProN",
   Meiryo,
   sans-serif;
-
-  background:
-  linear-gradient(
-    180deg,
-    #f5fbff 0%,
-    #fff7f0 100%
-  );
-
+  background:linear-gradient(180deg,#f5fbff 0%,#fff7f0 100%);
   color:#222;
 }
 
@@ -70,6 +61,7 @@ h1{
   color:#888;
   font-size:12px;
   line-height:1.7;
+  margin-top:8px;
   text-align:center;
 }
 
@@ -85,34 +77,55 @@ h1{
   display:block;
 }
 
+.next-btn,
+.back-btn{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:17px;
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  margin-top:12px;
+}
+
+.next-btn{
+  background:linear-gradient(135deg,#ff477e,#ff8b3d);
+  box-shadow:0 7px 18px rgba(255,71,126,.2);
+}
+
+.back-btn{
+  background:#777;
+}
+
 /* =========================
    条件入力
 ========================= */
 
-.input-group{
+.form-group{
   margin-bottom:18px;
 }
 
-.input-label{
+.form-label{
+  display:block;
   font-weight:900;
   margin-bottom:8px;
-  font-size:15px;
 }
 
-select,
-input{
+input[type="date"],
+select{
   width:100%;
-  padding:14px;
   border:1px solid #ddd;
   border-radius:14px;
-  background:#fff;
+  padding:14px;
   font-size:16px;
+  background:#fff;
 }
 
 .option-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:9px;
 }
 
 .option-btn{
@@ -127,74 +140,11 @@ input{
 .option-btn.selected{
   color:#fff;
   border-color:transparent;
-  background:
-  linear-gradient(135deg,#ff4f81,#ff8b5c);
-}
-
-.next-btn{
-  width:100%;
-  border:0;
-  border-radius:18px;
-  padding:17px;
-  font-size:19px;
-  font-weight:900;
-  color:#fff;
-
-  background:
-  linear-gradient(135deg,#ff477e,#ff8b3d);
-
-  box-shadow:0 7px 18px rgba(0,0,0,.12);
-}
-
-.back-btn{
-  width:100%;
-  border:0;
-  border-radius:15px;
-  padding:13px;
-  margin-top:10px;
-  font-size:14px;
-  font-weight:bold;
-  background:#eee;
-  color:#555;
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
 }
 
 /* =========================
-   キーワード
-========================= */
-
-.keyword-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.keyword{
-  border:1px solid #ddd;
-  background:#fff;
-  border-radius:15px;
-  padding:13px 7px;
-  font-size:14px;
-  font-weight:bold;
-}
-
-.keyword.selected{
-  color:#fff;
-  border-color:transparent;
-  background:
-  linear-gradient(135deg,#ff4f81,#ff8b5c);
-}
-
-.selected-keywords{
-  margin-top:12px;
-  text-align:center;
-  font-size:13px;
-  color:#e50046;
-  font-weight:bold;
-  min-height:20px;
-}
-
-/* =========================
-   モード
+   行き先
 ========================= */
 
 .mode{
@@ -215,169 +165,107 @@ input{
 
 .mode button.active{
   color:#fff;
-  background:
-  linear-gradient(135deg,#ff4f81,#ff8b5c);
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+}
+
+.keyword-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.keyword{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:15px;
+  padding:13px 7px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.keyword.selected{
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+}
+
+.selected-keywords{
+  margin-top:12px;
+  text-align:center;
+  font-size:13px;
+  color:#e50046;
+  font-weight:bold;
+  min-height:20px;
+}
+
+/* =========================
+   条件表示
+========================= */
+
+.condition-summary{
+  background:#fff7fa;
+  border:1px solid #ffe0e8;
+  border-radius:17px;
+  padding:14px;
+  line-height:1.9;
+  font-size:13px;
+}
+
+.condition-summary strong{
+  color:#e50046;
 }
 
 /* =========================
    スロット
 ========================= */
 
+.slot-area{
+  margin:20px 0;
+  padding:14px;
+  border-radius:22px;
+  background:#222;
+  box-shadow:inset 0 0 0 5px #444,0 8px 25px rgba(0,0,0,.2);
+}
+
 .slot-machine{
-  background:
-  linear-gradient(145deg,#202020,#454545);
-
-  border-radius:28px;
-  padding:20px 15px 18px;
-
-  box-shadow:
-  0 12px 30px rgba(0,0,0,.25);
-
-  border:5px solid #111;
-}
-
-.slot-title{
-  color:#fff;
-  text-align:center;
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:15px;
-}
-
-.slot-window{
-  background:#111;
-  border-radius:18px;
-  padding:10px;
-  box-shadow:
-  inset 0 4px 12px rgba(0,0,0,.5);
-}
-
-.slot-reels{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
 }
 
-.reel{
-  height:105px;
+.slot-window{
+  height:120px;
+  background:#fff;
+  border-radius:15px;
   overflow:hidden;
-  border-radius:14px;
-
-  background:
-  linear-gradient(
-    180deg,
-    #eee,
-    #fff 45%,
-    #ddd
-  );
-
-  border:4px solid #aaa;
-
   display:flex;
-  align-items:center;
   justify-content:center;
-
-  position:relative;
-}
-
-.reel::before,
-.reel::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  height:18px;
-  z-index:3;
-  pointer-events:none;
-}
-
-.reel::before{
-  top:0;
-  background:
-  linear-gradient(
-    rgba(0,0,0,.18),
-    transparent
-  );
-}
-
-.reel::after{
-  bottom:0;
-  background:
-  linear-gradient(
-    transparent,
-    rgba(0,0,0,.18)
-  );
-}
-
-.reel-inner{
+  align-items:center;
+  text-align:center;
+  padding:8px;
   font-size:17px;
   font-weight:900;
-  text-align:center;
-  line-height:1.2;
-  padding:8px;
+  line-height:1.35;
+  box-shadow:inset 0 0 12px rgba(0,0,0,.15);
 }
 
-.reel.spinning .reel-inner{
-  animation:
-  reelShake .08s linear infinite;
+.slot-window.spin{
+  animation:slotShake .08s infinite alternate;
 }
 
-@keyframes reelShake{
-
-  0%{
-    transform:translateY(-3px);
-  }
-
-  50%{
-    transform:translateY(3px);
-  }
-
-  100%{
-    transform:translateY(-3px);
-  }
-
+@keyframes slotShake{
+  from{transform:translateY(-3px);}
+  to{transform:translateY(3px);}
 }
 
-.slot-lever{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  margin:15px auto 5px;
-
-  border:0;
-
-  background:
-  linear-gradient(
-    145deg,
-    #ff4f81,
-    #ff8b3d
-  );
-
-  color:#fff;
-  font-size:30px;
-  font-weight:900;
-
-  box-shadow:
-  0 7px 15px rgba(0,0,0,.25);
-}
-
-.slot-lever:active{
-  transform:scale(.93);
-}
-
-.slot-status{
+.slot-label{
   text-align:center;
   color:#fff;
-  font-size:13px;
-  margin-top:8px;
-  min-height:20px;
+  font-size:12px;
+  margin:9px 0 0;
 }
 
-/* =========================
-   STOP
-========================= */
-
-.spin-controls{
+.slot-controls{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
@@ -397,13 +285,11 @@ input{
 }
 
 .start-btn{
-  background:
-  linear-gradient(135deg,#ff477e,#ff8b3d);
+  background:linear-gradient(135deg,#ff477e,#ff8b3d);
 }
 
 .stop-btn{
-  background:
-  linear-gradient(135deg,#333,#666);
+  background:linear-gradient(135deg,#333,#666);
 }
 
 button:disabled{
@@ -417,30 +303,34 @@ button:disabled{
 .result{
   display:none;
   text-align:center;
-  animation:pop .5s ease;
 }
 
 .result.show{
   display:block;
+  animation:pop .5s ease;
 }
 
 @keyframes pop{
-
   0%{
     transform:scale(.7);
     opacity:0;
   }
-
   100%{
     transform:scale(1);
     opacity:1;
   }
-
 }
 
 .result-place{
   font-size:30px;
   font-weight:900;
+}
+
+.result-hotel{
+  font-size:25px;
+  font-weight:900;
+  margin:12px 0;
+  line-height:1.4;
 }
 
 .keyword-result{
@@ -450,63 +340,27 @@ button:disabled{
   background:#fff0f4;
   color:#e50046;
   font-weight:bold;
+  font-size:13px;
 }
 
 .hotel-box{
   margin-top:16px;
   padding:18px;
   border-radius:20px;
-  background:
-  linear-gradient(135deg,#f7f7ff,#fff);
-
+  background:linear-gradient(135deg,#f7f7ff,#fff);
   border:1px solid #eee;
-}
-
-.hotel-label{
-  color:#777;
-  font-size:13px;
-}
-
-.hotel-name{
-  font-size:22px;
-  font-weight:900;
-  margin:8px 0 14px;
-  line-height:1.4;
 }
 
 .reserve-btn{
   display:block;
   text-decoration:none;
   color:#fff;
-
   background:#e50046;
-
   border-radius:15px;
-
   padding:15px;
-
   font-weight:900;
   font-size:16px;
-}
-
-/* =========================
-   条件表示
-========================= */
-
-.condition-summary{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
   margin-top:12px;
-}
-
-.condition-item{
-  background:#f7f7f7;
-  border-radius:12px;
-  padding:10px;
-  font-size:12px;
-  font-weight:bold;
-  text-align:center;
 }
 
 /* =========================
@@ -537,15 +391,9 @@ button:disabled{
   border-radius:16px;
   padding:15px;
   color:#fff;
-
-  background:
-  linear-gradient(135deg,#6c5ce7,#8e7dff);
-
+  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
   font-size:16px;
   font-weight:900;
-
-  box-shadow:
-  0 6px 16px rgba(108,92,231,.22);
 }
 
 .compare-results{
@@ -563,7 +411,6 @@ button:disabled{
   border-radius:16px;
   padding:13px;
   margin-bottom:9px;
-
   display:flex;
   align-items:center;
   gap:10px;
@@ -574,11 +421,9 @@ button:disabled{
   height:32px;
   border-radius:50%;
   background:#f2f2f2;
-
   display:flex;
   justify-content:center;
   align-items:center;
-
   font-weight:900;
   flex-shrink:0;
 }
@@ -602,13 +447,10 @@ button:disabled{
 .compare-link{
   display:inline-block;
   text-decoration:none;
-
   color:#fff;
   background:#333;
-
   border-radius:10px;
   padding:8px 10px;
-
   font-size:11px;
   font-weight:bold;
   white-space:nowrap;
@@ -642,6 +484,16 @@ button:disabled{
   margin-right:5px;
 }
 
+/* =========================
+   レスポンシブ
+========================= */
+
+@media(max-width:380px){
+  .slot-window{
+    height:105px;
+    font-size:14px;
+  }
+}
 </style>
 </head>
 
@@ -657,91 +509,121 @@ button:disabled{
 
 
 <!-- ==================================================
-     SCREEN 1
-     条件入力
+     SCREEN 1 条件入力
 ================================================== -->
 
-<div id="conditionScreen" class="screen active">
+<div id="screenCondition" class="screen active">
 
 <div class="card">
 
 <div class="title">
-📝 まず旅行条件を設定
+🧳 まずは旅行条件を決めよう
 </div>
 
 <div class="small">
-条件を入力したら、次の画面でスロットを回します。
+条件を決めたら、次の画面でスロットを回します！
 </div>
 
 <br>
 
+<div class="form-group">
 
-<div class="input-group">
+<label class="form-label">
+📅 チェックイン
+</label>
 
-<div class="input-label">
-📅 何泊？
-</div>
-
-<select id="nights">
-
-<option value="1">1泊</option>
-<option value="2">2泊</option>
-<option value="3">3泊</option>
-<option value="4">4泊</option>
-<option value="5">5泊</option>
-<option value="6">6泊</option>
-<option value="7">7泊</option>
-<option value="8">8泊</option>
-<option value="9">9泊</option>
-<option value="10">10泊</option>
-
-</select>
+<input type="date" id="checkin">
 
 </div>
 
 
-<div class="input-group">
+<div class="form-group">
 
-<div class="input-label">
-👥 何名？
-</div>
-
-<select id="guests">
-
-<option value="1">1名</option>
-<option value="2">2名</option>
-<option value="3">3名</option>
-<option value="4">4名</option>
-<option value="5">5名</option>
-<option value="6">6名</option>
-<option value="7">7名</option>
-<option value="8">8名</option>
-<option value="9">9名</option>
-<option value="10">10名</option>
-
-</select>
-
-</div>
-
-
-<div class="input-group">
-
-<div class="input-label">
-🍳 朝食
-</div>
+<label class="form-label">
+🌙 泊数
+</label>
 
 <div class="option-grid">
 
-<button
-class="option-btn selected"
-onclick="selectCondition(this,'breakfast','あり')">
+<button class="option-btn selected"
+onclick="selectNights(this,1)">
+1泊
+</button>
+
+<button class="option-btn"
+onclick="selectNights(this,2)">
+2泊
+</button>
+
+<button class="option-btn"
+onclick="selectNights(this,3)">
+3泊
+</button>
+
+<button class="option-btn"
+onclick="selectNights(this,4)">
+4泊以上
+</button>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label class="form-label">
+👥 人数
+</label>
+
+<div class="option-grid">
+
+<button class="option-btn selected"
+onclick="selectGuests(this,1)">
+1名
+</button>
+
+<button class="option-btn"
+onclick="selectGuests(this,2)">
+2名
+</button>
+
+<button class="option-btn"
+onclick="selectGuests(this,3)">
+3名
+</button>
+
+<button class="option-btn"
+onclick="selectGuests(this,4)">
+4名以上
+</button>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label class="form-label">
+🍳 朝食
+</label>
+
+<div class="option-grid">
+
+<button class="option-btn selected"
+onclick="selectBreakfast(this,'おまかせ')">
+おまかせ
+</button>
+
+<button class="option-btn"
+onclick="selectBreakfast(this,'朝食あり')">
 🍳 朝食あり
 </button>
 
-<button
-class="option-btn"
-onclick="selectCondition(this,'breakfast','なし')">
-☕ 朝食なし
+<button class="option-btn"
+onclick="selectBreakfast(this,'朝食なし')">
+🥐 朝食なし
 </button>
 
 </div>
@@ -749,24 +631,22 @@ onclick="selectCondition(this,'breakfast','なし')">
 </div>
 
 
-<div class="input-group">
+<div class="form-group">
 
-<div class="input-label">
-❌ キャンセル
-</div>
+<label class="form-label">
+🆓 キャンセル
+</label>
 
 <div class="option-grid">
 
-<button
-class="option-btn selected"
-onclick="selectCondition(this,'cancel','無料')">
-⭕ 無料のみ
+<button class="option-btn selected"
+onclick="selectCancel(this,'おまかせ')">
+おまかせ
 </button>
 
-<button
-class="option-btn"
-onclick="selectCondition(this,'cancel','問わない')">
-△ 問わない
+<button class="option-btn"
+onclick="selectCancel(this,'無料キャンセル希望')">
+🆓 無料キャンセル
 </button>
 
 </div>
@@ -774,38 +654,88 @@ onclick="selectCondition(this,'cancel','問わない')">
 </div>
 
 
-<div class="input-group">
+<button class="next-btn"
+onclick="goToDestination()">
+条件を決定して次へ 🎰
+</button>
 
-<div class="input-label">
+</div>
+
+</div>
+
+
+
+<!-- ==================================================
+     SCREEN 2 行き先
+================================================== -->
+
+<div id="screenDestination" class="screen">
+
+<div class="card">
+
+<div class="title">
+📋 今回の旅行条件
+</div>
+
+<div id="conditionSummary"
+class="condition-summary">
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="title">
 🌏 行き先
 </div>
 
 <div class="mode">
 
-<button
-id="japanBtn"
+<button id="japanBtn"
 class="active"
 onclick="selectMode('japan')">
 🇯🇵 日本
 </button>
 
-<button
-id="overseasBtn"
+<button id="overseasBtn"
 onclick="selectMode('overseas')">
 🌎 海外
 </button>
 
 </div>
 
+<br>
+
+<div class="title">
+📍 行き先を選ぶ
+</div>
+
+<div class="small">
+行き先を自分で選ぶこともできます
+</div>
+
+<br>
+
+<div id="destinationGrid"
+class="keyword-grid">
 </div>
 
 
-<button
-class="next-btn"
-onclick="goToSlotScreen()">
+<div class="small" style="margin-top:14px;">
+または、全国からランダムに決めることもできます
+</div>
 
-🎰 条件を決定してスロットへ
 
+<button class="next-btn"
+onclick="goToPlaceSlot()">
+🎰 全国からスロットで決める
+</button>
+
+
+<button class="back-btn"
+onclick="showScreen('screenCondition')">
+← 条件入力に戻る
 </button>
 
 </div>
@@ -825,58 +755,49 @@ onclick="goToSlotScreen()">
 
 <div class="keyword-grid">
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'♨️ 温泉')">
 ♨️ 温泉
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'💰 安く泊まりたい')">
 💰 安さ
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'🍳 朝食を楽しみたい')">
 🍳 朝食
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'🏙️ 観光に便利')">
 🏙️ 観光
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'🚉 駅近')">
 🚉 駅近
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'🌿 ゆっくりしたい')">
 🌿 癒やし
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'✨ ちょっと贅沢')">
 ✨ 贅沢
 </button>
 
-<button
-class="keyword"
+<button class="keyword"
 onclick="chooseKeyword(this,'🍽️ 食事を楽しみたい')">
 🍽️ 食事
 </button>
 
 </div>
 
-<div
-id="selectedKeywords"
+<div id="selectedKeywords"
 class="selected-keywords">
 </div>
 
@@ -885,12 +806,12 @@ class="selected-keywords">
 </div>
 
 
+
 <!-- ==================================================
-     SCREEN 2
-     スロット
+     SCREEN 3 行き先スロット
 ================================================== -->
 
-<div id="slotScreen" class="screen">
+<div id="screenPlaceSlot" class="screen">
 
 <div class="card">
 
@@ -898,118 +819,73 @@ class="selected-keywords">
 🎰 行き先スロット
 </div>
 
-<div class="small">
-3つのリールが止まった場所が今回の旅先！
-</div>
-
-<br>
-
-
-<div class="slot-machine">
-
-<div class="slot-title">
-✨ DESTINATION SLOT ✨
-</div>
-
-<div class="slot-window">
-
-<div class="slot-reels">
-
-<div class="reel" id="reel1">
-<div class="reel-inner">北海道</div>
-</div>
-
-<div class="reel" id="reel2">
-<div class="reel-inner">京都府</div>
-</div>
-
-<div class="reel" id="reel3">
-<div class="reel-inner">大阪府</div>
-</div>
-
-</div>
-
-</div>
-
-
-<button
-class="slot-lever"
-onclick="startPlaceSlot()">
-
-▶
-
-</button>
-
-<div
-id="slotStatus"
-class="slot-status">
-
-レバーを押してスタート！
-
-</div>
-
-</div>
-
-
-<div class="spin-controls">
-
-<button
-id="placeStartBtn"
-class="start-btn"
-onclick="startPlaceSlot()">
-
-▶️ START
-
-</button>
-
-<button
-id="placeStopBtn"
-class="stop-btn"
-onclick="stopPlaceSlot()"
-disabled>
-
-⏹️ STOP
-
-</button>
-
-</div>
-
-
-<button
-class="back-btn"
-onclick="showScreen('conditionScreen')">
-
-← 条件を変更する
-
-</button>
-
-</div>
-
-
-<div
-id="conditionDisplay"
-class="card">
-
-<div class="title">
-📝 今回の条件
-</div>
-
-<div
-id="conditionSummary"
+<div id="placeConditionSummary"
 class="condition-summary">
 </div>
 
+
+<div class="slot-area">
+
+<div class="slot-machine">
+
+<div id="placeSlot1"
+class="slot-window">
+北海道
+</div>
+
+<div id="placeSlot2"
+class="slot-window">
+京都府
+</div>
+
+<div id="placeSlot3"
+class="slot-window">
+東京都
 </div>
 
 </div>
+
+<div class="slot-label">
+STOPすると3つのスロットが止まります
+</div>
+
+</div>
+
+
+<div class="slot-controls">
+
+<button id="placeStartBtn"
+class="start-btn"
+onclick="startPlaceSlot()">
+▶️ START
+</button>
+
+<button id="placeStopBtn"
+class="stop-btn"
+onclick="stopPlaceSlot()"
+disabled>
+⏹️ STOP
+</button>
+
+</div>
+
+
+<button class="back-btn"
+onclick="showScreen('screenDestination')">
+← 行き先選択に戻る
+</button>
+
+</div>
+
+</div>
+
 
 
 <!-- ==================================================
-     SCREEN 3
-     ホテルスロット
+     SCREEN 4 ホテルスロット
 ================================================== -->
 
-<div id="hotelScreen" class="screen">
+<div id="screenHotelSlot" class="screen">
 
 <div class="card">
 
@@ -1017,15 +893,13 @@ class="condition-summary">
 📍 今回の旅先
 </div>
 
-<div
-id="currentPlace"
+<div id="selectedPlace"
 class="result-place">
 ---
 </div>
 
-<div
-id="placeMessage"
-class="small">
+<div id="hotelConditionSummary"
+class="condition-summary">
 </div>
 
 </div>
@@ -1038,83 +912,51 @@ class="small">
 </div>
 
 <div class="small">
-このエリアのホテルから運命の1軒を抽選！
+この条件をもとにホテル候補から抽選します！
 </div>
 
-<br>
 
+<div class="slot-area">
 
 <div class="slot-machine">
 
-<div class="slot-title">
-🏨 HOTEL SLOT 🏨
-</div>
-
-<div class="slot-window">
-
-<div class="slot-reels">
-
-<div class="reel" id="hotelReel1">
-<div class="reel-inner">
+<div id="hotelSlot1"
+class="slot-window">
 ホテル
 </div>
-</div>
 
-<div class="reel" id="hotelReel2">
-<div class="reel-inner">
+<div id="hotelSlot2"
+class="slot-window">
 ホテル
 </div>
-</div>
 
-<div class="reel" id="hotelReel3">
-<div class="reel-inner">
+<div id="hotelSlot3"
+class="slot-window">
 ホテル
 </div>
-</div>
 
 </div>
 
-</div>
-
-
-<button
-class="slot-lever"
-onclick="startHotelSlot()">
-
-▶
-
-</button>
-
-<div
-id="hotelSlotStatus"
-class="slot-status">
-
-レバーを押してホテル抽選！
-
+<div class="slot-label">
+運命のホテルを決めよう！
 </div>
 
 </div>
 
 
-<div class="spin-controls">
+<div class="slot-controls">
 
-<button
-id="hotelStartBtn"
+<button id="hotelStartBtn"
 class="start-btn"
 onclick="startHotelSlot()">
-
 ▶️ START
-
 </button>
 
-<button
-id="hotelStopBtn"
+<button id="hotelStopBtn"
 class="stop-btn"
 onclick="stopHotelSlot()"
 disabled>
-
 ⏹️ STOP
-
 </button>
 
 </div>
@@ -1124,61 +966,57 @@ disabled>
 </div>
 
 
+
 <!-- ==================================================
-     RESULT
+     SCREEN 5 結果
 ================================================== -->
 
-<div
-id="result"
-class="card result">
+<div id="screenResult" class="screen">
+
+<div id="result"
+class="card result show">
 
 <div class="result-place">
 🎉 旅が決定！
 </div>
 
-<br>
 
-<div id="finalPlace">
+<div id="finalPlace"
+class="result-place">
 ---
 </div>
 
-<br>
 
-<div
-id="finalKeyword"
+<div id="finalKeyword"
 class="keyword-result">
 🔎 キーワード：おまかせ
 </div>
 
 
-<div
-id="finalConditions"
-class="condition-summary">
-</div>
-
-
 <div class="hotel-box">
 
-<div class="hotel-label">
+<div class="small">
 🏨 あなたのホテルは…
 </div>
 
-<div
-id="finalHotel"
-class="hotel-name">
+
+<div id="finalHotel"
+class="result-hotel">
 ---
 </div>
 
 
-<a
-id="reserveBtn"
+<div id="finalCondition"
+class="condition-summary">
+</div>
+
+
+<a id="reserveBtn"
 class="reserve-btn"
 href="#"
 target="_blank"
 rel="noopener noreferrer">
-
 🏨 楽天トラベルで予約する →
-
 </a>
 
 
@@ -1191,21 +1029,18 @@ rel="noopener noreferrer">
 </div>
 
 <div class="compare-description">
-このホテルを複数の予約サイトで比較して、
-安い順にチェックできます。
+同じホテル・同じ旅行条件で複数サイトを確認できます。
 </div>
+
 
 <button
 class="compare-btn"
 onclick="showComparison()">
-
 🔎 安い予約サイトを比較する
-
 </button>
 
 
-<div
-id="compareResults"
+<div id="compareResults"
 class="compare-results">
 
 
@@ -1227,14 +1062,11 @@ class="compare-results">
 
 </div>
 
-<a
-id="rakutenCompare"
+<a id="rakutenCompare"
 class="compare-link"
 href="#"
 target="_blank">
-
 見る
-
 </a>
 
 </div>
@@ -1258,14 +1090,11 @@ target="_blank">
 
 </div>
 
-<a
-id="jalanCompare"
+<a id="jalanCompare"
 class="compare-link"
-href="https://www.jalan.net/"
+href="#"
 target="_blank">
-
 見る
-
 </a>
 
 </div>
@@ -1289,14 +1118,11 @@ Booking.com
 
 </div>
 
-<a
-id="bookingCompare"
+<a id="bookingCompare"
 class="compare-link"
-href="https://www.booking.com/"
+href="#"
 target="_blank">
-
 見る
-
 </a>
 
 </div>
@@ -1320,24 +1146,19 @@ Agoda
 
 </div>
 
-<a
-id="agodaCompare"
+<a id="agodaCompare"
 class="compare-link"
-href="https://www.agoda.com/"
+href="#"
 target="_blank">
-
 見る
-
 </a>
 
 </div>
 
 
 <div class="compare-note">
-
-※現在のHTML版では各サイトのリアルタイム料金を自動取得していません。<br>
-実際の料金・空室状況は各予約サイトでご確認ください。
-
+※このHTML単体では予約サイトのリアルタイム料金を取得していません。<br>
+実際の料金・空室・キャンセル条件は各予約サイトで確認してください。
 </div>
 
 </div>
@@ -1351,17 +1172,16 @@ target="_blank">
 
 <button
 class="next-btn"
-onclick="showScreen('conditionScreen')">
-
-🔄 もう一度やる
-
+onclick="restart()">
+🎰 もう一度遊ぶ
 </button>
 
 </div>
 
 
+
 <!-- ==================================================
-     HISTORY
+     履歴
 ================================================== -->
 
 <div class="card">
@@ -1377,6 +1197,10 @@ onclick="showScreen('conditionScreen')">
 </div>
 
 
+<!-- ==================================================
+     遊び方
+================================================== -->
+
 <div class="card">
 
 <div class="small">
@@ -1385,20 +1209,20 @@ onclick="showScreen('conditionScreen')">
 
 <br><br>
 
-① 泊数・人数・朝食などを入力<br>
-② 日本か海外を選択<br>
-③ キーワードを選択<br>
-④ スロット画面へ移動<br>
-⑤ 行き先スロットを回す<br>
-⑥ ホテルスロットを回す<br>
-⑦ 予約サイトを比較<br>
-⑧ 最後は運命のホテルへ！
+① 宿泊条件を入力<br>
+② 行き先を決める<br>
+③ 🎰 スロットを回す<br>
+④ ホテルを決める<br>
+⑤ 💰 予約サイトを比較<br>
+⑥ 安いサイトをチェック<br>
+⑦ 最後は運命のホテルへ！
 
 </div>
 
 </div>
 
 </div>
+
 
 
 <script>
@@ -1407,40 +1231,23 @@ onclick="showScreen('conditionScreen')">
    基本設定
 ================================================== */
 
-let currentMode = "japan";
-
 let keywords = [];
 
-let currentPlace = null;
+let currentMode = "japan";
 
+let selectedNights = 1;
+let selectedGuests = 1;
+let selectedBreakfast = "おまかせ";
+let selectedCancel = "おまかせ";
+
+let selectedPlace = null;
 let currentHotel = null;
 
 let placeRunning = false;
-
-let hotelRunning = false;
-
 let placeTimer = null;
 
+let hotelRunning = false;
 let hotelTimer = null;
-
-let hotelList = [];
-
-
-/* ==================================================
-   条件
-================================================== */
-
-let conditions = {
-
-nights:"1",
-
-guests:"2",
-
-breakfast:"あり",
-
-cancel:"無料"
-
-};
 
 
 /* ==================================================
@@ -1456,7 +1263,6 @@ const prefectures = [
 "秋田県",
 "山形県",
 "福島県",
-
 "茨城県",
 "栃木県",
 "群馬県",
@@ -1464,37 +1270,31 @@ const prefectures = [
 "千葉県",
 "東京都",
 "神奈川県",
-
 "新潟県",
 "富山県",
 "石川県",
 "福井県",
 "山梨県",
 "長野県",
-
 "岐阜県",
 "静岡県",
 "愛知県",
 "三重県",
-
 "滋賀県",
 "京都府",
 "大阪府",
 "兵庫県",
 "奈良県",
 "和歌山県",
-
 "鳥取県",
 "島根県",
 "岡山県",
 "広島県",
 "山口県",
-
 "徳島県",
 "香川県",
 "愛媛県",
 "高知県",
-
 "福岡県",
 "佐賀県",
 "長崎県",
@@ -1506,10 +1306,6 @@ const prefectures = [
 
 ];
 
-
-/* ==================================================
-   海外
-================================================== */
 
 const overseas = [
 
@@ -1528,550 +1324,916 @@ const overseas = [
 
 
 /* ==================================================
-   全国ホテル
-   ※各都道府県10件程度まで追加可能
+   ホテル
+   元のホテルを維持
 ================================================== */
 
-const hotelsByPrefecture = {
+const hotels = [
+
+{
+name:"JRタワーホテル日航札幌",
+url:"https://a.r10.to/hPHwkR"
+},
+
+{
+name:"ホテルモントレ エーデルホフ札幌",
+url:"https://a.r10.to/h5sCsm"
+},
+
+{
+name:"ソラリア西鉄ホテル札幌",
+url:"https://a.r10.to/hgD3ku"
+},
+
+{
+name:"札幌ホテル by グランベル",
+url:"https://a.r10.to/hPlmGl"
+},
+
+{
+name:"ONSEN RYOKAN 由縁 札幌",
+url:"https://a.r10.to/hYVGq6"
+},
+
+{
+name:"ニューオータニイン札幌",
+url:"https://a.r10.to/h5YmNL"
+},
+
+{
+name:"ホテル京阪 札幌",
+url:"https://a.r10.to/hFdmKn"
+},
+
+{
+name:"ホテルエミシア札幌",
+url:"https://a.r10.to/h5njrJ"
+},
+
+{
+name:"札幌グランドホテル",
+url:"https://a.r10.to/hPljXP"
+},
+
+{
+name:"クロスホテル札幌",
+url:"https://a.r10.to/h57Fzw"
+}
+
+];
 
 
-"北海道":[
-["JRタワーホテル日航札幌","https://a.r10.to/hPHwkR"],
-["ホテルモントレ エーデルホフ札幌","https://a.r10.to/h5sCsm"],
-["ソラリア西鉄ホテル札幌","https://a.r10.to/hgD3ku"],
-["札幌ホテル by グランベル","https://a.r10.to/hPlmGl"],
-["ONSEN RYOKAN 由縁 札幌","https://a.r10.to/hYVGq6"],
-["ニューオータニイン札幌","https://a.r10.to/h5YmNL"],
-["ホテル京阪 札幌","https://a.r10.to/hFdmKn"],
-["ホテルエミシア札幌","https://a.r10.to/h5njrJ"],
-["札幌グランドホテル","https://a.r10.to/hPljXP"],
-["クロスホテル札幌","https://a.r10.to/h57Fzw"]
-],
+const kyotoHotels = [
+
+{
+name:"HOTEL ARU KYOTO 三条木屋町通り",
+url:"https://a.r10.to/hPRzvh"
+},
+
+{
+name:"ホテル グラン・エムズ京都",
+url:"https://a.r10.to/hgLs22"
+},
+
+{
+name:"ホテルグランヴィア京都",
+url:"https://a.r10.to/h8QXhX"
+},
+
+{
+name:"THE BLOSSOM KYOTO",
+url:"https://a.r10.to/h5gYSt"
+},
+
+{
+name:"ヒルトン京都",
+url:"https://a.r10.to/hg1s96"
+},
+
+{
+name:"エースホテル京都",
+url:"https://a.r10.to/hPiJUn"
+},
+
+{
+name:"ホテル ザ ミツイ キョウト",
+url:"https://a.r10.to/hYvzZa"
+},
+
+{
+name:"The Hotel Seiryu Kyoto Kiyomizu",
+url:"https://a.r10.to/h8rJW7"
+},
+
+{
+name:"Park Hyatt Kyoto",
+url:"https://a.r10.to/h57FJ2"
+},
+
+{
+name:"フォーシーズンズホテル京都",
+url:"https://a.r10.to/hgDehp"
+}
+
+];
 
 
-"青森県":[
-["星野リゾート 青森屋","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル青森","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル青森","https://www.rakutentravel.co.jp/"],
-["ホテルJALシティ青森","https://www.rakutentravel.co.jp/"],
-["アートホテル青森","https://www.rakutentravel.co.jp/"]
-],
+const osakaHotels = [
+
+{
+name:"KOKO HOTEL 大阪心斎橋",
+url:"https://a.r10.to/hk0aeA"
+},
+
+{
+name:"黒門クリスタルホテル",
+url:"https://a.r10.to/hgElkZ"
+},
+
+{
+name:"大阪グランベルホテル",
+url:"https://a.r10.to/hgclXy"
+},
+
+{
+name:"ホテルヴィスキオ大阪",
+url:"https://a.r10.to/TLKYG6"
+},
+
+{
+name:"ホテルリソルトリニティ大阪",
+url:"https://a.r10.to/hgjoEJ"
+},
+
+{
+name:"都シティ 大阪本町",
+url:"https://a.r10.to/hFcH5m"
+},
+
+{
+name:"ホテル阪急レスパイア大阪",
+url:"https://a.r10.to/h575rE"
+},
+
+{
+name:"ホテルグランヴィア大阪",
+url:"https://a.r10.to/hRiIkf"
+},
+
+{
+name:"帝国ホテル 大阪",
+url:"https://a.r10.to/hgcQ68"
+},
+
+{
+name:"ザ ロイヤルパークホテル アイコニック 大阪御堂筋",
+url:"https://a.r10.to/hXi5On"
+}
+
+];
 
 
-"岩手県":[
-["ホテルメトロポリタン盛岡","https://www.rakutentravel.co.jp/"],
-["アートホテル盛岡","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル盛岡駅前","https://www.rakutentravel.co.jp/"],
-["盛岡ニューシティホテル","https://www.rakutentravel.co.jp/"],
-["ホテルパールシティ盛岡","https://www.rakutentravel.co.jp/"]
-],
+const tokyoHotels = [
+
+{
+name:"ホテルミュッセ銀座名鉄",
+url:"https://a.r10.to/hPDUsh"
+},
+
+{
+name:"からくさホテル 東京ステーション",
+url:"https://a.r10.to/hPfUGg"
+},
+
+{
+name:"三井ガーデンホテル銀座プレミア",
+url:"https://a.r10.to/hP6bAf"
+},
+
+{
+name:"三井ガーデンホテル日本橋プレミア",
+url:"https://a.r10.to/h50zik"
+},
+
+{
+name:"パークホテル東京",
+url:"https://a.r10.to/hgp4eY"
+},
+
+{
+name:"MIMARU東京 日本橋水天宮前",
+url:"https://a.r10.to/hPJKcu"
+},
+
+{
+name:"帝国ホテル 東京",
+url:"https://a.r10.to/hk7QVa"
+},
+
+{
+name:"グランド ハイアット 東京",
+url:"https://a.r10.to/hgePLf"
+},
+
+{
+name:"ザ・ペニンシュラ東京",
+url:"https://a.r10.to/h5q12U"
+},
+
+{
+name:"マンダリン オリエンタル 東京",
+url:"https://a.r10.to/hP5ZFe"
+}
+
+];
 
 
-"宮城県":[
-["ウェスティンホテル仙台","https://www.rakutentravel.co.jp/"],
-["ホテルメトロポリタン仙台","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテルプレミア仙台駅前","https://www.rakutentravel.co.jp/"],
-["三井ガーデンホテル仙台","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル仙台","https://www.rakutentravel.co.jp/"]
-],
+const fukuokaHotels = [
+
+{
+name:"博多エクセルホテル東急",
+url:"https://a.r10.to/hP8xv3"
+},
+
+{
+name:"西鉄ホテル クルーム博多",
+url:"https://a.r10.to/T3JpPu"
+},
+
+{
+name:"ホテルモントレ福岡",
+url:"https://a.r10.to/h8fA4F"
+},
+
+{
+name:"三井ガーデンホテル福岡中洲",
+url:"https://a.r10.to/hYwIlp"
+},
+
+{
+name:"三井ガーデンホテル福岡祇園",
+url:"https://a.r10.to/hPKHkK"
+},
+
+{
+name:"ホテル日航福岡",
+url:"https://a.r10.to/hkBbbN"
+},
+
+{
+name:"福岡ホテル7",
+url:"https://a.r10.to/hRVG8U"
+},
+
+{
+name:"福岡ホテル8",
+url:"https://a.r10.to/hPUKDH"
+},
+
+{
+name:"福岡ホテル9",
+url:"https://a.r10.to/h5uO2O"
+},
+
+{
+name:"福岡ホテル10",
+url:"https://a.r10.to/hkQi0X"
+}
+
+];
 
 
-"秋田県":[
-["ホテルメトロポリタン秋田","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル秋田駅前","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル秋田","https://www.rakutentravel.co.jp/"],
-["ANAクラウンプラザホテル秋田","https://www.rakutentravel.co.jp/"],
-["秋田キャッスルホテル","https://www.rakutentravel.co.jp/"]
-],
+/* ==================================================
+   全国の主要都市ホテル
+   既存ホテルがない県は検索型候補にする
+================================================== */
 
+const cityMap = {
 
-"山形県":[
-["ホテルメトロポリタン山形","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル山形駅前","https://www.rakutentravel.co.jp/"],
-["山形グランドホテル","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル山形駅前","https://www.rakutentravel.co.jp/"],
-["ホテルキャッスル山形","https://www.rakutentravel.co.jp/"]
-],
-
-
-"福島県":[
-["ホテルサンルート福島","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル福島駅前","https://www.rakutentravel.co.jp/"],
-["ホテルメッツ福島","https://www.rakutentravel.co.jp/"],
-["郡山ビューホテル","https://www.rakutentravel.co.jp/"],
-["磐梯熱海温泉 華の湯","https://www.rakutentravel.co.jp/"]
-],
-
-
-"茨城県":[
-["ホテル日航つくば","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル水戸","https://www.rakutentravel.co.jp/"],
-["ホテルテラスザガーデン水戸","https://www.rakutentravel.co.jp/"],
-["アパホテル水戸駅北","https://www.rakutentravel.co.jp/"],
-["水戸京成ホテル","https://www.rakutentravel.co.jp/"]
-],
-
-
-"栃木県":[
-["鬼怒川温泉 あさや","https://www.rakutentravel.co.jp/"],
-["ホテルエピナール那須","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル宇都宮駅前","https://www.rakutentravel.co.jp/"],
-["ホテルマイステイズ宇都宮","https://www.rakutentravel.co.jp/"],
-["日光金谷ホテル","https://www.rakutentravel.co.jp/"]
-],
-
-
-"群馬県":[
-["草津温泉 ホテル櫻井","https://www.rakutentravel.co.jp/"],
-["草津温泉 望雲","https://www.rakutentravel.co.jp/"],
-["ホテルメトロポリタン高崎","https://www.rakutentravel.co.jp/"],
-["高崎ワシントンホテルプラザ","https://www.rakutentravel.co.jp/"],
-["水上館","https://www.rakutentravel.co.jp/"]
-],
-
-
-"埼玉県":[
-["ロイヤルパインズホテル浦和","https://www.rakutentravel.co.jp/"],
-["パレスホテル大宮","https://www.rakutentravel.co.jp/"],
-["川越プリンスホテル","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル大宮","https://www.rakutentravel.co.jp/"],
-["ホテルメトロポリタンさいたま新都心","https://www.rakutentravel.co.jp/"]
-],
-
-
-"千葉県":[
-["東京ディズニーランドホテル","https://www.rakutentravel.co.jp/"],
-["東京ディズニーシー・ホテルミラコスタ","https://www.rakutentravel.co.jp/"],
-["ホテルオークラ東京ベイ","https://www.rakutentravel.co.jp/"],
-["ヒルトン東京ベイ","https://www.rakutentravel.co.jp/"],
-["三井ガーデンホテル千葉","https://www.rakutentravel.co.jp/"]
-],
-
-
-"東京都":[
-["ホテルミュッセ銀座名鉄","https://a.r10.to/hPDUsh"],
-["からくさホテル 東京ステーション","https://a.r10.to/hPfUGg"],
-["三井ガーデンホテル銀座プレミア","https://a.r10.to/hP6bAf"],
-["三井ガーデンホテル日本橋プレミア","https://a.r10.to/h50zik"],
-["パークホテル東京","https://a.r10.to/hgp4eY"],
-["MIMARU東京 日本橋水天宮前","https://a.r10.to/hPJKcu"],
-["帝国ホテル 東京","https://a.r10.to/hk7QVa"],
-["グランド ハイアット 東京","https://a.r10.to/hgePLf"],
-["ザ・ペニンシュラ東京","https://a.r10.to/h5q12U"],
-["マンダリン オリエンタル 東京","https://a.r10.to/hP5ZFe"]
-],
-
-
-"神奈川県":[
-["横浜ロイヤルパークホテル","https://www.rakutentravel.co.jp/"],
-["ホテルニューグランド","https://www.rakutentravel.co.jp/"],
-["ヨコハマ グランド インターコンチネンタル ホテル","https://www.rakutentravel.co.jp/"],
-["ハイアット リージェンシー 横浜","https://www.rakutentravel.co.jp/"],
-["箱根湯本温泉 天成園","https://www.rakutentravel.co.jp/"]
-],
-
-
-"新潟県":[
-["ホテルオークラ新潟","https://www.rakutentravel.co.jp/"],
-["ホテル日航新潟","https://www.rakutentravel.co.jp/"],
-["アートホテル新潟駅前","https://www.rakutentravel.co.jp/"],
-["ANAクラウンプラザホテル新潟","https://www.rakutentravel.co.jp/"],
-["新潟グランドホテル","https://www.rakutentravel.co.jp/"]
-],
-
-
-"富山県":[
-["富山エクセルホテル東急","https://www.rakutentravel.co.jp/"],
-["ANAクラウンプラザホテル富山","https://www.rakutentravel.co.jp/"],
-["富山マンテンホテル","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル富山駅前","https://www.rakutentravel.co.jp/"],
-["ホテルヴィスキオ富山","https://www.rakutentravel.co.jp/"]
-],
-
-
-"石川県":[
-["ホテル日航金沢","https://www.rakutentravel.co.jp/"],
-["金沢東急ホテル","https://www.rakutentravel.co.jp/"],
-["三井ガーデンホテル金沢","https://www.rakutentravel.co.jp/"],
-["ハイアット セントリック 金沢","https://www.rakutentravel.co.jp/"],
-["THE HOTEL SANRAKU KANAZAWA","https://www.rakutentravel.co.jp/"]
-],
-
-
-"福井県":[
-["ホテルフジタ福井","https://www.rakutentravel.co.jp/"],
-["ドーミーイン福井","https://www.rakutentravel.co.jp/"],
-["福井マンテンホテル駅前","https://www.rakutentravel.co.jp/"],
-["ホテルリバージュアケボノ","https://www.rakutentravel.co.jp/"],
-["アパホテル福井片町","https://www.rakutentravel.co.jp/"]
-],
-
-
-"山梨県":[
-["富士急オフィシャルホテル ハイランドリゾート ホテル＆スパ","https://www.rakutentravel.co.jp/"],
-["ホテルマイステイズ富士山 展望温泉","https://www.rakutentravel.co.jp/"],
-["富士レークホテル","https://www.rakutentravel.co.jp/"],
-["河口湖温泉 富士吟景","https://www.rakutentravel.co.jp/"],
-["甲府ワシントンホテルプラザ","https://www.rakutentravel.co.jp/"]
-],
-
-
-"長野県":[
-["ホテルメトロポリタン長野","https://www.rakutentravel.co.jp/"],
-["ホテル国際21長野","https://www.rakutentravel.co.jp/"],
-["軽井沢プリンスホテル","https://www.rakutentravel.co.jp/"],
-["白馬東急ホテル","https://www.rakutentravel.co.jp/"],
-["上高地帝国ホテル","https://www.rakutentravel.co.jp/"]
-],
-
-
-"岐阜県":[
-["飛騨花里の湯 高山桜庵","https://www.rakutentravel.co.jp/"],
-["高山グリーンホテル","https://www.rakutentravel.co.jp/"],
-["ホテルアソシア高山リゾート","https://www.rakutentravel.co.jp/"],
-["都ホテル 岐阜長良川","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル岐阜","https://www.rakutentravel.co.jp/"]
-],
-
-
-"静岡県":[
-["日本平ホテル","https://www.rakutentravel.co.jp/"],
-["ホテルオーレ イン","https://www.rakutentravel.co.jp/"],
-["ホテルクラッド","https://www.rakutentravel.co.jp/"],
-["焼津グランドホテル","https://www.rakutentravel.co.jp/"],
-["熱海後楽園ホテル","https://www.rakutentravel.co.jp/"]
-],
-
+"北海道":hotels,
+"京都府":kyotoHotels,
+"大阪府":osakaHotels,
+"東京都":tokyoHotels,
+"福岡県":fukuokaHotels,
 
 "愛知県":[
-["名古屋マリオットアソシアホテル","https://www.rakutentravel.co.jp/"],
-["名古屋東急ホテル","https://www.rakutentravel.co.jp/"],
-["ヒルトン名古屋","https://www.rakutentravel.co.jp/"],
-["三井ガーデンホテル名古屋プレミア","https://www.rakutentravel.co.jp/"],
-["ニッコースタイル名古屋","https://www.rakutentravel.co.jp/"]
+{name:"名古屋マリオットアソシアホテル",url:"https://www.google.com/search?q="+encodeURIComponent("名古屋マリオットアソシアホテル 予約")},
+{name:"名古屋東急ホテル",url:"https://www.google.com/search?q="+encodeURIComponent("名古屋東急ホテル 予約")},
+{name:"ヒルトン名古屋",url:"https://www.google.com/search?q="+encodeURIComponent("ヒルトン名古屋 予約")},
+{name:"名古屋JRゲートタワーホテル",url:"https://www.google.com/search?q="+encodeURIComponent("名古屋JRゲートタワーホテル 予約")}
 ],
 
-
-"三重県":[
-["志摩観光ホテル ザ ベイスイート","https://www.rakutentravel.co.jp/"],
-["鳥羽国際ホテル","https://www.rakutentravel.co.jp/"],
-["ホテル志摩スペイン村","https://www.rakutentravel.co.jp/"],
-["伊勢シティホテル","https://www.rakutentravel.co.jp/"],
-["コンフォートホテル伊勢","https://www.rakutentravel.co.jp/"]
+"神奈川県":[
+{name:"横浜ベイホテル東急",url:"https://www.google.com/search?q="+encodeURIComponent("横浜ベイホテル東急 予約")},
+{name:"横浜ロイヤルパークホテル",url:"https://www.google.com/search?q="+encodeURIComponent("横浜ロイヤルパークホテル 予約")},
+{name:"ホテルニューグランド",url:"https://www.google.com/search?q="+encodeURIComponent("ホテルニューグランド 横浜 予約")},
+{name:"インターコンチネンタル横浜Pier 8",url:"https://www.google.com/search?q="+encodeURIComponent("インターコンチネンタル横浜Pier 8 予約")}
 ],
-
-
-"滋賀県":[
-["琵琶湖ホテル","https://www.rakutentravel.co.jp/"],
-["びわ湖大津プリンスホテル","https://www.rakutentravel.co.jp/"],
-["ホテルボストンプラザ草津","https://www.rakutentravel.co.jp/"],
-["琵琶湖マリオットホテル","https://www.rakutentravel.co.jp/"],
-["おごと温泉 湯元舘","https://www.rakutentravel.co.jp/"]
-],
-
-
-"京都府":[
-["HOTEL ARU KYOTO 三条木屋町通り","https://a.r10.to/hPRzvh"],
-["ホテル グラン・エムズ京都","https://a.r10.to/hgLs22"],
-["ホテルグランヴィア京都","https://a.r10.to/h8QXhX"],
-["THE BLOSSOM KYOTO","https://a.r10.to/h5gYSt"],
-["ヒルトン京都","https://a.r10.to/hg1s96"],
-["エースホテル京都","https://a.r10.to/hPiJUn"],
-["ホテル ザ ミツイ キョウト","https://a.r10.to/hYvzZa"],
-["The Hotel Seiryu Kyoto Kiyomizu","https://a.r10.to/h8rJW7"],
-["Park Hyatt Kyoto","https://a.r10.to/h57FJ2"],
-["フォーシーズンズホテル京都","https://a.r10.to/hgDehp"]
-],
-
-
-"大阪府":[
-["KOKO HOTEL 大阪心斎橋","https://a.r10.to/hk0aeA"],
-["黒門クリスタルホテル","https://a.r10.to/hgElkZ"],
-["大阪グランベルホテル","https://a.r10.to/hgclXy"],
-["ホテルヴィスキオ大阪","https://a.r10.to/TLKYG6"],
-["ホテルリソルトリニティ大阪","https://a.r10.to/hgjoEJ"],
-["都シティ 大阪本町","https://a.r10.to/hFcH5m"],
-["ホテル阪急レスパイア大阪","https://a.r10.to/h575rE"],
-["ホテルグランヴィア大阪","https://a.r10.to/hRiIkf"],
-["帝国ホテル 大阪","https://a.r10.to/hgcQ68"],
-["ザ ロイヤルパークホテル アイコニック 大阪御堂筋","https://a.r10.to/hXi5On"]
-],
-
 
 "兵庫県":[
-["ホテルオークラ神戸","https://www.rakutentravel.co.jp/"],
-["神戸メリケンパークオリエンタルホテル","https://www.rakutentravel.co.jp/"],
-["ホテル ラ・スイート神戸ハーバーランド","https://www.rakutentravel.co.jp/"],
-["神戸ポートピアホテル","https://www.rakutentravel.co.jp/"],
-["有馬温泉 兵衛向陽閣","https://www.rakutentravel.co.jp/"]
+{name:"ホテルオークラ神戸",url:"https://www.google.com/search?q="+encodeURIComponent("ホテルオークラ神戸 予約")},
+{name:"神戸ポートピアホテル",url:"https://www.google.com/search?q="+encodeURIComponent("神戸ポートピアホテル 予約")},
+{name:"神戸メリケンパークオリエンタルホテル",url:"https://www.google.com/search?q="+encodeURIComponent("神戸メリケンパークオリエンタルホテル 予約")},
+{name:"ANAクラウンプラザホテル神戸",url:"https://www.google.com/search?q="+encodeURIComponent("ANAクラウンプラザホテル神戸 予約")}
 ],
-
-
-"奈良県":[
-["JWマリオット・ホテル奈良","https://www.rakutentravel.co.jp/"],
-["ホテル日航奈良","https://www.rakutentravel.co.jp/"],
-["奈良ホテル","https://www.rakutentravel.co.jp/"],
-["センチュリオンホテルクラシック奈良","https://www.rakutentravel.co.jp/"],
-["MIROKU NARA by THE SHARE HOTELS","https://www.rakutentravel.co.jp/"]
-],
-
-
-"和歌山県":[
-["ホテルグランヴィア和歌山","https://www.rakutentravel.co.jp/"],
-["白浜古賀の井リゾート＆スパ","https://www.rakutentravel.co.jp/"],
-["南紀白浜マリオットホテル","https://www.rakutentravel.co.jp/"],
-["浜千鳥の湯 海舟","https://www.rakutentravel.co.jp/"],
-["ホテル川久","https://www.rakutentravel.co.jp/"]
-],
-
-
-"鳥取県":[
-["三朝館","https://www.rakutentravel.co.jp/"],
-["依山楼岩崎","https://www.rakutentravel.co.jp/"],
-["ホテルモナーク鳥取","https://www.rakutentravel.co.jp/"],
-["鳥取グリーンホテルモーリス","https://www.rakutentravel.co.jp/"],
-["皆生グランドホテル天水","https://www.rakutentravel.co.jp/"]
-],
-
-
-"島根県":[
-["ホテル一畑","https://www.rakutentravel.co.jp/"],
-["ドーミーイン出雲","https://www.rakutentravel.co.jp/"],
-["玉造温泉 湯之助の宿 長楽園","https://www.rakutentravel.co.jp/"],
-["佳翠苑 皆美","https://www.rakutentravel.co.jp/"],
-["松江エクセルホテル東急","https://www.rakutentravel.co.jp/"]
-],
-
-
-"岡山県":[
-["ホテルグランヴィア岡山","https://www.rakutentravel.co.jp/"],
-["ANAクラウンプラザホテル岡山","https://www.rakutentravel.co.jp/"],
-["三井ガーデンホテル岡山","https://www.rakutentravel.co.jp/"],
-["岡山後楽ホテル","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル岡山駅前","https://www.rakutentravel.co.jp/"]
-],
-
 
 "広島県":[
-["リーガロイヤルホテル広島","https://www.rakutentravel.co.jp/"],
-["ホテルグランヴィア広島","https://www.rakutentravel.co.jp/"],
-["ANAクラウンプラザホテル広島","https://www.rakutentravel.co.jp/"],
-["ヒルトン広島","https://www.rakutentravel.co.jp/"],
-["グランドプリンスホテル広島","https://www.rakutentravel.co.jp/"]
+{name:"リーガロイヤルホテル広島",url:"https://www.google.com/search?q="+encodeURIComponent("リーガロイヤルホテル広島 予約")},
+{name:"ホテルグランヴィア広島",url:"https://www.google.com/search?q="+encodeURIComponent("ホテルグランヴィア広島 予約")},
+{name:"シェラトングランドホテル広島",url:"https://www.google.com/search?q="+encodeURIComponent("シェラトングランドホテル広島 予約")},
+{name:"THE KNOT HIROSHIMA",url:"https://www.google.com/search?q="+encodeURIComponent("THE KNOT HIROSHIMA 予約")}
 ],
-
-
-"山口県":[
-["ANAクラウンプラザホテル宇部","https://www.rakutentravel.co.jp/"],
-["ホテル西長門リゾート","https://www.rakutentravel.co.jp/"],
-["湯田温泉 松田屋ホテル","https://www.rakutentravel.co.jp/"],
-["ドーミーインPREMIUM下関","https://www.rakutentravel.co.jp/"],
-["ホテルニュータナカ","https://www.rakutentravel.co.jp/"]
-],
-
-
-"徳島県":[
-["JRホテルクレメント徳島","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル徳島駅前","https://www.rakutentravel.co.jp/"],
-["徳島グランヴィリオホテル","https://www.rakutentravel.co.jp/"],
-["ホテルサンルート徳島","https://www.rakutentravel.co.jp/"],
-["アオアヲ ナルト リゾート","https://www.rakutentravel.co.jp/"]
-],
-
-
-"香川県":[
-["JRホテルクレメント高松","https://www.rakutentravel.co.jp/"],
-["高松東急REIホテル","https://www.rakutentravel.co.jp/"],
-["ロイヤルパークホテル高松","https://www.rakutentravel.co.jp/"],
-["喜代美山荘 花樹海","https://www.rakutentravel.co.jp/"],
-["琴平グランドホテル 桜の抄","https://www.rakutentravel.co.jp/"]
-],
-
-
-"愛媛県":[
-["ANAクラウンプラザホテル松山","https://www.rakutentravel.co.jp/"],
-["道後温泉 大和屋本店","https://www.rakutentravel.co.jp/"],
-["道後舘","https://www.rakutentravel.co.jp/"],
-["ホテルマイステイズ松山","https://www.rakutentravel.co.jp/"],
-["ダイワロイネットホテル松山","https://www.rakutentravel.co.jp/"]
-],
-
-
-"高知県":[
-["城西館","https://www.rakutentravel.co.jp/"],
-["ザ クラウンパレス新阪急高知","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル高知","https://www.rakutentravel.co.jp/"],
-["JRクレメントイン高知","https://www.rakutentravel.co.jp/"],
-["三翠園","https://www.rakutentravel.co.jp/"]
-],
-
-
-"福岡県":[
-["博多エクセルホテル東急","https://a.r10.to/hP8xv3"],
-["西鉄ホテル クルーム博多","https://a.r10.to/T3JpPu"],
-["ホテルモントレ福岡","https://a.r10.to/h8fA4F"],
-["三井ガーデンホテル福岡中洲","https://a.r10.to/hYwIlp"],
-["三井ガーデンホテル福岡祇園","https://a.r10.to/hPKHkK"],
-["ホテル日航福岡","https://a.r10.to/hkBbbN"],
-["福岡ホテル7","https://a.r10.to/hRVG8U"],
-["福岡ホテル8","https://a.r10.to/hPUKDH"],
-["福岡ホテル9","https://a.r10.to/h5uO2O"],
-["福岡ホテル10","https://a.r10.to/hkQi0X"]
-],
-
-
-"佐賀県":[
-["ホテルニューオータニ佐賀","https://www.rakutentravel.co.jp/"],
-["ガーデンテラス佐賀 ホテル＆マリトピア","https://www.rakutentravel.co.jp/"],
-["嬉野温泉 萬象閣敷島","https://www.rakutentravel.co.jp/"],
-["嬉野温泉 大正屋","https://www.rakutentravel.co.jp/"],
-["唐津シーサイドホテル","https://www.rakutentravel.co.jp/"]
-],
-
-
-"長崎県":[
-["ホテルニュー長崎","https://www.rakutentravel.co.jp/"],
-["ヒルトン長崎","https://www.rakutentravel.co.jp/"],
-["ホテルモントレ長崎","https://www.rakutentravel.co.jp/"],
-["ガーデンテラス長崎ホテル＆リゾート","https://www.rakutentravel.co.jp/"],
-["ホテルヨーロッパ","https://www.rakutentravel.co.jp/"]
-],
-
-
-"熊本県":[
-["ホテル日航熊本","https://www.rakutentravel.co.jp/"],
-["ANAクラウンプラザホテル熊本ニュースカイ","https://www.rakutentravel.co.jp/"],
-["熊本ホテルキャッスル","https://www.rakutentravel.co.jp/"],
-["THE BLOSSOM KUMAMOTO","https://www.rakutentravel.co.jp/"],
-["黒川温泉 山みず木","https://www.rakutentravel.co.jp/"]
-],
-
-
-"大分県":[
-["杉乃井ホテル","https://www.rakutentravel.co.jp/"],
-["別府温泉 竹と椿のお宿 花べっぷ","https://www.rakutentravel.co.jp/"],
-["別府亀の井ホテル","https://www.rakutentravel.co.jp/"],
-["由布院 玉の湯","https://www.rakutentravel.co.jp/"],
-["湯布院 山荘 無量塔","https://www.rakutentravel.co.jp/"]
-],
-
-
-"宮崎県":[
-["シェラトン・グランデ・オーシャンリゾート","https://www.rakutentravel.co.jp/"],
-["ANAホリデイ・イン リゾート宮崎","https://www.rakutentravel.co.jp/"],
-["ホテルJALシティ宮崎","https://www.rakutentravel.co.jp/"],
-["宮崎観光ホテル","https://www.rakutentravel.co.jp/"],
-["リッチモンドホテル宮崎駅前","https://www.rakutentravel.co.jp/"]
-],
-
-
-"鹿児島県":[
-["SHIROYAMA HOTEL kagoshima","https://www.rakutentravel.co.jp/"],
-["ソラリア西鉄ホテル鹿児島","https://www.rakutentravel.co.jp/"],
-["城山ホテル鹿児島","https://www.rakutentravel.co.jp/"],
-["鹿児島サンロイヤルホテル","https://www.rakutentravel.co.jp/"],
-["JR九州ホテル鹿児島","https://www.rakutentravel.co.jp/"]
-],
-
 
 "沖縄県":[
-["ハレクラニ沖縄","https://www.rakutentravel.co.jp/"],
-["ホテルモントレ沖縄 スパ＆リゾート","https://www.rakutentravel.co.jp/"],
-["ザ・ブセナテラス","https://www.rakutentravel.co.jp/"],
-["リザンシーパークホテル谷茶ベイ","https://www.rakutentravel.co.jp/"],
-["ヒルトン沖縄北谷リゾート","https://www.rakutentravel.co.jp/"]
+{name:"ハレクラニ沖縄",url:"https://www.google.com/search?q="+encodeURIComponent("ハレクラニ沖縄 予約")},
+{name:"ホテル コレクティブ",url:"https://www.google.com/search?q="+encodeURIComponent("ホテル コレクティブ 沖縄 予約")},
+{name:"沖縄ハーバービューホテル",url:"https://www.google.com/search?q="+encodeURIComponent("沖縄ハーバービューホテル 予約")},
+{name:"ヒューイットリゾート那覇",url:"https://www.google.com/search?q="+encodeURIComponent("ヒューイットリゾート那覇 予約")}
 ]
 
 };
 
 
 /* ==================================================
-   海外
+   画面切り替え
 ================================================== */
 
-const overseasHotels = {
+function showScreen(id){
 
-"🇰🇷 韓国":[
-"ソウル新羅ホテル",
-"ロッテホテルソウル",
-"グランドハイアットソウル",
-"パラダイスホテル釜山",
-"ウェスティン朝鮮ソウル"
-],
+document.querySelectorAll(".screen")
+.forEach(function(screen){
+screen.classList.remove("active");
+});
 
-"🇹🇼 台湾":[
-"台北晶華酒店",
-"オークラ プレステージ台北",
-"リージェント台北",
-"W台北",
-"台北君悦酒店"
-],
+document.getElementById(id)
+.classList.add("active");
 
-"🇹🇭 タイ":[
-"マンダリン オリエンタル バンコク",
-"シャングリ・ラ バンコク",
-"ザ・ペニンシュラ バンコク",
-"バンヤンツリー バンコク",
-"JWマリオット・ホテル・バンコク"
-],
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
-"🇸🇬 シンガポール":[
-"マリーナベイ・サンズ",
-"ラッフルズ・シンガポール",
-"マンダリン オリエンタル シンガポール",
-"フラトン・ホテル・シンガポール",
-"シャングリ・ラ シンガポール"
-],
+}
 
-"🇻🇳 ベトナム":[
-"インターコンチネンタル ダナン",
-"パークハイアット サイゴン",
-"ホテル ニッコー サイゴン",
-"ソフィテル レジェンド メトロポール ハノイ",
-"JWマリオット・ホテル・ハノイ"
-],
 
-"🇺🇸 アメリカ":[
-"ヒルトン ハワイアン ビレッジ",
-"モアナ サーフライダー",
-"ハイアット リージェンシー ワイキキ",
-"シェラトン ワイキキ",
-"ザ・リッツ・カールトン ワイキキ"
-],
+/* ==================================================
+   条件
+================================================== */
 
-"🇫🇷 フランス":[
-"ル・ムーリス",
-"ホテル・リッツ・パリ",
-"ル・ブリストル・パリ",
-"シャングリ・ラ パリ",
-"マンダリン オリエンタル パリ"
-],
+function selectNights(button,value){
 
-"🇮🇹 イタリア":[
-"ホテル ダニエリ",
-"ブルガリ ホテル ミラノ",
-"フォーシーズンズ ホテル フィレンツェ",
-"ホテル エデン ローマ",
-"ベルモンド ホテル チプリアーニ"
-],
+document.querySelectorAll(".form-group:nth-of-type(2) .option-btn")
+.forEach(function(btn){
+btn.classList.remove("selected");
+});
 
-"🇬🇧 イギリス":[
-"ザ・サヴォイ",
-"ザ・リッツ・ロンドン",
-"ザ・ランガム ロンドン",
-"シャングリ・ラ ホテル ロンドン",
-"ザ・ドーチェスター"
-],
+button.classList.add("selected");
 
-"🇦🇺 オーストラリア":[
-"パークハイアット シドニー",
-"シャングリ・ラ シドニー",
-"フォーシーズンズ シドニー",
-"ザ・ランガム メルボルン",
-"クラウン タワーズ メルボルン"
-]
+selectedNights=value;
+
+}
+
+
+function selectGuests(button,value){
+
+document.querySelectorAll(".form-group:nth-of-type(3) .option-btn")
+.forEach(function(btn){
+btn.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+selectedGuests=value;
+
+}
+
+
+function selectBreakfast(button,value){
+
+const parent=button.parentElement;
+
+parent.querySelectorAll(".option-btn")
+.forEach(function(btn){
+btn.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+selectedBreakfast=value;
+
+}
+
+
+function selectCancel(button,value){
+
+const parent=button.parentElement;
+
+parent.querySelectorAll(".option-btn")
+.forEach(function(btn){
+btn.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+selectedCancel=value;
+
+}
+
+
+/* ==================================================
+   条件表示
+================================================== */
+
+function getCheckin(){
+
+const value=
+document.getElementById("checkin").value;
+
+if(!value){
+return "未指定";
+}
+
+const date=new Date(value+"T00:00:00");
+
+return date.toLocaleDateString(
+"ja-JP",
+{
+year:"numeric",
+month:"long",
+day:"numeric"
+}
+);
+
+}
+
+
+function getConditionHTML(){
+
+return `
+<strong>📅 ${getCheckin()}</strong><br>
+🌙 ${selectedNights === 4 ? "4泊以上" : selectedNights+"泊"}　
+👥 ${selectedGuests === 4 ? "4名以上" : selectedGuests+"名"}<br>
+🍳 ${selectedBreakfast}　
+🆓 ${selectedCancel}
+`;
+
+}
+
+
+/* ==================================================
+   条件 → 行き先
+================================================== */
+
+function goToDestination(){
+
+if(!document.getElementById("checkin").value){
+
+alert("チェックイン日を選んでください！");
+
+return;
+
+}
+
+document.getElementById("conditionSummary")
+.innerHTML=getConditionHTML();
+
+createDestinationGrid();
+
+showScreen("screenDestination");
+
+}
+
+
+/* ==================================================
+   モード
+================================================== */
+
+function selectMode(mode){
+
+currentMode=mode;
+
+document.getElementById("japanBtn")
+.classList.toggle("active",mode==="japan");
+
+document.getElementById("overseasBtn")
+.classList.toggle("active",mode==="overseas");
+
+createDestinationGrid();
+
+}
+
+
+/* ==================================================
+   行き先ボタン
+================================================== */
+
+function createDestinationGrid(){
+
+const grid=
+document.getElementById("destinationGrid");
+
+grid.innerHTML="";
+
+const items=
+currentMode==="japan"
+? prefectures
+: overseas;
+
+items.forEach(function(place){
+
+const button=
+document.createElement("button");
+
+button.className="keyword";
+
+button.textContent=place;
+
+button.onclick=function(){
+
+selectedPlace=place;
+
+goToHotelSlot();
 
 };
+
+grid.appendChild(button);
+
+});
+
+}
+
+
+/* ==================================================
+   行き先スロット
+================================================== */
+
+let placeItems=[];
+
+function goToPlaceSlot(){
+
+placeItems=
+currentMode==="japan"
+? prefectures
+: overseas;
+
+document.getElementById("placeConditionSummary")
+.innerHTML=getConditionHTML();
+
+showScreen("screenPlaceSlot");
+
+}
+
+
+function startPlaceSlot(){
+
+if(placeRunning)return;
+
+placeRunning=true;
+
+document.getElementById("placeStartBtn").disabled=true;
+document.getElementById("placeStopBtn").disabled=false;
+
+const windows=[
+document.getElementById("placeSlot1"),
+document.getElementById("placeSlot2"),
+document.getElementById("placeSlot3")
+];
+
+windows.forEach(function(el){
+el.classList.add("spin");
+});
+
+placeTimer=setInterval(function(){
+
+windows.forEach(function(el){
+
+el.textContent=
+placeItems[
+Math.floor(Math.random()*placeItems.length)
+];
+
+});
+
+},80);
+
+}
+
+
+function stopPlaceSlot(){
+
+if(!placeRunning)return;
+
+clearInterval(placeTimer);
+
+placeRunning=false;
+
+document.getElementById("placeStartBtn").disabled=false;
+document.getElementById("placeStopBtn").disabled=true;
+
+const windows=[
+document.getElementById("placeSlot1"),
+document.getElementById("placeSlot2"),
+document.getElementById("placeSlot3")
+];
+
+windows.forEach(function(el){
+el.classList.remove("spin");
+});
+
+selectedPlace=
+placeItems[
+Math.floor(Math.random()*placeItems.length)
+];
+
+windows.forEach(function(el){
+el.textContent=selectedPlace;
+});
+
+setTimeout(function(){
+
+goToHotelSlot();
+
+},700);
+
+}
+
+
+/* ==================================================
+   ホテル候補取得
+================================================== */
+
+function getHotelsForPlace(place){
+
+if(cityMap[place]){
+return cityMap[place];
+}
+
+/*
+  まだ個別ホテルを登録していない県は、
+  その地域のホテル検索へつなぐ候補を自動生成。
+*/
+
+const cities={
+
+"青森県":"青森市 ホテル",
+"岩手県":"盛岡市 ホテル",
+"宮城県":"仙台市 ホテル",
+"秋田県":"秋田市 ホテル",
+"山形県":"山形市 ホテル",
+"福島県":"福島市 ホテル",
+"茨城県":"水戸市 ホテル",
+"栃木県":"宇都宮市 ホテル",
+"群馬県":"高崎市 ホテル",
+"埼玉県":"さいたま市 ホテル",
+"千葉県":"千葉市 ホテル",
+"新潟県":"新潟市 ホテル",
+"富山県":"富山市 ホテル",
+"石川県":"金沢市 ホテル",
+"福井県":"福井市 ホテル",
+"山梨県":"甲府市 ホテル",
+"長野県":"長野市 ホテル",
+"岐阜県":"岐阜市 ホテル",
+"静岡県":"静岡市 ホテル",
+"三重県":"津市 ホテル",
+"滋賀県":"大津市 ホテル",
+"奈良県":"奈良市 ホテル",
+"和歌山県":"和歌山市 ホテル",
+"鳥取県":"鳥取市 ホテル",
+"島根県":"松江市 ホテル",
+"岡山県":"岡山市 ホテル",
+"山口県":"山口市 ホテル",
+"徳島県":"徳島市 ホテル",
+"香川県":"高松市 ホテル",
+"愛媛県":"松山市 ホテル",
+"高知県":"高知市 ホテル",
+"佐賀県":"佐賀市 ホテル",
+"長崎県":"長崎市 ホテル",
+"熊本県":"熊本市 ホテル",
+"大分県":"大分市 ホテル",
+"宮崎県":"宮崎市 ホテル",
+"鹿児島県":"鹿児島市 ホテル"
+};
+
+const city=
+cities[place] || place+" ホテル";
+
+return [
+
+{
+name:city+" おすすめホテル①",
+url:"https://www.google.com/search?q="+encodeURIComponent(city+" おすすめホテル")
+},
+
+{
+name:city+" おすすめホテル②",
+url:"https://www.google.com/search?q="+encodeURIComponent(city+" 人気ホテル")
+},
+
+{
+name:city+" おすすめホテル③",
+url:"https://www.google.com/search?q="+encodeURIComponent(city+" 安いホテル")
+},
+
+{
+name:city+" おすすめホテル④",
+url:"https://www.google.com/search?q="+encodeURIComponent(city+" ホテル 朝食")
+},
+
+{
+name:city+" おすすめホテル⑤",
+url:"https://www.google.com/search?q="+encodeURIComponent(city+" ホテル 駅近")
+}
+
+];
+
+}
+
+
+/* ==================================================
+   ホテル画面
+================================================== */
+
+function goToHotelSlot(){
+
+if(!selectedPlace){
+return;
+}
+
+document.getElementById("selectedPlace")
+.textContent=selectedPlace;
+
+document.getElementById("hotelConditionSummary")
+.innerHTML=getConditionHTML();
+
+showScreen("screenHotelSlot");
+
+}
+
+
+/* ==================================================
+   ホテルスロット
+================================================== */
+
+let currentHotelList=[];
+
+
+function startHotelSlot(){
+
+if(hotelRunning)return;
+
+currentHotelList=
+getHotelsForPlace(selectedPlace);
+
+hotelRunning=true;
+
+document.getElementById("hotelStartBtn").disabled=true;
+document.getElementById("hotelStopBtn").disabled=false;
+
+const windows=[
+document.getElementById("hotelSlot1"),
+document.getElementById("hotelSlot2"),
+document.getElementById("hotelSlot3")
+];
+
+windows.forEach(function(el){
+el.classList.add("spin");
+});
+
+hotelTimer=setInterval(function(){
+
+windows.forEach(function(el){
+
+const hotel=
+currentHotelList[
+Math.floor(Math.random()*currentHotelList.length)
+];
+
+el.textContent=hotel.name;
+
+});
+
+},80);
+
+}
+
+
+function stopHotelSlot(){
+
+if(!hotelRunning)return;
+
+clearInterval(hotelTimer);
+
+hotelRunning=false;
+
+document.getElementById("hotelStartBtn").disabled=false;
+document.getElementById("hotelStopBtn").disabled=true;
+
+const windows=[
+document.getElementById("hotelSlot1"),
+document.getElementById("hotelSlot2"),
+document.getElementById("hotelSlot3")
+];
+
+windows.forEach(function(el){
+el.classList.remove("spin");
+});
+
+currentHotel=
+currentHotelList[
+Math.floor(Math.random()*currentHotelList.length)
+];
+
+windows.forEach(function(el){
+el.textContent=currentHotel.name;
+});
+
+setTimeout(function(){
+
+showFinalResult();
+
+},700);
+
+}
+
+
+/* ==================================================
+   結果
+================================================== */
+
+function showFinalResult(){
+
+document.getElementById("finalPlace")
+.textContent=selectedPlace;
+
+document.getElementById("finalHotel")
+.textContent=
+"🏨 "+currentHotel.name;
+
+document.getElementById("finalKeyword")
+.textContent=
+"🔎 キーワード："+(
+keywords.length
+? keywords.join("・")
+: "おまかせ"
+);
+
+document.getElementById("finalCondition")
+.innerHTML=getConditionHTML();
+
+document.getElementById("reserveBtn")
+.href=currentHotel.url;
+
+document.getElementById("compareResults")
+.classList.remove("show");
+
+saveHistory();
+
+showScreen("screenResult");
+
+}
+
+
+/* ==================================================
+   比較
+================================================== */
+
+function showComparison(){
+
+if(!currentHotel)return;
+
+const hotelName=
+encodeURIComponent(currentHotel.name);
+
+const checkin=
+document.getElementById("checkin").value;
+
+const nights=selectedNights;
+
+const guests=selectedGuests;
+
+
+/*
+  現在は各予約サイトの検索ページへ移動。
+  API接続後はここを実料金取得処理に変更する。
+*/
+
+document.getElementById("rakutenCompare").href=
+currentHotel.url;
+
+document.getElementById("jalanCompare").href=
+"https://www.jalan.net/";
+
+document.getElementById("bookingCompare").href=
+"https://www.booking.com/searchresults.html?ss="+hotelName;
+
+document.getElementById("agodaCompare").href=
+"https://www.agoda.com/search?text="+hotelName;
+
+
+document.getElementById("compareResults")
+.classList.add("show");
+
+}
 
 
 /* ==================================================
@@ -2082,10 +2244,10 @@ function chooseKeyword(button,value){
 
 if(keywords.includes(value)){
 
-keywords =
-keywords.filter(
-item => item !== value
-);
+keywords=
+keywords.filter(function(item){
+return item!==value;
+});
 
 button.classList.remove("selected");
 
@@ -2104,631 +2266,19 @@ updateSelectedKeywords();
 
 function updateSelectedKeywords(){
 
-const box =
-document.getElementById(
-"selectedKeywords"
-);
+const box=
+document.getElementById("selectedKeywords");
 
-if(keywords.length === 0){
+if(keywords.length===0){
 
-box.textContent = "";
+box.textContent="";
 
 }else{
 
-box.textContent =
-"選択中： " +
-keywords.join(" ・ ");
+box.textContent=
+"選択中： "+keywords.join(" ・ ");
 
 }
-
-}
-
-
-/* ==================================================
-   条件ボタン
-================================================== */
-
-function selectCondition(button,type,value){
-
-conditions[type] = value;
-
-const parent =
-button.parentElement;
-
-parent
-.querySelectorAll(".option-btn")
-.forEach(
-btn =>
-btn.classList.remove("selected")
-);
-
-button.classList.add("selected");
-
-}
-
-
-/* ==================================================
-   モード
-================================================== */
-
-function selectMode(mode){
-
-currentMode = mode;
-
-document
-.getElementById("japanBtn")
-.classList.toggle(
-"active",
-mode === "japan"
-);
-
-document
-.getElementById("overseasBtn")
-.classList.toggle(
-"active",
-mode === "overseas"
-);
-
-}
-
-
-/* ==================================================
-   画面切り替え
-================================================== */
-
-function showScreen(id){
-
-document
-.querySelectorAll(".screen")
-.forEach(
-screen =>
-screen.classList.remove("active")
-);
-
-document
-.getElementById(id)
-.classList.add("active");
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-
-/* ==================================================
-   条件確定
-================================================== */
-
-function goToSlotScreen(){
-
-conditions.nights =
-document.getElementById(
-"nights"
-).value;
-
-conditions.guests =
-document.getElementById(
-"guests"
-).value;
-
-showConditionSummary();
-
-showScreen(
-"slotScreen"
-);
-
-}
-
-
-/* ==================================================
-   条件表示
-================================================== */
-
-function showConditionSummary(){
-
-const box =
-document.getElementById(
-"conditionSummary"
-);
-
-box.innerHTML =
-
-`
-<div class="condition-item">
-📅 ${conditions.nights}泊
-</div>
-
-<div class="condition-item">
-👥 ${conditions.guests}名
-</div>
-
-<div class="condition-item">
-🍳 朝食${conditions.breakfast}
-</div>
-
-<div class="condition-item">
-❌ キャンセル${conditions.cancel}
-</div>
-`;
-
-}
-
-
-/* ==================================================
-   リール表示
-================================================== */
-
-function setReel(id,text){
-
-document
-.getElementById(id)
-.querySelector(".reel-inner")
-.textContent = text;
-
-}
-
-
-/* ==================================================
-   行き先スロット
-================================================== */
-
-function startPlaceSlot(){
-
-if(placeRunning){
-return;
-}
-
-placeRunning = true;
-
-document
-.getElementById("placeStartBtn")
-.disabled = true;
-
-document
-.getElementById("placeStopBtn")
-.disabled = false;
-
-document
-.getElementById("slotStatus")
-.textContent =
-"🎰 回転中……";
-
-const list =
-currentMode === "japan"
-? prefectures
-: overseas;
-
-placeTimer =
-setInterval(function(){
-
-for(
-let i=1;
-i<=3;
-i++
-){
-
-const item =
-list[
-Math.floor(
-Math.random()*list.length
-)
-];
-
-setReel(
-"reel"+i,
-item
-);
-
-}
-
-},70);
-
-}
-
-
-function stopPlaceSlot(){
-
-if(!placeRunning){
-return;
-}
-
-clearInterval(placeTimer);
-
-placeRunning = false;
-
-document
-.getElementById("placeStartBtn")
-.disabled = false;
-
-document
-.getElementById("placeStopBtn")
-.disabled = true;
-
-const list =
-currentMode === "japan"
-? prefectures
-: overseas;
-
-currentPlace =
-list[
-Math.floor(
-Math.random()*list.length
-)
-];
-
-setReel(
-"reel1",
-currentPlace
-);
-
-setReel(
-"reel2",
-currentPlace
-);
-
-setReel(
-"reel3",
-currentPlace
-);
-
-document
-.getElementById("slotStatus")
-.textContent =
-"🎉 行き先決定！";
-
-setTimeout(
-showHotelScreen,
-700
-);
-
-}
-
-
-/* ==================================================
-   ホテル画面
-================================================== */
-
-function showHotelScreen(){
-
-document
-.getElementById("currentPlace")
-.textContent =
-currentPlace;
-
-document
-.getElementById("placeMessage")
-.textContent =
-currentPlace +
-" が今回の旅先に決定しました！";
-
-hotelList =
-getHotelsForPlace(
-currentPlace
-);
-
-showScreen(
-"hotelScreen"
-);
-
-}
-
-
-/* ==================================================
-   ホテル取得
-================================================== */
-
-function getHotelsForPlace(place){
-
-if(
-currentMode === "japan"
-){
-
-let list =
-hotelsByPrefecture[place];
-
-if(!list || list.length === 0){
-
-return [
-[
-place+"おすすめホテル",
-"https://www.rakutentravel.co.jp/"
-]
-];
-
-}
-
-return list.map(
-item => ({
-name:item[0],
-url:item[1]
-})
-);
-
-}
-
-
-/* 海外 */
-
-let overseasList =
-overseasHotels[place] ||
-["おすすめホテル"];
-
-return overseasList.map(
-name => ({
-name:name,
-url:"https://www.rakutentravel.co.jp/"
-})
-);
-
-}
-
-
-/* ==================================================
-   ホテルスロット START
-================================================== */
-
-function startHotelSlot(){
-
-if(hotelRunning){
-return;
-}
-
-if(
-!hotelList ||
-hotelList.length === 0
-){
-return;
-}
-
-hotelRunning = true;
-
-document
-.getElementById("hotelStartBtn")
-.disabled = true;
-
-document
-.getElementById("hotelStopBtn")
-.disabled = false;
-
-document
-.getElementById("hotelSlotStatus")
-.textContent =
-"🏨 ホテル抽選中……";
-
-[
-"hotelReel1",
-"hotelReel2",
-"hotelReel3"
-].forEach(
-id =>
-document
-.getElementById(id)
-.classList.add("spinning")
-);
-
-
-hotelTimer =
-setInterval(function(){
-
-for(
-let i=1;
-i<=3;
-i++
-){
-
-const hotel =
-hotelList[
-Math.floor(
-Math.random()*
-hotelList.length
-)
-];
-
-setReel(
-"hotelReel"+i,
-hotel.name
-);
-
-}
-
-},80);
-
-}
-
-
-/* ==================================================
-   ホテル STOP
-================================================== */
-
-function stopHotelSlot(){
-
-if(!hotelRunning){
-return;
-}
-
-clearInterval(hotelTimer);
-
-hotelRunning = false;
-
-document
-.getElementById("hotelStartBtn")
-.disabled = false;
-
-document
-.getElementById("hotelStopBtn")
-.disabled = true;
-
-[
-"hotelReel1",
-"hotelReel2",
-"hotelReel3"
-].forEach(
-id =>
-document
-.getElementById(id)
-.classList.remove("spinning")
-);
-
-
-currentHotel =
-hotelList[
-Math.floor(
-Math.random()*
-hotelList.length
-)
-];
-
-
-setReel(
-"hotelReel1",
-currentHotel.name
-);
-
-setReel(
-"hotelReel2",
-currentHotel.name
-);
-
-setReel(
-"hotelReel3",
-currentHotel.name
-);
-
-
-document
-.getElementById("hotelSlotStatus")
-.textContent =
-"🎉 ホテル決定！";
-
-
-setTimeout(
-showFinalResult,
-700
-);
-
-}
-
-
-/* ==================================================
-   最終結果
-================================================== */
-
-function showFinalResult(){
-
-document
-.getElementById("finalPlace")
-textContent = currentPlace;
-
-document
-.getElementById("finalKeyword")
-textContent =
-"🔎 キーワード：" +
-(
-keywords.length
-?
-keywords.join("・")
-:
-"おまかせ"
-);
-
-
-document
-.getElementById("finalHotel")
-textContent =
-"🏨 " +
-currentHotel.name;
-
-
-document
-.getElementById("reserveBtn")
-.href =
-currentHotel.url;
-
-
-/* 条件 */
-
-document
-.getElementById("finalConditions")
-.innerHTML =
-
-`
-<div class="condition-item">
-📅 ${conditions.nights}泊
-</div>
-
-<div class="condition-item">
-👥 ${conditions.guests}名
-</div>
-
-<div class="condition-item">
-🍳 朝食${conditions.breakfast}
-</div>
-
-<div class="condition-item">
-❌ キャンセル${conditions.cancel}
-</div>
-`;
-
-
-document
-.getElementById("compareResults")
-.classList.remove("show");
-
-
-document
-.getElementById("result")
-.classList.add("show");
-
-
-saveHistory();
-
-
-document
-.getElementById("result")
-.scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-}
-
-
-/* ==================================================
-   比較
-================================================== */
-
-function showComparison(){
-
-if(!currentHotel){
-return;
-}
-
-document
-.getElementById("rakutenCompare")
-.href =
-currentHotel.url;
-
-
-/*
-  現段階では各予約サイトへの
-  確認ボタンを表示。
-
-  将来ここへAPIを接続すれば
-
-  料金取得
-      ↓
-  最安値計算
-      ↓
-  安い順ソート
-
-  が可能。
-*/
-
-document
-.getElementById("compareResults")
-.classList.add("show");
 
 }
 
@@ -2739,51 +2289,33 @@ document
 
 function saveHistory(){
 
-const history =
-document.getElementById(
-"history"
-);
+const history=
+document.getElementById("history");
 
-if(
-history.textContent ===
-"まだありません"
-){
-
-history.innerHTML = "";
-
+if(history.textContent==="まだありません"){
+history.innerHTML="";
 }
 
-
-const item =
+const item=
 document.createElement("div");
 
-item.className =
-"history-item";
+item.className="history-item";
 
-
-item.innerHTML =
-
-`
-<span class="badge">
-NEW
-</span>
-
-${currentPlace}
-
-｜${conditions.nights}泊
-
-｜${conditions.guests}名
-
-｜🏨 ${currentHotel.name}
-`;
-
+item.innerHTML=
+'<span class="badge">NEW</span>'+
+selectedPlace+
+"｜"+
+(
+keywords.length
+? keywords.join("・")
+: "おまかせ"
+)+
+"｜🏨 "+
+currentHotel.name;
 
 history.prepend(item);
 
-
-while(
-history.children.length > 5
-){
+while(history.children.length>5){
 
 history.removeChild(
 history.lastChild
@@ -2795,10 +2327,58 @@ history.lastChild
 
 
 /* ==================================================
-   初期表示
+   リスタート
 ================================================== */
 
-showConditionSummary();
+function restart(){
+
+selectedPlace=null;
+currentHotel=null;
+
+keywords=[];
+
+document.querySelectorAll(".keyword.selected")
+.forEach(function(button){
+button.classList.remove("selected");
+});
+
+document.getElementById("checkin").value="";
+
+document.getElementById("compareResults")
+.classList.remove("show");
+
+showScreen("screenCondition");
+
+}
+
+
+/* ==================================================
+   初期化
+================================================== */
+
+(function(){
+
+const today=
+new Date();
+
+const yyyy=
+today.getFullYear();
+
+const mm=
+String(today.getMonth()+1).padStart(2,"0");
+
+const dd=
+String(today.getDate()).padStart(2,"0");
+
+document.getElementById("checkin")
+.min=yyyy+"-"+mm+"-"+dd;
+
+document.getElementById("checkin")
+.value=yyyy+"-"+mm+"-"+dd;
+
+createDestinationGrid();
+
+})();
 
 </script>
 
