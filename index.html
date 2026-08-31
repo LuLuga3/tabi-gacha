@@ -2,456 +2,512 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎰 タビガチャ</title>
 
 <style>
 *{
- box-sizing:border-box;
- -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
- margin:0;
- font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",
- "Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
- background:linear-gradient(180deg,#f5fbff,#fff7f0);
- color:#222;
+  margin:0;
+  font-family:
+  -apple-system,
+  BlinkMacSystemFont,
+  "Noto Sans JP",
+  "Hiragino Kaku Gothic ProN",
+  Meiryo,
+  sans-serif;
+  background:linear-gradient(180deg,#f5fbff 0%,#fff7f0 100%);
+  color:#222;
 }
 
 .container{
- max-width:600px;
- margin:auto;
- padding:18px 14px 60px;
+  max-width:600px;
+  margin:auto;
+  padding:18px 14px 60px;
 }
 
 h1{
- text-align:center;
- font-size:30px;
- margin:8px 0 4px;
+  text-align:center;
+  font-size:30px;
+  margin:8px 0 4px;
 }
 
 .subtitle{
- text-align:center;
- color:#777;
- font-size:14px;
- margin-bottom:18px;
-}
-
-.screen{
- display:none;
-}
-
-.screen.active{
- display:block;
+  text-align:center;
+  color:#777;
+  font-size:14px;
+  margin-bottom:18px;
 }
 
 .card{
- background:#fff;
- border-radius:22px;
- padding:18px;
- margin-bottom:16px;
- box-shadow:0 8px 25px rgba(0,0,0,.07);
+  background:#fff;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
 .title{
- font-size:20px;
- font-weight:900;
- margin-bottom:12px;
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:12px;
 }
 
 .small{
- color:#888;
- font-size:12px;
- line-height:1.7;
- text-align:center;
+  color:#888;
+  font-size:12px;
+  line-height:1.7;
+  margin-top:8px;
+  text-align:center;
 }
 
-.back-btn{
- width:100%;
- border:0;
- border-radius:14px;
- padding:12px;
- background:#eee;
- font-weight:bold;
- margin-bottom:12px;
+.mode{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.primary{
- width:100%;
- border:0;
- border-radius:17px;
- padding:17px;
- color:#fff;
- font-size:18px;
- font-weight:900;
- background:linear-gradient(135deg,#ff477e,#ff8b3d);
- box-shadow:0 7px 18px rgba(0,0,0,.12);
+.mode button{
+  border:0;
+  border-radius:17px;
+  padding:14px 8px;
+  font-size:16px;
+  font-weight:bold;
+  background:#eee;
+  color:#555;
 }
 
-.secondary{
- width:100%;
- border:0;
- border-radius:15px;
- padding:14px;
- color:#fff;
- font-size:15px;
- font-weight:900;
- background:#555;
-}
-
-input,select{
- width:100%;
- padding:14px;
- border:1px solid #ddd;
- border-radius:14px;
- font-size:16px;
- background:#fff;
-}
-
-.form-row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.form-group{
- margin-bottom:14px;
-}
-
-.form-label{
- font-size:14px;
- font-weight:900;
- margin-bottom:7px;
-}
-
-.choice-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
-}
-
-.choice{
- border:1px solid #ddd;
- background:#fff;
- border-radius:14px;
- padding:13px 8px;
- font-size:14px;
- font-weight:bold;
-}
-
-.choice.selected{
- color:#fff;
- border-color:transparent;
- background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+.mode button.active{
+  color:#fff;
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
 }
 
 .keyword-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
 }
 
 .keyword{
- border:1px solid #ddd;
- background:#fff;
- border-radius:15px;
- padding:13px 7px;
- font-size:14px;
- font-weight:bold;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:15px;
+  padding:13px 7px;
+  font-size:14px;
+  font-weight:bold;
 }
 
 .keyword.selected{
- color:#fff;
- border-color:transparent;
- background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
 }
 
 .selected-keywords{
- margin-top:12px;
- text-align:center;
- font-size:13px;
- color:#e50046;
- font-weight:bold;
- min-height:20px;
+  margin-top:12px;
+  text-align:center;
+  font-size:13px;
+  color:#e50046;
+  font-weight:bold;
+  min-height:20px;
 }
 
-/* スロット */
-
-.slot-machine{
- background:#202020;
- border-radius:25px;
- padding:18px;
- box-shadow:0 10px 30px rgba(0,0,0,.25);
+.main-menu{
+  display:grid;
+  gap:12px;
 }
 
-.slot-title{
- color:#fff;
- text-align:center;
- font-size:18px;
- font-weight:900;
- margin-bottom:12px;
+.main-menu button{
+  border:0;
+  border-radius:20px;
+  padding:19px 15px;
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  box-shadow:0 7px 18px rgba(0,0,0,.12);
 }
 
-.slots{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:7px;
+.gacha-btn{
+  background:linear-gradient(135deg,#ff477e,#ff8b3d);
 }
 
-.slot{
- height:100px;
- background:linear-gradient(#fff,#eee);
- border-radius:12px;
- overflow:hidden;
- position:relative;
- border:5px solid #777;
+.place-search-btn{
+  background:linear-gradient(135deg,#5b5be7,#8e7dff);
 }
 
-.slot-item{
- height:100px;
- display:flex;
- align-items:center;
- justify-content:center;
- text-align:center;
- padding:5px;
- font-size:14px;
- font-weight:900;
+.screen{
+  display:none;
 }
 
-.slot-window{
- position:absolute;
- inset:30px 0;
- border-top:3px solid #ff477e;
- border-bottom:3px solid #ff477e;
- pointer-events:none;
- z-index:3;
+.screen.active{
+  display:block;
 }
 
-.slot-result{
- text-align:center;
- color:#fff;
- font-weight:900;
- margin-top:12px;
- min-height:24px;
+.back-btn{
+  width:100%;
+  border:0;
+  background:#eee;
+  border-radius:15px;
+  padding:13px;
+  font-weight:bold;
+  margin-bottom:15px;
 }
 
-.slot-buttons{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
- margin-top:15px;
+.next-btn{
+  width:100%;
+  border:0;
+  border-radius:17px;
+  padding:17px;
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  background:linear-gradient(135deg,#ff477e,#ff8b3d);
+  margin-top:14px;
 }
 
-.spin-btn,.stop-btn{
- border:0;
- border-radius:15px;
- padding:15px 5px;
- font-size:17px;
- font-weight:900;
- color:#fff;
+.input{
+  width:100%;
+  padding:16px;
+  border:1px solid #ddd;
+  border-radius:15px;
+  font-size:16px;
+  outline:none;
 }
 
-.spin-btn{
- background:linear-gradient(135deg,#ff477e,#ff8b3d);
+.input:focus{
+  border-color:#777;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.option{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:15px;
+  padding:14px 8px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.option.selected{
+  color:#fff;
+  background:linear-gradient(135deg,#ff4f81,#ff8b5c);
+}
+
+.roulette-area{
+  position:relative;
+  width:100%;
+  height:350px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.pointer{
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  width:0;
+  height:0;
+  border-left:18px solid transparent;
+  border-right:18px solid transparent;
+  border-top:36px solid #222;
+}
+
+.wheel{
+  position:relative;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  border:8px solid #fff;
+  box-shadow:0 8px 30px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+
+.wheel-bg{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+}
+
+.wheel-labels{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+}
+
+.pref-label{
+  position:absolute;
+  left:50%;
+  top:50%;
+  text-align:center;
+  font-weight:900;
+  color:#fff;
+  text-shadow:0 1px 2px #333;
+  white-space:nowrap;
+  pointer-events:none;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.wheel-center{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:#fff;
+  border:5px solid #222;
+  z-index:10;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+}
+
+.spin-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.start-btn,
+.stop-btn{
+  border:0;
+  border-radius:17px;
+  padding:17px 8px;
+  font-size:19px;
+  font-weight:900;
+  color:#fff;
+}
+
+.start-btn{
+  background:linear-gradient(135deg,#ff477e,#ff8b3d);
 }
 
 .stop-btn{
- background:#555;
+  background:linear-gradient(135deg,#333,#666);
 }
 
-.spin-btn:disabled,
-.stop-btn:disabled{
- opacity:.4;
+button:disabled{
+  opacity:.45;
 }
 
-/* 結果 */
+.place{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+  margin:10px 0;
+}
 
 .result{
- text-align:center;
- animation:pop .45s ease;
+  display:none;
 }
 
-@keyframes pop{
- from{transform:scale(.8);opacity:0}
- to{transform:scale(1);opacity:1}
+.result.show{
+  display:block;
 }
 
-.final-place{
- font-size:27px;
- font-weight:900;
- margin:8px 0;
+.result-place{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
 }
 
-.final-hotel{
- font-size:23px;
- font-weight:900;
- line-height:1.4;
- margin:8px 0 15px;
+.hotel-box{
+  margin-top:16px;
+  padding:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#f7f7ff,#fff);
+  border:1px solid #eee;
 }
 
-.condition-box{
- background:#f7f7ff;
- border-radius:15px;
- padding:12px;
- text-align:left;
- font-size:12px;
- line-height:1.8;
- margin-bottom:15px;
+.hotel-label{
+  color:#777;
+  font-size:13px;
 }
 
-.price-box{
- margin-top:15px;
- padding:15px;
- background:#fff8ec;
- border-radius:18px;
- border:1px solid #ffe0a8;
+.hotel-name{
+  font-size:22px;
+  font-weight:900;
+  margin:8px 0 14px;
+  line-height:1.4;
 }
 
-.price-title{
- font-size:18px;
- font-weight:900;
- margin-bottom:5px;
+.reserve-btn,
+.compare-link{
+  display:block;
+  text-decoration:none;
+  color:#fff;
+  background:#e50046;
+  border-radius:15px;
+  padding:15px;
+  text-align:center;
+  font-weight:900;
+}
+
+.compare-box{
+  margin-top:18px;
+}
+
+.compare-btn{
+  width:100%;
+  border:0;
+  border-radius:16px;
+  padding:15px;
+  color:#fff;
+  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
+  font-size:16px;
+  font-weight:900;
+}
+
+.compare-results{
+  display:none;
+  margin-top:14px;
+}
+
+.compare-results.show{
+  display:block;
 }
 
 .compare-item{
- display:flex;
- align-items:center;
- gap:9px;
- padding:12px 0;
- border-bottom:1px solid #eee;
- text-align:left;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:16px;
+  padding:13px;
+  margin-bottom:9px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.compare-item:last-child{
- border-bottom:0;
-}
-
-.rank{
- width:30px;
- height:30px;
- border-radius:50%;
- background:#eee;
- display:flex;
- align-items:center;
- justify-content:center;
- font-weight:900;
- flex-shrink:0;
+.compare-rank{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#f2f2f2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:900;
+  flex-shrink:0;
 }
 
 .compare-info{
- flex:1;
+  flex:1;
 }
 
-.site{
- font-weight:900;
- font-size:14px;
+.compare-site{
+  font-weight:900;
+  font-size:15px;
+}
+
+.compare-price{
+  font-size:13px;
+  color:#e50046;
+  font-weight:bold;
+  margin-top:3px;
+}
+
+.compare-link{
+  background:#333;
+  padding:8px 10px;
+  font-size:11px;
+}
+
+.destination-result{
+  margin-top:15px;
+}
+
+.destination-hotel{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.destination-hotel-name{
+  font-size:18px;
+  font-weight:900;
+}
+
+.distance{
+  display:inline-block;
+  margin-top:7px;
+  padding:5px 9px;
+  border-radius:12px;
+  background:#eef7ff;
+  color:#2877b8;
+  font-size:12px;
+  font-weight:bold;
 }
 
 .price{
- color:#e50046;
- font-weight:900;
- font-size:14px;
- margin-top:3px;
+  color:#e50046;
+  font-weight:900;
+  margin-top:7px;
 }
 
-.check-btn{
- border:0;
- border-radius:9px;
- padding:8px 10px;
- background:#333;
- color:#fff;
- font-size:11px;
- font-weight:bold;
+.recommend{
+  display:inline-block;
+  background:#fff0c8;
+  border-radius:12px;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:bold;
+  margin-top:7px;
 }
 
-.cheapest{
- border:2px solid #ffb000;
- border-radius:13px;
- padding:10px !important;
- background:#fffaf0;
+.transport-box{
+  margin-top:15px;
+  background:#f7f7f7;
+  border-radius:17px;
+  padding:15px;
 }
 
-.reserve{
- display:block;
- text-decoration:none;
- color:#fff;
- background:#e50046;
- border-radius:15px;
- padding:16px;
- font-weight:900;
- margin-top:15px;
-}
-
-.action-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
- margin-top:10px;
-}
-
-.action{
- border:0;
- border-radius:14px;
- padding:13px;
- font-weight:900;
- background:#eee;
-}
-
-.favorite.on{
- background:#ffe1ea;
- color:#e50046;
+.transport-title{
+  font-weight:900;
+  margin-bottom:7px;
 }
 
 .history-item{
- padding:10px 0;
- border-bottom:1px solid #eee;
- font-size:13px;
+  padding:9px 0;
+  border-bottom:1px solid #eee;
+  font-size:13px;
 }
 
 .badge{
- display:inline-block;
- background:#fff0f4;
- color:#e50046;
- border-radius:20px;
- padding:3px 8px;
- font-size:10px;
- margin-right:5px;
-}
-
-/* 比較ローディング */
-
-.loading{
- display:none;
- text-align:center;
- padding:12px;
- color:#777;
-}
-
-.loading.show{
- display:block;
-}
-
-.spinner{
- display:inline-block;
- width:22px;
- height:22px;
- border:3px solid #ddd;
- border-top-color:#ff477e;
- border-radius:50%;
- animation:spin .8s linear infinite;
- vertical-align:middle;
- margin-right:7px;
-}
-
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
-
-@media(max-width:380px){
- .slot-item{
+  display:inline-block;
+  background:#fff0f4;
+  color:#e50046;
+  border-radius:20px;
+  padding:3px 8px;
   font-size:11px;
- }
+  margin-right:5px;
+}
+
+@media(max-width:360px){
+  .wheel{
+    width:270px;
+    height:270px;
+  }
 }
 </style>
 </head>
@@ -461,191 +517,176 @@ input,select{
 <div class="container">
 
 <h1>🎰 タビガチャ</h1>
-<div class="subtitle">次の旅を、運にまかせて決めよう！</div>
+<div class="subtitle">
+次の旅を、運にまかせて決めよう！
+</div>
 
 
-<!-- =====================================================
-     SCREEN 1 条件入力
-===================================================== -->
+<!-- =========================================
+     TOP
+========================================= -->
 
-<section id="conditionScreen" class="screen active">
+<div id="topScreen" class="screen active">
 
 <div class="card">
+<div class="title">✈️ 旅行の探し方</div>
 
-<div class="title">✈️ まず旅行条件を入力</div>
+<div class="main-menu">
 
-<div class="form-group">
-<div class="form-label">📅 チェックイン</div>
-<input type="date" id="checkin">
-</div>
-
-<div class="form-row">
-
-<div class="form-group">
-<div class="form-label">🌙 泊数</div>
-<select id="nights">
-<option value="1">1泊</option>
-<option value="2">2泊</option>
-<option value="3">3泊</option>
-<option value="4">4泊</option>
-<option value="5">5泊</option>
-<option value="6">6泊</option>
-<option value="7">7泊</option>
-</select>
-</div>
-
-<div class="form-group">
-<div class="form-label">👥 人数</div>
-<select id="guests">
-<option value="1">1名</option>
-<option value="2" selected>2名</option>
-<option value="3">3名</option>
-<option value="4">4名</option>
-<option value="5">5名</option>
-<option value="6">6名</option>
-</select>
-</div>
-
-</div>
-
-<div class="form-group">
-<div class="form-label">🍳 朝食</div>
-
-<div class="choice-grid">
-<button class="choice selected" onclick="selectChoice(this,'breakfast','指定なし')">おまかせ</button>
-<button class="choice" onclick="selectChoice(this,'breakfast','朝食あり')">🍳 朝食あり</button>
-<button class="choice" onclick="selectChoice(this,'breakfast','朝食なし')">☕ 朝食なし</button>
-</div>
-
-</div>
-
-<div class="form-group">
-<div class="form-label">🛡️ キャンセル</div>
-
-<div class="choice-grid">
-<button class="choice selected" onclick="selectChoice(this,'cancel','指定なし')">おまかせ</button>
-<button class="choice" onclick="selectChoice(this,'cancel','キャンセル無料')">⭕ 無料のみ</button>
-<button class="choice" onclick="selectChoice(this,'cancel','返金不可も可')">💰 安さ優先</button>
-</div>
-
-</div>
-
-<div class="form-group">
-<div class="form-label">💴 予算（1泊・1室の目安）</div>
-
-<select id="budget">
-<option value="0">こだわらない</option>
-<option value="5000">5,000円以下</option>
-<option value="10000">10,000円以下</option>
-<option value="15000">15,000円以下</option>
-<option value="20000">20,000円以下</option>
-<option value="30000">30,000円以下</option>
-</select>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="title">🌏 行き先</div>
-
-<div class="choice-grid">
-<button id="japanMode" class="choice selected" onclick="setMode('japan')">
-🇯🇵 日本
+<button class="gacha-btn" onclick="showScreen('conditionScreen')">
+🎰 おまかせで決める
 </button>
 
-<button id="overseasMode" class="choice" onclick="setMode('overseas')">
-🌎 海外
+<button class="place-search-btn" onclick="showScreen('destinationScreen')">
+📍 行きたい場所から探す
 </button>
-</div>
 
 </div>
-
+</div>
 
 <div class="card">
+<div class="small">
+🎰 おまかせならスロットで旅先を決定<br>
+📍 行きたい場所があるならホテル・距離・交通までチェック
+</div>
+</div>
+
+</div>
+
+
+<!-- =========================================
+     条件入力
+========================================= -->
+
+<div id="conditionScreen" class="screen">
+
+<button class="back-btn" onclick="showScreen('topScreen')">
+← 戻る
+</button>
+
+<div class="card">
+
+<div class="title">📝 旅行条件</div>
+
+<div class="small">
+先に条件を選んでからスロットへ！
+</div>
+
+<br>
+
+<div class="title">🌙 何泊する？</div>
+
+<div class="option-grid">
+<button class="option" onclick="selectOption(this,'nights','1泊')">1泊</button>
+<button class="option" onclick="selectOption(this,'nights','2泊')">2泊</button>
+<button class="option" onclick="selectOption(this,'nights','3泊')">3泊</button>
+<button class="option" onclick="selectOption(this,'nights','4泊以上')">4泊以上</button>
+</div>
+
+<br>
+
+<div class="title">👥 何名？</div>
+
+<div class="option-grid">
+<button class="option" onclick="selectOption(this,'people','1名')">1名</button>
+<button class="option" onclick="selectOption(this,'people','2名')">2名</button>
+<button class="option" onclick="selectOption(this,'people','3名')">3名</button>
+<button class="option" onclick="selectOption(this,'people','4名以上')">4名以上</button>
+</div>
+
+<br>
+
+<div class="title">🍳 朝食</div>
+
+<div class="option-grid">
+<button class="option" onclick="selectOption(this,'breakfast','朝食あり')">🍳 あり</button>
+<button class="option" onclick="selectOption(this,'breakfast','朝食なし')">なし</button>
+</div>
+
+<br>
+
+<div class="title">🔄 キャンセル</div>
+
+<div class="option-grid">
+<button class="option" onclick="selectOption(this,'cancel','無料キャンセル希望')">無料希望</button>
+<button class="option" onclick="selectOption(this,'cancel','どちらでも')">どちらでも</button>
+</div>
+
+<br>
 
 <div class="title">🔎 旅のキーワード</div>
 
-<div class="small">好きなだけ選択できます</div>
-<br>
-
 <div class="keyword-grid">
 
-<button class="keyword" onclick="toggleKeyword(this,'♨️ 温泉')">♨️ 温泉</button>
-<button class="keyword" onclick="toggleKeyword(this,'💰 安さ')">💰 安さ</button>
-<button class="keyword" onclick="toggleKeyword(this,'🍳 朝食')">🍳 朝食</button>
-<button class="keyword" onclick="toggleKeyword(this,'🏙️ 観光')">🏙️ 観光</button>
-<button class="keyword" onclick="toggleKeyword(this,'🚉 駅近')">🚉 駅近</button>
-<button class="keyword" onclick="toggleKeyword(this,'🌿 癒やし')">🌿 癒やし</button>
-<button class="keyword" onclick="toggleKeyword(this,'✨ 贅沢')">✨ 贅沢</button>
-<button class="keyword" onclick="toggleKeyword(this,'🍽️ 食事')">🍽️ 食事</button>
+<button class="keyword" onclick="chooseKeyword(this,'♨️ 温泉')">♨️ 温泉</button>
+<button class="keyword" onclick="chooseKeyword(this,'💰 安さ')">💰 安さ</button>
+<button class="keyword" onclick="chooseKeyword(this,'🍳 朝食')">🍳 朝食</button>
+<button class="keyword" onclick="chooseKeyword(this,'🏙️ 観光')">🏙️ 観光</button>
+<button class="keyword" onclick="chooseKeyword(this,'🚉 駅近')">🚉 駅近</button>
+<button class="keyword" onclick="chooseKeyword(this,'🌿 癒やし')">🌿 癒やし</button>
+<button class="keyword" onclick="chooseKeyword(this,'✨ 贅沢')">✨ 贅沢</button>
+<button class="keyword" onclick="chooseKeyword(this,'🍽️ 食事')">🍽️ 食事</button>
 
 </div>
 
 <div id="selectedKeywords" class="selected-keywords"></div>
 
+<button class="next-btn" onclick="goToGacha()">
+🎰 条件を決定してスロットへ
+</button>
+
+</div>
 </div>
 
 
-<button class="primary" onclick="startTrip()">
-🎰 この条件でタビガチャ開始！
-</button>
+<!-- =========================================
+     スロット
+========================================= -->
 
-</section>
+<div id="gachaScreen" class="screen">
 
-
-<!-- =====================================================
-     SCREEN 2 都道府県スロット
-===================================================== -->
-
-<section id="placeScreen" class="screen">
-
-<button class="back-btn" onclick="goScreen('conditionScreen')">
+<button class="back-btn" onclick="showScreen('conditionScreen')">
 ← 条件入力に戻る
 </button>
 
 <div class="card">
 
-<div class="title">🎰 行き先スロット</div>
-
-<div id="conditionSummary" class="condition-box"></div>
-
-<div class="slot-machine">
-
-<div class="slot-title">WHERE TO GO?</div>
-
-<div class="slots">
-
-<div class="slot">
-<div id="placeSlot1" class="slot-item">北海道</div>
-<div class="slot-window"></div>
+<div class="title" id="rouletteTitle">
+🎰 都道府県スロット
 </div>
 
-<div class="slot">
-<div id="placeSlot2" class="slot-item">京都府</div>
-<div class="slot-window"></div>
+<div id="rouletteDescription" class="small">
+47都道府県から抽選
 </div>
 
-<div class="slot">
-<div id="placeSlot3" class="slot-item">大阪府</div>
-<div class="slot-window"></div>
+<div class="roulette-area">
+
+<div class="pointer"></div>
+
+<div id="placeWheel" class="wheel">
+
+<div id="placeWheelBg" class="wheel-bg"></div>
+<div id="placeLabels" class="wheel-labels"></div>
+
+<div id="placeCenter" class="wheel-center">
+START
 </div>
 
 </div>
-
-<div id="placeSlotResult" class="slot-result">
-STARTを押してください
 </div>
 
-<div class="slot-buttons">
+<div class="spin-controls">
 
-<button id="placeSpinBtn" class="spin-btn" onclick="spinPlace()">
+<button id="placeStartBtn"
+class="start-btn"
+onclick="startPlace()">
 ▶️ START
 </button>
 
-<button id="placeStopBtn" class="stop-btn" onclick="stopPlace()" disabled>
+<button id="placeStopBtn"
+class="stop-btn"
+onclick="stopPlace()"
+disabled>
 ⏹️ STOP
 </button>
 
@@ -653,135 +694,117 @@ STARTを押してください
 
 </div>
 
+<div id="currentPlaceCard" class="card" style="display:none;">
+
+<div class="title">
+📍 今回の旅先
 </div>
 
-</section>
+<div id="currentPlace" class="place">
+---
+</div>
+
+</div>
+
+</div>
 
 
-<!-- =====================================================
-     SCREEN 3 ホテルスロット
-===================================================== -->
+<!-- =========================================
+     行きたい場所検索
+========================================= -->
 
-<section id="hotelScreen" class="screen">
+<div id="destinationScreen" class="screen">
 
-<button class="back-btn" onclick="goScreen('placeScreen')">
-← 行き先に戻る
+<button class="back-btn" onclick="showScreen('topScreen')">
+← 戻る
 </button>
 
 <div class="card">
 
-<div class="title">📍 今回の旅先</div>
-
-<div id="selectedPlace" class="final-place">---</div>
-
+<div class="title">
+📍 行きたい場所から探す
 </div>
 
-<div class="card">
-
-<div class="title">🏨 ホテルスロット</div>
-
 <div class="small">
-この条件に合う候補ホテルから運命の1軒を抽選！
+「四国水族館」「USJ」「東京ディズニーランド」など、行きたい場所を入力
 </div>
 
 <br>
 
-<div class="slot-machine">
+<input
+id="destinationInput"
+class="input"
+type="text"
+placeholder="例：四国水族館"
+>
 
-<div class="slot-title">HOTEL GACHA</div>
-
-<div class="slots">
-
-<div class="slot">
-<div id="hotelSlot1" class="slot-item">ホテル</div>
-<div class="slot-window"></div>
-</div>
-
-<div class="slot">
-<div id="hotelSlot2" class="slot-item">ホテル</div>
-<div class="slot-window"></div>
-</div>
-
-<div class="slot">
-<div id="hotelSlot3" class="slot-item">ホテル</div>
-<div class="slot-window"></div>
-</div>
-
-</div>
-
-<div id="hotelSlotResult" class="slot-result">
-STARTを押してください
-</div>
-
-<div class="slot-buttons">
-
-<button id="hotelSpinBtn" class="spin-btn" onclick="spinHotel()">
-▶️ START
-</button>
-
-<button id="hotelStopBtn" class="stop-btn" onclick="stopHotel()" disabled>
-⏹️ STOP
+<button
+class="next-btn"
+onclick="searchDestination()">
+🔎 周辺ホテルを探す
 </button>
 
 </div>
 
+
+<div id="destinationResult"
+class="card destination-result"
+style="display:none;">
+
+<div class="title">
+🏨 おすすめホテル
+</div>
+
+<div id="destinationResultText"></div>
+
+<div class="transport-box">
+
+<div class="transport-title">
+🚗 交通について
+</div>
+
+<div id="transportText">
+目的地とホテルの位置関係を確認できます。
 </div>
 
 </div>
 
-</section>
+</div>
+
+</div>
 
 
-<!-- =====================================================
-     SCREEN 4 結果
-===================================================== -->
+<!-- =========================================
+     最終結果
+========================================= -->
 
-<section id="resultScreen" class="screen">
+<div id="result" class="card result">
 
-<div class="card result">
+<div class="result-place">
+🎉 旅が決定！
+</div>
 
-<div class="title">🎉 旅が決定！</div>
-
-<div id="finalPlace" class="final-place">
+<div id="finalPlace" class="place">
 ---
 </div>
 
-<div id="finalHotel" class="final-hotel">
-🏨 ---
+<div id="finalKeyword" class="keyword-result">
+🔎 キーワード：おまかせ
 </div>
 
-<div id="finalCondition" class="condition-box">
+<div class="hotel-box">
+
+<div class="hotel-label">
+🏨 あなたのホテルは…
 </div>
 
-
-<div class="price-box">
-
-<div class="price-title">
-💰 予約サイトを比較
+<div id="finalHotel" class="hotel-name">
+---
 </div>
 
-<div class="small">
-入力した条件で各サイトの料金を比較します
-</div>
-
-<button id="compareBtn" class="primary"
-onclick="comparePrices()"
-style="margin-top:12px;">
-🔎 最安値をチェック
-</button>
-
-<div id="loading" class="loading">
-<span class="spinner"></span>
-料金を確認しています…
-</div>
-
-<div id="compareResults"></div>
-
-</div>
-
-
-<a id="reserveBtn"
-class="reserve"
+<a
+id="reserveBtn"
+class="reserve-btn"
 href="#"
 target="_blank"
 rel="noopener noreferrer">
@@ -789,37 +812,149 @@ rel="noopener noreferrer">
 </a>
 
 
-<div class="action-grid">
+<div class="compare-box">
 
-<button id="favoriteBtn"
-class="action favorite"
-onclick="toggleFavorite()">
-♡ お気に入り
+<div class="title">
+💰 予約サイトを比較
+</div>
+
+<div class="small">
+このホテルを複数の予約サイトで確認できます。
+</div>
+
+<br>
+
+<button
+class="compare-btn"
+onclick="showComparison()">
+🔎 安い予約サイトを比較する
 </button>
 
-<button class="action"
-onclick="shareResult()">
-📤 シェア
-</button>
+<div
+id="compareResults"
+class="compare-results">
 
-<button class="action"
-onclick="againPlace()">
-🎰 行き先を引き直す
-</button>
+<div class="compare-item">
 
-<button class="action"
-onclick="againHotel()">
-🏨 ホテルを引き直す
-</button>
+<div class="compare-rank">🥇</div>
+
+<div class="compare-info">
+<div class="compare-site">
+楽天トラベル
+</div>
+
+<div class="compare-price">
+料金を確認
+</div>
+</div>
+
+<a
+id="rakutenCompare"
+class="compare-link"
+href="#"
+target="_blank">
+見る
+</a>
+
+</div>
+
+
+<div class="compare-item">
+
+<div class="compare-rank">🥈</div>
+
+<div class="compare-info">
+<div class="compare-site">
+じゃらん
+</div>
+
+<div class="compare-price">
+料金を確認
+</div>
+</div>
+
+<a
+class="compare-link"
+href="https://www.jalan.net/"
+target="_blank">
+見る
+</a>
+
+</div>
+
+
+<div class="compare-item">
+
+<div class="compare-rank">🥉</div>
+
+<div class="compare-info">
+<div class="compare-site">
+Booking.com
+</div>
+
+<div class="compare-price">
+料金を確認
+</div>
+</div>
+
+<a
+class="compare-link"
+href="https://www.booking.com/"
+target="_blank">
+見る
+</a>
+
+</div>
+
+
+<div class="compare-item">
+
+<div class="compare-rank">④</div>
+
+<div class="compare-info">
+<div class="compare-site">
+Agoda
+</div>
+
+<div class="compare-price">
+料金を確認
+</div>
+</div>
+
+<a
+class="compare-link"
+href="https://www.agoda.com/"
+target="_blank">
+見る
+</a>
+
+</div>
+
+
+<div class="small">
+※現在は各サイトのリアルタイム料金を取得していません。
+<br>
+料金APIを接続すると実際の料金を安い順に自動表示できます。
+</div>
+
+</div>
 
 </div>
 
 </div>
 
+</div>
+
+
+<!-- =========================================
+     履歴
+========================================= -->
 
 <div class="card">
 
-<div class="title">📜 最近の結果</div>
+<div class="title">
+📜 最近の結果
+</div>
 
 <div id="history">
 まだありません
@@ -827,1032 +962,797 @@ onclick="againHotel()">
 
 </div>
 
-</section>
-
-
-<!-- =====================================================
-     SCREEN 5 お気に入り
-===================================================== -->
-
-<section id="favoriteScreen" class="screen">
 
 <div class="card">
 
-<div class="title">❤️ お気に入り</div>
+<div class="small">
 
-<div id="favoriteList">
-まだありません
+<b>🎰 タビガチャの遊び方</b>
+
+<br><br>
+
+① おまかせ or 行きたい場所を選ぶ<br>
+② おまかせなら旅行条件を入力<br>
+③ スロットで旅先を決定<br>
+④ ホテルを抽選<br>
+⑤ 予約サイトを比較<br>
+⑥ 行きたい場所検索なら周辺ホテルを探す<br>
+⑦ 将来的には料金・交通・距離まで自動比較！
+
 </div>
 
 </div>
-
-<button class="back-btn" onclick="goScreen('resultScreen')">
-← 結果に戻る
-</button>
-
-</section>
-
 
 </div>
 
 
 <script>
 
-/* =====================================================
+/* =========================================
    状態
-===================================================== */
-
-let currentMode = "japan";
+========================================= */
 
 let keywords = [];
 
 let conditions = {
- checkin:"",
- nights:"1",
- guests:"2",
- breakfast:"指定なし",
- cancel:"指定なし",
- budget:"0"
+  nights:"",
+  people:"",
+  breakfast:"",
+  cancel:""
 };
 
-let currentPlace = "";
+let currentMode = "japan";
+
+let placeRunning = false;
+let placeRotation = 0;
+let placeTimer = null;
 
 let currentHotel = null;
 
-let placeRunning = false;
-let hotelRunning = false;
 
-let placeTimer = null;
-let hotelTimer = null;
+/* =========================================
+   画面切り替え
+========================================= */
 
-let placeIndex = 0;
-let hotelIndex = 0;
-
-
-/* =====================================================
-   全国47都道府県
-===================================================== */
-
-const prefectures = [
-"北海道",
-"青森県",
-"岩手県",
-"宮城県",
-"秋田県",
-"山形県",
-"福島県",
-"茨城県",
-"栃木県",
-"群馬県",
-"埼玉県",
-"千葉県",
-"東京都",
-"神奈川県",
-"新潟県",
-"富山県",
-"石川県",
-"福井県",
-"山梨県",
-"長野県",
-"岐阜県",
-"静岡県",
-"愛知県",
-"三重県",
-"滋賀県",
-"京都府",
-"大阪府",
-"兵庫県",
-"奈良県",
-"和歌山県",
-"鳥取県",
-"島根県",
-"岡山県",
-"広島県",
-"山口県",
-"徳島県",
-"香川県",
-"愛媛県",
-"高知県",
-"福岡県",
-"佐賀県",
-"長崎県",
-"熊本県",
-"大分県",
-"宮崎県",
-"鹿児島県",
-"沖縄県"
-];
-
-
-/* =====================================================
-   海外
-===================================================== */
-
-const overseas = [
-"🇰🇷 韓国",
-"🇹🇼 台湾",
-"🇹🇭 タイ",
-"🇸🇬 シンガポール",
-"🇻🇳 ベトナム",
-"🇺🇸 アメリカ",
-"🇫🇷 フランス",
-"🇮🇹 イタリア",
-"🇬🇧 イギリス",
-"🇦🇺 オーストラリア"
-];
-
-
-/* =====================================================
-   ホテルデータ
-   今まで使用していたホテルを残す
-===================================================== */
-
-const hotelData = {
-
-"北海道":[
-{name:"JRタワーホテル日航札幌",url:"https://a.r10.to/hPHwkR"},
-{name:"ホテルモントレ エーデルホフ札幌",url:"https://a.r10.to/h5sCsm"},
-{name:"ソラリア西鉄ホテル札幌",url:"https://a.r10.to/hgD3ku"},
-{name:"札幌ホテル by グランベル",url:"https://a.r10.to/hPlmGl"},
-{name:"ONSEN RYOKAN 由縁 札幌",url:"https://a.r10.to/hYVGq6"},
-{name:"ニューオータニイン札幌",url:"https://a.r10.to/h5YmNL"},
-{name:"ホテル京阪 札幌",url:"https://a.r10.to/hFdmKn"},
-{name:"ホテルエミシア札幌",url:"https://a.r10.to/h5njrJ"},
-{name:"札幌グランドホテル",url:"https://a.r10.to/hPljXP"},
-{name:"クロスホテル札幌",url:"https://a.r10.to/h57Fzw"}
-],
-
-"京都府":[
-{name:"HOTEL ARU KYOTO 三条木屋町通り",url:"https://a.r10.to/hPRzvh"},
-{name:"ホテル グラン・エムズ京都",url:"https://a.r10.to/hgLs22"},
-{name:"ホテルグランヴィア京都",url:"https://a.r10.to/h8QXhX"},
-{name:"THE BLOSSOM KYOTO",url:"https://a.r10.to/h5gYSt"},
-{name:"ヒルトン京都",url:"https://a.r10.to/hg1s96"},
-{name:"エースホテル京都",url:"https://a.r10.to/hPiJUn"},
-{name:"ホテル ザ ミツイ キョウト",url:"https://a.r10.to/hYvzZa"},
-{name:"The Hotel Seiryu Kyoto Kiyomizu",url:"https://a.r10.to/h8rJW7"},
-{name:"Park Hyatt Kyoto",url:"https://a.r10.to/h57FJ2"},
-{name:"フォーシーズンズホテル京都",url:"https://a.r10.to/hgDehp"}
-],
-
-"大阪府":[
-{name:"KOKO HOTEL 大阪心斎橋",url:"https://a.r10.to/hk0aeA"},
-{name:"黒門クリスタルホテル",url:"https://a.r10.to/hgElkZ"},
-{name:"大阪グランベルホテル",url:"https://a.r10.to/hgclXy"},
-{name:"ホテルヴィスキオ大阪",url:"https://a.r10.to/TLKYG6"},
-{name:"ホテルリソルトリニティ大阪",url:"https://a.r10.to/hgjoEJ"},
-{name:"都シティ 大阪本町",url:"https://a.r10.to/hFcH5m"},
-{name:"ホテル阪急レスパイア大阪",url:"https://a.r10.to/h575rE"},
-{name:"ホテルグランヴィア大阪",url:"https://a.r10.to/hRiIkf"},
-{name:"帝国ホテル 大阪",url:"https://a.r10.to/hgcQ68"},
-{name:"ザ ロイヤルパークホテル アイコニック 大阪御堂筋",url:"https://a.r10.to/hXi5On"}
-],
-
-"東京都":[
-{name:"ホテルミュッセ銀座名鉄",url:"https://a.r10.to/hPDUsh"},
-{name:"からくさホテル 東京ステーション",url:"https://a.r10.to/hPfUGg"},
-{name:"三井ガーデンホテル銀座プレミア",url:"https://a.r10.to/hP6bAf"},
-{name:"三井ガーデンホテル日本橋プレミア",url:"https://a.r10.to/h50zik"},
-{name:"パークホテル東京",url:"https://a.r10.to/hgp4eY"},
-{name:"MIMARU東京 日本橋水天宮前",url:"https://a.r10.to/hPJKcu"},
-{name:"帝国ホテル 東京",url:"https://a.r10.to/hk7QVa"},
-{name:"グランド ハイアット 東京",url:"https://a.r10.to/hgePLf"},
-{name:"ザ・ペニンシュラ東京",url:"https://a.r10.to/h5q12U"},
-{name:"マンダリン オリエンタル 東京",url:"https://a.r10.to/hP5ZFe"}
-],
-
-"福岡県":[
-{name:"博多エクセルホテル東急",url:"https://a.r10.to/hP8xv3"},
-{name:"西鉄ホテル クルーム博多",url:"https://a.r10.to/T3JpPu"},
-{name:"ホテルモントレ福岡",url:"https://a.r10.to/h8fA4F"},
-{name:"三井ガーデンホテル福岡中洲",url:"https://a.r10.to/hYwIlp"},
-{name:"三井ガーデンホテル福岡祇園",url:"https://a.r10.to/hPKHkK"},
-{name:"ホテル日航福岡",url:"https://a.r10.to/hkBbbN"},
-{name:"福岡ホテル7",url:"https://a.r10.to/hRVG8U"},
-{name:"福岡ホテル8",url:"https://a.r10.to/hPUKDH"},
-{name:"福岡ホテル9",url:"https://a.r10.to/h5uO2O"},
-{name:"福岡ホテル10",url:"https://a.r10.to/hkQi0X"}
-],
-
-/* その他の都道府県
-   実際の予約URLを入れられる構造にしてあります */
-
-"青森県":makeGeneric("青森"),
-"岩手県":makeGeneric("盛岡"),
-"宮城県":makeGeneric("仙台"),
-"秋田県":makeGeneric("秋田"),
-"山形県":makeGeneric("山形"),
-"福島県":makeGeneric("福島"),
-"茨城県":makeGeneric("水戸"),
-"栃木県":makeGeneric("宇都宮"),
-"群馬県":makeGeneric("前橋"),
-"埼玉県":makeGeneric("さいたま"),
-"千葉県":makeGeneric("千葉"),
-"神奈川県":makeGeneric("横浜"),
-"新潟県":makeGeneric("新潟"),
-"富山県":makeGeneric("富山"),
-"石川県":makeGeneric("金沢"),
-"福井県":makeGeneric("福井"),
-"山梨県":makeGeneric("甲府"),
-"長野県":makeGeneric("長野"),
-"岐阜県":makeGeneric("岐阜"),
-"静岡県":makeGeneric("静岡"),
-"愛知県":makeGeneric("名古屋"),
-"三重県":makeGeneric("津"),
-"滋賀県":makeGeneric("大津"),
-"兵庫県":makeGeneric("神戸"),
-"奈良県":makeGeneric("奈良"),
-"和歌山県":makeGeneric("和歌山"),
-"鳥取県":makeGeneric("鳥取"),
-"島根県":makeGeneric("松江"),
-"岡山県":makeGeneric("岡山"),
-"広島県":makeGeneric("広島"),
-"山口県":makeGeneric("山口"),
-"徳島県":makeGeneric("徳島"),
-"香川県":makeGeneric("高松"),
-"愛媛県":makeGeneric("松山"),
-"高知県":makeGeneric("高知"),
-"佐賀県":makeGeneric("佐賀"),
-"長崎県":makeGeneric("長崎"),
-"熊本県":makeGeneric("熊本"),
-"大分県":makeGeneric("別府"),
-"宮崎県":makeGeneric("宮崎"),
-"鹿児島県":makeGeneric("鹿児島"),
-"沖縄県":makeGeneric("那覇")
-};
-
-
-/* =====================================================
-   仮ホテルデータ生成
-   ※ここは後で実際のホテル・予約URLに置き換える
-===================================================== */
-
-function makeGeneric(city){
-
-return [
-{name:city+"ホテルA",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルB",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルC",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルD",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルE",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルF",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルG",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルH",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルI",url:"https://travel.rakuten.co.jp/"},
-{name:city+"ホテルJ",url:"https://travel.rakuten.co.jp/"}
-];
-
-}
-
-
-/* =====================================================
-   条件
-===================================================== */
-
-function selectChoice(button,type,value){
-
-conditions[type]=value;
-
-const parent=button.parentElement;
-
-parent.querySelectorAll(".choice").forEach(b=>{
- b.classList.remove("selected");
-});
-
-button.classList.add("selected");
-}
-
-
-function setMode(mode){
-
-currentMode=mode;
-
-document.getElementById("japanMode")
-.classList.toggle("selected",mode==="japan");
-
-document.getElementById("overseasMode")
-.classList.toggle("selected",mode==="overseas");
-
-}
-
-
-function toggleKeyword(button,value){
-
-if(keywords.includes(value)){
-
-keywords=keywords.filter(x=>x!==value);
-button.classList.remove("selected");
-
-}else{
-
-keywords.push(value);
-button.classList.add("selected");
-
-}
-
-document.getElementById("selectedKeywords").textContent=
-keywords.length
-?"選択中："+keywords.join("・")
-:"";
-
-}
-
-
-/* =====================================================
-   画面切替
-===================================================== */
-
-function goScreen(id){
+function showScreen(id){
 
 document.querySelectorAll(".screen")
-.forEach(s=>s.classList.remove("active"));
+.forEach(function(screen){
+  screen.classList.remove("active");
+});
 
 document.getElementById(id)
 .classList.add("active");
 
 window.scrollTo({
-top:0,
-behavior:"smooth"
+  top:0,
+  behavior:"smooth"
 });
 
 }
 
 
-/* =====================================================
-   ガチャ開始
-===================================================== */
+/* =========================================
+   条件
+========================================= */
 
-function startTrip(){
+function selectOption(button,type,value){
 
-conditions.checkin=
-document.getElementById("checkin").value;
+conditions[type] = value;
 
-conditions.nights=
-document.getElementById("nights").value;
+const parent = button.parentElement;
 
-conditions.guests=
-document.getElementById("guests").value;
+parent.querySelectorAll(".option")
+.forEach(function(btn){
+  btn.classList.remove("selected");
+});
 
-conditions.budget=
-document.getElementById("budget").value;
-
-if(!conditions.checkin){
-
-const today=new Date();
-
-const y=today.getFullYear();
-const m=String(today.getMonth()+1).padStart(2,"0");
-const d=String(today.getDate()+1).padStart(2,"0");
-
-conditions.checkin=
-`${y}-${m}-${d}`;
-
-document.getElementById("checkin").value=
-conditions.checkin;
-
-}
-
-showConditionSummary();
-
-goScreen("placeScreen");
+button.classList.add("selected");
 
 }
 
 
-/* =====================================================
-   条件表示
-===================================================== */
+/* =========================================
+   キーワード
+========================================= */
 
-function showConditionSummary(){
+function chooseKeyword(button,value){
 
-const budget=
-conditions.budget==="0"
-?"指定なし"
-:Number(conditions.budget).toLocaleString()+"円以下";
+if(keywords.includes(value)){
 
-document.getElementById("conditionSummary").innerHTML=
-`
-📅 ${conditions.checkin}<br>
-🌙 ${conditions.nights}泊　
-👥 ${conditions.guests}名<br>
-🍳 ${conditions.breakfast}<br>
-🛡️ ${conditions.cancel}<br>
-💴 予算：${budget}<br>
-🔎 ${keywords.length?keywords.join("・"):"おまかせ"}
-`;
+keywords = keywords.filter(function(item){
+  return item !== value;
+});
+
+button.classList.remove("selected");
+
+}else{
+
+keywords.push(value);
+
+button.classList.add("selected");
+
+}
+
+document.getElementById("selectedKeywords")
+.textContent =
+keywords.length
+? "選択中： " + keywords.join(" ・ ")
+: "";
 
 }
 
 
-/* =====================================================
-   行き先スロット
-===================================================== */
+/* =========================================
+   Gacha開始
+========================================= */
 
-function getPlaceList(){
+function goToGacha(){
 
-return currentMode==="japan"
-?prefectures
-:overseas;
+showScreen("gachaScreen");
+
+createPlaceLabels();
 
 }
 
 
-function spinPlace(){
+/* =========================================
+   都道府県
+========================================= */
 
-if(placeRunning)return;
+const prefectures = [
 
-placeRunning=true;
+"北海道","青森県","岩手県","宮城県","秋田県",
+"山形県","福島県","茨城県","栃木県","群馬県",
+"埼玉県","千葉県","東京都","神奈川県","新潟県",
+"富山県","石川県","福井県","山梨県","長野県",
+"岐阜県","静岡県","愛知県","三重県","滋賀県",
+"京都府","大阪府","兵庫県","奈良県","和歌山県",
+"鳥取県","島根県","岡山県","広島県","山口県",
+"徳島県","香川県","愛媛県","高知県","福岡県",
+"佐賀県","長崎県","熊本県","大分県","宮崎県",
+"鹿児島県","沖縄県"
 
-document.getElementById("placeSpinBtn").disabled=true;
-document.getElementById("placeStopBtn").disabled=false;
-
-const list=getPlaceList();
-
-placeTimer=setInterval(()=>{
-
-placeIndex=
-Math.floor(Math.random()*list.length);
-
-const a=list[placeIndex];
-
-const b=list[
-Math.floor(Math.random()*list.length)
 ];
 
-const c=list[
-Math.floor(Math.random()*list.length)
+
+/* =========================================
+   ホテルデータ
+========================================= */
+
+const hotelData = {
+
+"北海道":[
+["JRタワーホテル日航札幌","https://a.r10.to/hPHwkR"],
+["ホテルモントレ エーデルホフ札幌","https://a.r10.to/h5sCsm"],
+["ソラリア西鉄ホテル札幌","https://a.r10.to/hgD3ku"],
+["札幌ホテル by グランベル","https://a.r10.to/hPlmGl"],
+["ONSEN RYOKAN 由縁 札幌","https://a.r10.to/hYVGq6"],
+["ニューオータニイン札幌","https://a.r10.to/h5YmNL"],
+["ホテル京阪 札幌","https://a.r10.to/hFdmKn"],
+["ホテルエミシア札幌","https://a.r10.to/h5njrJ"],
+["札幌グランドホテル","https://a.r10.to/hPljXP"],
+["クロスホテル札幌","https://a.r10.to/h57Fzw"]
+],
+
+"京都府":[
+["HOTEL ARU KYOTO 三条木屋町通り","https://a.r10.to/hPRzvh"],
+["ホテル グラン・エムズ京都","https://a.r10.to/hgLs22"],
+["ホテルグランヴィア京都","https://a.r10.to/h8QXhX"],
+["THE BLOSSOM KYOTO","https://a.r10.to/h5gYSt"],
+["ヒルトン京都","https://a.r10.to/hg1s96"],
+["エースホテル京都","https://a.r10.to/hPiJUn"],
+["ホテル ザ ミツイ キョウト","https://a.r10.to/hYvzZa"],
+["The Hotel Seiryu Kyoto Kiyomizu","https://a.r10.to/h8rJW7"],
+["Park Hyatt Kyoto","https://a.r10.to/h57FJ2"],
+["フォーシーズンズホテル京都","https://a.r10.to/hgDehp"]
+],
+
+"大阪府":[
+["KOKO HOTEL 大阪心斎橋","https://a.r10.to/hk0aeA"],
+["黒門クリスタルホテル","https://a.r10.to/hgElkZ"],
+["大阪グランベルホテル","https://a.r10.to/hgclXy"],
+["ホテルヴィスキオ大阪","https://a.r10.to/TLKYG6"],
+["ホテルリソルトリニティ大阪","https://a.r10.to/hgjoEJ"],
+["都シティ 大阪本町","https://a.r10.to/hFcH5m"],
+["ホテル阪急レスパイア大阪","https://a.r10.to/h575rE"],
+["ホテルグランヴィア大阪","https://a.r10.to/hRiIkf"],
+["帝国ホテル 大阪","https://a.r10.to/hgcQ68"],
+["ザ ロイヤルパークホテル アイコニック 大阪御堂筋","https://a.r10.to/hXi5On"]
+],
+
+"東京都":[
+["ホテルミュッセ銀座名鉄","https://a.r10.to/hPDUsh"],
+["からくさホテル 東京ステーション","https://a.r10.to/hPfUGg"],
+["三井ガーデンホテル銀座プレミア","https://a.r10.to/hP6bAf"],
+["三井ガーデンホテル日本橋プレミア","https://a.r10.to/h50zik"],
+["パークホテル東京","https://a.r10.to/hgp4eY"],
+["MIMARU東京 日本橋水天宮前","https://a.r10.to/hPJKcu"],
+["帝国ホテル 東京","https://a.r10.to/hk7QVa"],
+["グランド ハイアット 東京","https://a.r10.to/hgePLf"],
+["ザ・ペニンシュラ東京","https://a.r10.to/h5q12U"],
+["マンダリン オリエンタル 東京","https://a.r10.to/hP5ZFe"]
+],
+
+"福岡県":[
+["博多エクセルホテル東急","https://a.r10.to/hP8xv3"],
+["西鉄ホテル クルーム博多","https://a.r10.to/T3JpPu"],
+["ホテルモントレ福岡","https://a.r10.to/h8fA4F"],
+["三井ガーデンホテル福岡中洲","https://a.r10.to/hYwIlp"],
+["三井ガーデンホテル福岡祇園","https://a.r10.to/hPKHkK"],
+["ホテル日航福岡","https://a.r10.to/hkBbbN"],
+["福岡ホテル7","https://a.r10.to/hRVG8U"],
+["福岡ホテル8","https://a.r10.to/hPUKDH"],
+["福岡ホテル9","https://a.r10.to/h5uO2O"],
+["福岡ホテル10","https://a.r10.to/hkQi0X"]
+]
+
+};
+
+
+/* =========================================
+   47都道府県スロット
+========================================= */
+
+const wheelColors = [
+"#ff6b6b",
+"#ffd166",
+"#06d6a0",
+"#4dabf7",
+"#9b5de5",
+"#ff70a6",
+"#ff9f1c",
+"#2ec4b6"
 ];
 
-document.getElementById("placeSlot1").textContent=a;
-document.getElementById("placeSlot2").textContent=b;
-document.getElementById("placeSlot3").textContent=c;
 
-},70);
+function setWheelColors(element,count){
 
-document.getElementById("placeSlotResult")
-.textContent="回転中…";
+let angle = 360 / count;
+let gradient = "";
+
+for(let i=0;i<count;i++){
+
+let start = i * angle;
+let end = (i+1) * angle;
+
+gradient +=
+wheelColors[i % wheelColors.length]
++ " "
++ start
++ "deg "
++ end
++ "deg";
+
+if(i < count-1){
+gradient += ",";
+}
+
+}
+
+element.style.background =
+"conic-gradient(" + gradient + ")";
+
+}
+
+
+function createPlaceLabels(){
+
+const box =
+document.getElementById("placeLabels");
+
+box.innerHTML = "";
+
+const count = prefectures.length;
+
+setWheelColors(
+document.getElementById("placeWheelBg"),
+count
+);
+
+const sector = 360 / count;
+
+prefectures.forEach(function(name,index){
+
+const label =
+document.createElement("div");
+
+label.className = "pref-label";
+label.textContent = name;
+
+const angle =
+index * sector
++ sector/2
+- 90;
+
+const rad =
+angle * Math.PI / 180;
+
+const radius = 105;
+
+const x = Math.cos(rad) * radius;
+const y = Math.sin(rad) * radius;
+
+label.style.width = "42px";
+label.style.height = "24px";
+label.style.marginLeft = "-21px";
+label.style.marginTop = "-12px";
+label.style.fontSize = "7px";
+
+label.style.transform =
+"translate("
++x+"px,"
++y+"px) rotate("
++(angle+90)
++"deg)";
+
+box.appendChild(label);
+
+});
+
+}
+
+
+function startPlace(){
+
+if(placeRunning){
+return;
+}
+
+placeRunning = true;
+
+document.getElementById("placeStartBtn")
+.disabled = true;
+
+document.getElementById("placeStopBtn")
+.disabled = false;
+
+document.getElementById("placeCenter")
+.textContent = "GO!";
+
+placeTimer =
+setInterval(function(){
+
+placeRotation += 12;
+
+document.getElementById("placeWheel")
+.style.transform =
+"rotate("+placeRotation+"deg)";
+
+},30);
 
 }
 
 
 function stopPlace(){
 
-if(!placeRunning)return;
+if(!placeRunning){
+return;
+}
 
 clearInterval(placeTimer);
 
-placeRunning=false;
+placeRunning = false;
 
-document.getElementById("placeSpinBtn").disabled=false;
-document.getElementById("placeStopBtn").disabled=true;
+document.getElementById("placeStartBtn")
+.disabled = false;
 
-const list=getPlaceList();
+document.getElementById("placeStopBtn")
+.disabled = true;
 
-const result=
-list[Math.floor(Math.random()*list.length)];
+const count = prefectures.length;
+const sector = 360 / count;
 
-currentPlace=result;
+let normalized =
+((placeRotation % 360)+360)%360;
 
-document.getElementById("placeSlot1").textContent=result;
-document.getElementById("placeSlot2").textContent=result;
-document.getElementById("placeSlot3").textContent=result;
+let index =
+Math.floor(
+(360-normalized+sector/2)/sector
+)%count;
 
-document.getElementById("placeSlotResult")
-.textContent="🎉 "+result+" に決定！";
+const result =
+prefectures[index];
 
-document.getElementById("selectedPlace")
-.textContent=result;
+document.getElementById("placeCenter")
+.textContent = result;
 
-setTimeout(()=>{
- goScreen("hotelScreen");
-},700);
+document.getElementById("currentPlaceCard")
+.style.display = "block";
 
-}
+document.getElementById("currentPlace")
+.textContent = result;
 
-
-/* =====================================================
-   ホテルスロット
-===================================================== */
-
-function getHotels(){
-
-let place=currentPlace.replace(/^🇰🇷 |^🇹🇼 |^🇹🇭 |^🇸🇬 |^🇻🇳 |^🇺🇸 |^🇫🇷 |^🇮🇹 |^🇬🇧 |^🇦🇺 /,"");
-
-return hotelData[place] || makeGeneric(place);
+showHotelForPlace(result);
 
 }
 
 
-function spinHotel(){
+/* =========================================
+   当選県のホテル
+========================================= */
 
-if(hotelRunning)return;
+function showHotelForPlace(place){
 
-hotelRunning=true;
+if(!hotelData[place]){
 
-document.getElementById("hotelSpinBtn").disabled=true;
-document.getElementById("hotelStopBtn").disabled=false;
-
-const list=getHotels();
-
-hotelTimer=setInterval(()=>{
-
-const a=list[Math.floor(Math.random()*list.length)];
-const b=list[Math.floor(Math.random()*list.length)];
-const c=list[Math.floor(Math.random()*list.length)];
-
-document.getElementById("hotelSlot1").textContent=a.name;
-document.getElementById("hotelSlot2").textContent=b.name;
-document.getElementById("hotelSlot3").textContent=c.name;
-
-},70);
-
-document.getElementById("hotelSlotResult")
-.textContent="回転中…";
-
-}
-
-
-function stopHotel(){
-
-if(!hotelRunning)return;
-
-clearInterval(hotelTimer);
-
-hotelRunning=false;
-
-document.getElementById("hotelSpinBtn").disabled=false;
-document.getElementById("hotelStopBtn").disabled=true;
-
-const list=getHotels();
-
-currentHotel=
-list[Math.floor(Math.random()*list.length)];
-
-document.getElementById("hotelSlot1").textContent=
-currentHotel.name;
-
-document.getElementById("hotelSlot2").textContent=
-currentHotel.name;
-
-document.getElementById("hotelSlot3").textContent=
-currentHotel.name;
-
-document.getElementById("hotelSlotResult")
-.textContent="🎉 運命のホテル決定！";
-
-showFinalResult();
-
-}
-
-
-/* =====================================================
-   最終結果
-===================================================== */
-
-function showFinalResult(){
-
-document.getElementById("finalPlace")
-.textContent="📍 "+currentPlace;
-
-document.getElementById("finalHotel")
-.textContent="🏨 "+currentHotel.name;
-
-const budget=
-conditions.budget==="0"
-?"指定なし"
-:Number(conditions.budget).toLocaleString()+"円以下";
-
-document.getElementById("finalCondition").innerHTML=
-`
-📅 ${conditions.checkin}<br>
-🌙 ${conditions.nights}泊<br>
-👥 ${conditions.guests}名<br>
-🍳 ${conditions.breakfast}<br>
-🛡️ ${conditions.cancel}<br>
-💴 予算：${budget}<br>
-🔎 ${keywords.length?keywords.join("・"):"おまかせ"}
-`;
-
-document.getElementById("reserveBtn").href=
-currentHotel.url;
-
-document.getElementById("compareResults").innerHTML="";
-
-document.getElementById("favoriteBtn")
-.classList.remove("on");
-
-saveHistory();
-
-goScreen("resultScreen");
-
-}
-
-
-/* =====================================================
-   予約サイト比較
-===================================================== */
-
-/*
-=========================================================
-重要
-
-ここは「料金APIを接続する場所」。
-
-HTMLだけでは楽天・じゃらん・Booking.com・Agodaの
-リアルタイム料金を取得できないため、
-現在は「料金を確認」として表示する。
-
-APIを接続すると、
-
-サイト → 実際の料金取得
-↓
-料金を数値化
-↓
-sort((a,b)=>a.price-b.price)
-↓
-安い順表示
-
-に変更できる。
-=========================================================
-*/
-
-
-async function comparePrices(){
-
-if(!currentHotel)return;
-
-const loading=
-document.getElementById("loading");
-
-const btn=
-document.getElementById("compareBtn");
-
-loading.classList.add("show");
-btn.disabled=true;
-
-await new Promise(resolve=>
- setTimeout(resolve,900)
+alert(
+place+
+"のホテルデータは現在準備中です。"
 );
 
-/*
-本番ではここをAPI通信に変更。
+return;
 
-例：
+}
 
-const response=await fetch("/api/hotel-price",{
- method:"POST",
- headers:{
-  "Content-Type":"application/json"
- },
- body:JSON.stringify({
-  hotel:currentHotel.name,
-  checkin:conditions.checkin,
-  nights:conditions.nights,
-  guests:conditions.guests,
-  breakfast:conditions.breakfast,
-  cancel:conditions.cancel
- })
+const list = hotelData[place];
+
+const random =
+list[Math.floor(Math.random()*list.length)];
+
+currentHotel = {
+name:random[0],
+url:random[1]
+};
+
+showFinalResult(
+currentHotel,
+"🇯🇵 "+place
+);
+
+}
+
+
+/* =========================================
+   最終結果
+========================================= */
+
+function showFinalResult(hotel,place){
+
+currentHotel = hotel;
+
+document.getElementById("finalPlace")
+.textContent = place;
+
+document.getElementById("finalKeyword")
+.textContent =
+"🔎 キーワード："
++
+(
+keywords.length
+? keywords.join("・")
+: "おまかせ"
+);
+
+document.getElementById("finalHotel")
+.textContent =
+"🏨 "+hotel.name;
+
+document.getElementById("reserveBtn")
+.href = hotel.url;
+
+document.getElementById("result")
+.classList.add("show");
+
+document.getElementById("compareResults")
+.classList.remove("show");
+
+saveHistory(
+hotel.name,
+place
+);
+
+document.getElementById("result")
+.scrollIntoView({
+behavior:"smooth",
+block:"center"
 });
 
-const data=await response.json();
+}
 
+
+/* =========================================
+   予約サイト比較
+========================================= */
+
+function showComparison(){
+
+if(!currentHotel){
+return;
+}
+
+document.getElementById("rakutenCompare")
+.href = currentHotel.url;
+
+document.getElementById("compareResults")
+.classList.add("show");
+
+}
+
+
+/* =========================================
+   行きたい場所検索
+========================================= */
+
+/*
+  ★ここが将来APIを接続する場所です。
+
+  現在：
+  「四国水族館」などを入力すると
+  サンプルのホテル候補を表示。
+
+  将来：
+  Google Maps等で目的地を検索
+  ↓
+  周辺ホテルを取得
+  ↓
+  距離・所要時間取得
+  ↓
+  料金API取得
+  ↓
+  安い順・近い順・総合順を表示
 */
 
 
-const sites=[
+const destinationSamples = {
+
+"四国水族館":[
 
 {
-name:"楽天トラベル",
-url:currentHotel.url
+name:"宇多津グランドホテル",
+distance:"車で約8分",
+price:"料金を確認",
+recommend:"水族館へのアクセス重視"
 },
 
 {
-name:"じゃらん",
-url:"https://www.jalan.net/"
+name:"ホテルアネシス瀬戸大橋",
+distance:"車で約10分",
+price:"料金を確認",
+recommend:"駅・観光にも便利"
 },
 
 {
-name:"Booking.com",
-url:"https://www.booking.com/"
+name:"坂出グランドホテル",
+distance:"車で約15分",
+price:"料金を確認",
+recommend:"価格重視"
+}
+
+],
+
+"USJ":[
+
+{
+name:"ザ パーク フロント ホテル",
+distance:"徒歩約1分",
+price:"料金を確認",
+recommend:"USJ最優先ならおすすめ"
 },
 
 {
-name:"Agoda",
-url:"https://www.agoda.com/"
+name:"ホテル ユニバーサル ポート",
+distance:"徒歩約5分",
+price:"料金を確認",
+recommend:"USJに近い"
+},
+
+{
+name:"ホテル京阪 ユニバーサル・タワー",
+distance:"徒歩約2分",
+price:"料金を確認",
+recommend:"駅にも便利"
+}
+
+],
+
+"東京ディズニーランド":[
+
+{
+name:"東京ディズニーランドホテル",
+distance:"徒歩約5分",
+price:"料金を確認",
+recommend:"アクセス最優先"
+},
+
+{
+name:"東京ベイ舞浜ホテル",
+distance:"車で約5分",
+price:"料金を確認",
+recommend:"ファミリー向け"
+},
+
+{
+name:"ホテルオークラ東京ベイ",
+distance:"車で約5分",
+price:"料金を確認",
+recommend:"ゆっくり過ごしたい人向け"
+}
+
+]
+
+};
+
+
+function searchDestination(){
+
+const input =
+document.getElementById("destinationInput")
+.value
+.trim();
+
+if(!input){
+
+alert("行きたい場所を入力してください");
+
+return;
+
+}
+
+let results =
+destinationSamples[input];
+
+if(!results){
+
+results = [
+
+{
+name:"周辺ホテル候補A",
+distance:"距離をAPIで取得予定",
+price:"料金をAPIで取得予定",
+recommend:"総合評価を計算予定"
+},
+
+{
+name:"周辺ホテル候補B",
+distance:"距離をAPIで取得予定",
+price:"料金をAPIで取得予定",
+recommend:"価格重視候補"
+},
+
+{
+name:"周辺ホテル候補C",
+distance:"距離をAPIで取得予定",
+price:"料金をAPIで取得予定",
+recommend:"アクセス重視候補"
 }
 
 ];
 
+}
 
-/*
-現在は価格を捏造しない。
-*/
+const box =
+document.getElementById("destinationResultText");
 
-document.getElementById("compareResults").innerHTML=
-`
-<div style="
- margin-top:14px;
- padding:12px;
- background:#f7f7f7;
- border-radius:13px;
- font-size:12px;
- line-height:1.7;
- text-align:center;
-">
-⚠️ 現在は予約サイトのリアルタイム料金APIが
-接続されていません。<br>
-下の「見る」から各サイトの最新料金を確認できます。
-</div>
-`;
+box.innerHTML = "";
 
-sites.forEach((site,index)=>{
+results.forEach(function(hotel,index){
 
-const div=document.createElement("div");
+const div =
+document.createElement("div");
 
-div.className="compare-item";
+div.className =
+"destination-hotel";
 
-div.innerHTML=
-`
-<div class="rank">${index+1}</div>
+div.innerHTML =
 
-<div class="compare-info">
+"<div class='destination-hotel-name'>"
++(index+1)
++". "
++hotel.name+
+"</div>"
 
-<div class="site">
-${site.name}
-</div>
++
 
-<div class="price">
-料金を確認
-</div>
+"<div class='distance'>📍 "
++hotel.distance+
+"</div>"
 
-</div>
++
 
-<a
-class="check-btn"
-href="${site.url}"
-target="_blank"
-rel="noopener noreferrer">
-見る
-</a>
-`;
+"<div class='price'>💰 "
++hotel.price+
+"</div>"
 
-document.getElementById("compareResults")
-.appendChild(div);
++
+
+"<div class='recommend'>⭐ "
++hotel.recommend+
+"</div>"
+
++
+
+"<br><br>"
+
++
+
+"<a class='reserve-btn' href='#' onclick='alert(\"料金API接続後に予約サイトへ移動できます\")'>"
++"ホテルをチェック →"
++"</a>";
+
+box.appendChild(div);
 
 });
 
-loading.classList.remove("show");
-btn.disabled=false;
+
+document.getElementById("transportText")
+.innerHTML =
+
+"📍 目的地：<b>"
++input+
+"</b><br><br>"
++"現在はサンプル表示です。<br>"
++"地図APIを接続すると、ホテルから目的地までの距離・徒歩/車/電車の所要時間を自動表示できます。";
+
+
+document.getElementById("destinationResult")
+.style.display = "block";
+
+document.getElementById("destinationResult")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
 
 }
 
 
-/* =====================================================
+/* =========================================
    履歴
-===================================================== */
+========================================= */
 
-function saveHistory(){
+function saveHistory(hotelName,place){
 
-let history=
-JSON.parse(localStorage.getItem("tabigachaHistory")||"[]");
-
-history.unshift({
-place:currentPlace,
-hotel:currentHotel.name,
-date:new Date().toLocaleString("ja-JP")
-});
-
-history=history.slice(0,10);
-
-localStorage.setItem(
-"tabigachaHistory",
-JSON.stringify(history)
-);
-
-renderHistory();
-
-}
-
-
-function renderHistory(){
-
-const history=
-JSON.parse(localStorage.getItem("tabigachaHistory")||"[]");
-
-const box=
+const history =
 document.getElementById("history");
 
-if(!history.length){
-
-box.textContent="まだありません";
-return;
-
+if(history.textContent === "まだありません"){
+history.innerHTML = "";
 }
 
-box.innerHTML="";
+const item =
+document.createElement("div");
 
-history.forEach((item,index)=>{
+item.className =
+"history-item";
 
-const div=document.createElement("div");
+item.innerHTML =
+'<span class="badge">NEW</span>'
++
+place
++
+"｜"
++
+(
+keywords.length
+? keywords.join("・")
+: "おまかせ"
+)
++
+"｜🏨 "
++
+hotelName;
 
-div.className="history-item";
+history.prepend(item);
 
-div.innerHTML=
-`
-<span class="badge">#${index+1}</span>
-${item.place}
-｜🏨 ${item.hotel}
-<br>
-<span style="color:#999;font-size:10px">
-${item.date}
-</span>
-`;
+while(history.children.length > 5){
 
-box.appendChild(div);
-
-});
-
-}
-
-
-/* =====================================================
-   お気に入り
-===================================================== */
-
-function toggleFavorite(){
-
-if(!currentHotel)return;
-
-let favorites=
-JSON.parse(localStorage.getItem("tabigachaFavorites")||"[]");
-
-const exists=
-favorites.some(
-x=>x.name===currentHotel.name
+history.removeChild(
+history.lastChild
 );
 
-if(exists){
-
-favorites=
-favorites.filter(
-x=>x.name!==currentHotel.name
-);
-
-document.getElementById("favoriteBtn")
-.classList.remove("on");
-
-}else{
-
-favorites.push({
-name:currentHotel.name,
-place:currentPlace,
-url:currentHotel.url
-});
-
-document.getElementById("favoriteBtn")
-.classList.add("on");
-
-}
-
-localStorage.setItem(
-"tabigachaFavorites",
-JSON.stringify(favorites)
-);
-
-renderFavorites();
-
-}
-
-
-function renderFavorites(){
-
-const favorites=
-JSON.parse(
-localStorage.getItem("tabigachaFavorites")||"[]"
-);
-
-const box=
-document.getElementById("favoriteList");
-
-if(!favorites.length){
-
-box.textContent="まだありません";
-return;
-
-}
-
-box.innerHTML="";
-
-favorites.forEach(item=>{
-
-const div=document.createElement("div");
-
-div.className="history-item";
-
-div.innerHTML=
-`
-❤️ <b>${item.name}</b><br>
-<span style="color:#777">
-${item.place}
-</span><br>
-<a
-href="${item.url}"
-target="_blank"
-rel="noopener noreferrer">
-予約ページを見る
-</a>
-`;
-
-box.appendChild(div);
-
-});
-
-}
-
-
-/* =====================================================
-   シェア
-===================================================== */
-
-function shareResult(){
-
-if(!currentHotel)return;
-
-const text=
-`🎰 タビガチャ結果！
-
-📍 ${currentPlace}
-🏨 ${currentHotel.name}
-
-条件：
-${conditions.checkin}
-${conditions.nights}泊・${conditions.guests}名
-
-タビガチャで旅先を決めました！`;
-
-if(navigator.share){
-
-navigator.share({
-title:"🎰 タビガチャ",
-text:text
-}).catch(()=>{});
-
-}else{
-
-navigator.clipboard.writeText(text);
-
-alert("結果をコピーしました！");
-
 }
 
 }
 
 
-/* =====================================================
-   引き直し
-===================================================== */
-
-function againPlace(){
-
-goScreen("placeScreen");
-
-document.getElementById("placeSlotResult")
-.textContent="STARTを押してください";
-
-}
-
-
-function againHotel(){
-
-goScreen("hotelScreen");
-
-document.getElementById("hotelSlotResult")
-.textContent="STARTを押してください";
-
-}
-
-
-/* =====================================================
+/* =========================================
    初期化
-===================================================== */
+========================================= */
 
-(function(){
-
-const today=new Date();
-
-const y=today.getFullYear();
-const m=String(today.getMonth()+1).padStart(2,"0");
-const d=String(today.getDate()+1).padStart(2,"0");
-
-document.getElementById("checkin").value=
-`${y}-${m}-${d}`;
-
-renderHistory();
-renderFavorites();
-
-})();
+createPlaceLabels();
 
 </script>
 
 </body>
-</html>
+ </html>
